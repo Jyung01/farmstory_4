@@ -1,0 +1,234 @@
+/* 헤더영역 */
+* {
+            margin: 0;
+            padding: 0;
+            font: normal 12px '돋움';
+        }
+        ul, ol {list-style: none;}
+        a {text-decoration: none; color: #111;}
+        input, textarea {outline: none;}
+
+        #container {
+            width: 980px;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        
+header {
+  position: relative;
+  width: 100%;
+  height: 142px;
+  background-image: url("../images/head_top_line.png");
+  background-repeat: no-repeat;
+}
+
+header > .logo {
+  position: absolute;
+  left: 50%;
+  top: 20px;
+  margin-left: -95px;
+}
+header > p {
+  float: right;
+  margin-top: 16px;
+}
+header > img {
+  float: right;
+  clear: both;
+  margin-top: 26px;
+}
+
+header > .gnb {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+}
+header > .gnb > li {
+  float: left;
+  width: 20%;
+  height: 100%;
+  background-image: url("../images/head_menu_line.png");
+  background-repeat: no-repeat;
+  background-position: 0 -6px;
+}
+
+header > .gnb > li > a {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 0;
+  background-position: 0 6px;
+  background-repeat: no-repeat;
+}
+
+header > .gnb > li > a > img {
+  position: absolute;
+  left: 50%;
+  top: -16px;
+}
+
+header > .gnb > li:nth-child(1) > a {
+  background-image: url("../images/head_menu1.png");
+}
+header > .gnb > li:nth-child(2) > a {
+  background-image: url("../images/head_menu2.png");
+}
+header > .gnb > li:nth-child(3) > a {
+  background-image: url("../images/head_menu3.png");
+}
+header > .gnb > li:nth-child(4) > a {
+  background-image: url("../images/head_menu4.png");
+}
+header > .gnb > li:nth-child(5) > a {
+  background-image: url("../images/head_menu5.png");
+}
+
+header > .gnb > li:nth-child(1) > a:hover {
+  background-image: url("../images/head_menu1_ov.png");
+}
+header > .gnb > li:nth-child(2) > a:hover {
+  background-image: url("../images/head_menu2_ov.png");
+}
+header > .gnb > li:nth-child(3) > a:hover {
+  background-image: url("../images/head_menu3_ov.png");
+}
+header > .gnb > li:nth-child(4) > a:hover {
+  background-image: url("../images/head_menu4_ov.png");
+}
+header > .gnb > li:nth-child(5) > a:hover {
+  background-image: url("../images/head_menu5_ov.png");
+}
+
+/* 푸터영역 */
+footer {
+  width: 100%;
+  height: 120px;
+  margin-top: 10px;
+  border-top: 1px solid #d1cab2;
+  box-sizing: border-box;
+}
+
+footer > p {
+  float: right;
+  font-size: 11px;
+  color: #585858;
+  margin-top: 26px;
+  margin-right: 16px;
+  line-height: 18px;
+  overflow: hidden;
+}
+footer .copyright {
+  float: left;
+  color: #888;
+}
+
+footer .version {
+  float: right;
+  color: #888;
+}
+
+
+/* 버튼 공통 */
+.btn {
+  display: inline-block;
+  padding: 8px;    
+  border: 1px solid #bebebe; 
+  text-align: center;    
+  cursor: pointer;
+}
+
+.btnRegister {}
+.btnWrite {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #3b3c3f; 
+  background: #4b545e; 
+  color: #fff;
+}
+
+.btnComplete {
+  border: 1px solid #3b3c3f; 
+  background: #4b545e; 
+  color: #fff;
+}
+
+.btnAuth, .btnConfirm {
+  display: inline-block;
+  padding: 4px;    
+  border: 1px solid #bebebe; 
+  text-align: center;
+}
+
+.btnUpdatePass {
+  padding: 5px; background: #2e658a; color:#fff; border: 1px solid #bebebe; 
+}
+.btnWithdraw {
+  padding: 5px; background: #ed2f2f; color:#fff;
+}
+
+
+/* 로그인 */
+#user > .login {
+  position: relative;
+  width: 360px;
+  height: auto;
+  border: 1px solid #cfded8;
+  box-sizing: border-box;
+  margin: 100px auto;
+}
+#user > .login > form > table {
+  margin-left: 52px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+#user > .login > form > table img {width: 20px;}
+#user > .login > form > table input {
+  width: 162px;
+  height: 22px;
+  margin-left: 6px;
+  margin-bottom: 4px;
+  border: 1px solid #e4eaec;
+  background: #f7f7f7;
+}
+#user > .login > form > .btnLogin {
+  position: absolute;
+  right: 50px;
+  top: 30px;
+  width: 60px;
+  height: 52px;
+  background-color: #fdfdfd;
+  border: 1px solid #bebebe;
+}
+#user > .login > form > label {
+  position: absolute;
+  left: 78px;
+  top: 90px;
+}
+
+#user > .login > form > label input {
+  vertical-align: text-bottom;
+  margin-right: 2px;
+}
+
+#user > .login > div {
+  width: 100%;
+  height: 104px;
+  background: #f5f6fa;
+  border-top: 1px solid #cfded8;
+  margin-top: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+#user > .login > div > p {
+  margin: 10px 0;
+}
+#user > .login > div > a {
+  float: right;
+}

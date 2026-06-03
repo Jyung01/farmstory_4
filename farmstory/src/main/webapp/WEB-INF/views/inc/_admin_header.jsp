@@ -1,0 +1,13 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<c:set var="path" value="${pageContext.request.contextPath}" /> 
+<header>
+    <a href="./index.html" class="logo">
+        <img src="${path}/images/admin/admin_logo.jpg" alt="로고" />
+    </a>
+    <ul>
+        <li><a href="#">HOME |</a></li>
+        <li><a href="#">로그아웃 |</a></li>
+        <li><a href="#">고객센터</a></li>
+    </ul>
+</header>

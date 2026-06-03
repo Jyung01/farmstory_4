@@ -1,0 +1,287 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+#container {
+    width: 980px;
+    height: auto;
+    margin: 0 auto;
+}
+
+/* ********************************** 헤더 ********************************** */
+header {
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    background-image: url(../../images/admin/admin_bg.jpg);
+    padding: 10px 12px;
+}
+
+header ul {
+    display: flex;
+    gap: 5px;
+}
+
+header img {
+    margin-top: 4px;
+}
+
+header ul li a {
+    color: #fff;
+    font-size: 12px;
+}
+
+/* ********************************** 푸터 ********************************** */
+footer {
+    height: 39px;
+    background-color: #353535;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px;
+}
+
+footer p {
+    color: #ffffff;
+    font-size: 11px;
+}
+
+/* ********************************** 관리자 메인 - aside ********************************** */
+main {
+    display: flex;
+    min-height: 400px;
+}
+
+aside {
+    max-width: 176px;
+    padding: 10px;
+}
+
+aside div {
+    width: 156px;
+    height: 30px;
+    border-radius: 20px;
+    background-color: #e5e5e5;
+    border: 1px solid #cccccc;
+    display: flex;
+    align-items: center;
+    padding-left: 21px;
+}
+
+aside div p {
+    font-size: 14px;
+}
+
+aside > ul {
+    padding: 43px 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+aside > ul > span {
+    display: block;
+}
+
+aside > ul > li > ul {
+    padding-left: 13px;
+}
+
+aside > ul > li > ul > li {
+    padding: 4px 0;
+}
+
+aside > ul a.active span {
+    border-bottom: 1px solid black;
+}
+
+/* 관리자 메인 - section */
+.admin_main {
+    padding: 12px 10px 0;
+    width: 100%;
+}
+
+.admin_main h2 {
+    margin-bottom: 14px;
+    font-size: 18px;
+}
+
+.admin_main section {
+    margin-bottom: 12px;
+}
+.admin_main section:last-of-type {
+    margin-bottom: 10px;
+}
+
+.admin_main section div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 12px;
+}
+.admin_main table {
+    width: 100%;
+    border-top: 2px solid black;
+    font-size: 12px;
+}
+
+.admin_main table tbody th {
+    background-color: #fbfbfb;
+    height: 42.5px;
+    line-height: 1;
+}
+
+.admin_main table tbody td {
+    height: 42px;
+    text-align: center;
+    border-bottom: 1px dashed #999999;
+}
+
+/* ***************************** 관리자 상품관리 > 상품목록  ********************************** */
+table img {
+    width: 60px;
+    height: 60px;
+    aspect-ratio: 1/1;
+}
+
+section.proList table tbody td {
+    min-height: 89px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+.buttons a {
+    color: #111111;
+}
+
+.add_product {
+    width: 74px;
+    height: 31px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.pagination_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    margin-top: 26px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+}
+
+.page_active {
+    border-bottom: 1px solid black;
+    font-weight: 900;
+}
+
+/* ***************************** 관리자 상품관리 > 상품등록  ********************************** */
+section.proAdd form div {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 15px 12px;
+    border-bottom: 1px dashed #999999;
+    margin: 0;
+}
+
+section.proAdd form div p {
+    min-width: 100px;
+}
+
+section.proAdd form div input {
+    min-width: 150px;
+    height: 20px;
+    border-radius: 2.5px;
+}
+
+section.proAdd form div.delivery div {
+    display: flex;
+    gap: 18px;
+    border: 0;
+    padding: 0;
+}
+
+section.proAdd form div.delivery label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+section.proAdd form div.delivery input {
+    min-width: initial;
+}
+
+section.proAdd form div.proImg input[type="file"] {
+    height: auto;
+    line-height: normal;
+}
+
+section.proAdd form div.proImg div {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 4px;
+    border: 0;
+    padding: 0;
+    font-size: 11px;
+}
+
+section.proAdd form textarea {
+    min-width: 165px;
+}
+
+section.proAdd .buttons {
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: 22px;
+}
+section.proAdd .buttons .add_product {
+    background-color: #efefef;
+}
+
+section.proAdd .buttons .cancel {
+    width: 50px;
+    height: 31px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+/* ***************************** 관리자 주문관리 > 주문목록  ********************************** */
+section.orderList table tbody td {
+    font-size: 12px;
+}
+
+/* ***************************** 관리자 회원관리 > 회원목록  ********************************** */
+section.userList table tbody td {
+    font-size: 12px;
+}
