@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import kr.co.farmstory.dto.UserDTO;
+import kr.co.farmstory.dto.user.UserDTO;
 
 import java.io.IOException;
 /* 나중에 테스트 하실때 주석 풀어서 테스트 해보시면 될거 같습니다

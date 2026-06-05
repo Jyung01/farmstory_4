@@ -1,4 +1,4 @@
-package kr.co.farmstory.dto;
+package kr.co.farmstory.dto.user;
 
 public class UserDTO {
 	private String userid;
