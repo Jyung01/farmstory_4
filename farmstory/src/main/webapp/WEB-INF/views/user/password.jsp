@@ -1,14 +1,17 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>팜스토리::아이디찾기</title>
-        <link rel="stylesheet" href="../css/userid.css" />
+        <title>팜스토리::비밀번호찾기</title>
+        <link rel="stylesheet" href="../css/password.css" />
     </head>
     <body>
         <div id="container">
             <header>
-                <a href="./index.html" class="logo"><img src="./images/logo.png" alt="로고" /></a>
+                <a href="./index.html" class="logo">
+                    <img src="../images/logo.png" alt="로고" />
+                </a>
                 <p>
                     <a href="./index.html">HOME</a>| <a href="login.html">로그인</a>| <a href="terms.html">회원가입</a>|
                     <a href="cart.html">나의정보 |</a>
@@ -16,26 +19,28 @@
                     <a href="#">관리자</a>|
                     <a href="#">고객센터</a>
                 </p>
-                <img src="./images/head_txt_img.png" alt="3만원 이상 무료배송" />
-
+                <img src="../images/head_txt_img.png" alt="3만원 이상 무료배송" />
                 <ul class="gnb">
                     <li><a href="./introduction/hello.html">팜스토리소개</a></li>
                     <li>
-                        <a href="./market/list.html"><img src="./images/head_menu_badge.png" alt="30%" />장보기</a>
+                        <a href="./market/list.html"> <img src="../images/head_menu_badge.png" alt="30%" />장보기 </a>
                     </li>
                     <li><a href="./croptalk/story.html">농작물이야기</a></li>
                     <li><a href="./event/event.html">이벤트</a></li>
                     <li><a href="./community/notice.html">커뮤니티</a></li>
                 </ul>
             </header>
+
             <div id="find">
-                <section class="userid">
+                <section class="password">
                     <form action="#">
-                        <h2>아이디 찾기</h2>
+                        <h2>비밀번호 찾기</h2>
                         <table border="0">
                             <tr>
-                                <td>이름</td>
-                                <td><input type="text" name="name" placeholder="이름 입력" /></td>
+                                <td>아이디</td>
+                                <td>
+                                    <input type="text" name="uid" placeholder="아이디 입력" />
+                                </td>
                             </tr>
                             <tr>
                                 <td>이메일</td>
@@ -45,7 +50,7 @@
                                         <button type="button" class="btnAuth">인증번호 받기</button>
                                     </div>
                                     <div>
-                                        <input type="text" name="auth" disabled placeholder="인증번호 입력" />
+                                        <input type="text" name="auth" placeholder="인증번호 입력" />
                                         <button type="button" class="btnConfirm">확인</button>
                                     </div>
                                 </td>
@@ -54,13 +59,14 @@
                     </form>
 
                     <p>
-                        회원가입시 이메일 주소와 입력한 이메일 주소가 같아야, 인증번호를 받을 수 있습니다.<br />
+                        비밀번호를 찾고자 하는 아이디와 이메일을 입력해 주세요.<br />
+                        회원가입시 입력한 아이디와 이메일 주소가 같아야, 인증번호를 받을 수 있습니다.<br />
                         인증번호를 입력 후 확인 버튼을 누르세요.
                     </p>
 
                     <div>
                         <a href="./login.html" class="btn btnCancel">취소</a>
-                        <a href="./useridResult.html" class="btn btnNext">다음</a>
+                        <a href="./password.html" class="btn btnNext">다음</a>
                     </div>
                 </section>
             </div>

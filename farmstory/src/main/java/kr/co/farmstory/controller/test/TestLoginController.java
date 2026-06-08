@@ -27,7 +27,7 @@ public class TestLoginController extends HttpServlet {
         HttpSession session = req.getSession();
 
         session.setAttribute("sessUser", user);
-
+		
         resp.sendRedirect(req.getContextPath()+ "/index.jsp");
 	}
 }
