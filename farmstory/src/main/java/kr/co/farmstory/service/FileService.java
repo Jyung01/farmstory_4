@@ -34,7 +34,7 @@ public enum FileService {
 			
 				if(ofName != null && !ofName.isEmpty()) {
 					int index = ofName.lastIndexOf(".");
-					String ext = ofName.substring(index); // 확장자
+					String ext = ofName.substring(index); 
 					
 					String sfName= UUID.randomUUID().toString() + ext;
 					

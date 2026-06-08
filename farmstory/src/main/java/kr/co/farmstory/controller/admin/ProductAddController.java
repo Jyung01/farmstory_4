@@ -38,9 +38,7 @@ public class ProductAddController extends HttpServlet {
 		String stock = req.getParameter("stock");
 		String discript = req.getParameter("discript");
 		
-		
 		List<FileDTO> fileList = fileService.upload(req);
-		
 		
 		ProductDTO dto = new ProductDTO();
 		dto.setProdName(name);
@@ -58,10 +56,6 @@ public class ProductAddController extends HttpServlet {
 		
 		service.register(dto);
 		
-		
-		
 		resp.sendRedirect("/farmstory/admin/list.do?register=success");
-		
 	}
-
 }
