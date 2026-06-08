@@ -1,9 +1,10 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>팜스토리::약관</title>
-        <link rel="stylesheet" href="../css/style_terms.css" />
+        <title>팜스토리::아이디찾기결과</title>
+        <link rel="stylesheet" href="../css/useridResult.css" />
     </head>
     <body>
         <div id="container">
@@ -28,34 +29,40 @@
                     <li><a href="./community/notice.html">커뮤니티</a></li>
                 </ul>
             </header>
-            <div id="user">
-                <section class="terms">
-                    <h2 class="tit">사이트 이용약관</h2>
-                    <table border="1">
-                        <tr>
-                            <td>
-                                <textarea name="terms">약관내용</textarea>
-                                <label><input type="checkbox" class="terms" />&nbsp;동의합니다.</label>
-                            </td>
-                        </tr>
-                    </table>
-                    <h2 class="tit">개인정보 취급방침</h2>
-                    <table border="1">
-                        <tr>
-                            <td>
-                                <textarea name="privacy">약관내용</textarea>
-                                <label><input type="checkbox" class="privacy" />&nbsp;동의합니다.</label>
-                            </td>
-                        </tr>
-                    </table>
+            <div id="find">
+                <section class="useridResult">
+                    <form action="#">
+                        <h2 class="tit">아이디 찾기 결과</h2>
+                        <table border="0">
+                            <tr>
+                                <td>이름</td>
+                                <td>홍길동</td>
+                            </tr>
+                            <tr>
+                                <td>아이디</td>
+                                <td>honggildong</td>
+                            </tr>
+                            <tr>
+                                <td>이메일</td>
+                                <td>honggildong@gmail.com</td>
+                            </tr>
+                            <tr>
+                                <td>가입일</td>
+                                <td>2022-11-16 10:20</td>
+                            </tr>
+                        </table>
+                    </form>
+
+                    <p>고객님의 정보와 일치하는 아이디 입니다.</p>
+
                     <div>
-                        <a href="./login.html" class="btn btnCancel">취소</a>
-                        <a href="./register.html" class="btn btnNext">다음</a>
+                        <a href="./login.html" class="btn btnCancel">로그인</a>
+                        <a href="./register.html" class="btn btnNext">비밀번호 찾기</a>
                     </div>
                 </section>
             </div>
             <footer>
-                <img src="./images/footer_logo.png" alt="로고" />
+                <img src="../images/footer_logo.png" alt="로고" />
                 <p>
                     (주)팜스토리 / 사업자등록번호 123-45-67890 / 통신판매업신고 제 2013-부산진구-123호 / 벤처기업확인
                     서울지방중소기업청 제 012345678-9-01234호<br />
