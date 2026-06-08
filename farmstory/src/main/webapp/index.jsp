@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<!-- path 변수 선언을 통해 절대경로 잡도록 도와줌! img / css 경로 앞에 붙여서 사용하시면 됩니다 -->
 <c:set var="path" value="${pageContext.request.contextPath}" /> 
 <!doctype html>
 <html lang="en">
