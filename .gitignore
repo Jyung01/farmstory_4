@@ -1,3 +1,4 @@
 /.metadata/
 Servers/
-farmstory.mwb
+*.mwb
+*.mwb.bak
