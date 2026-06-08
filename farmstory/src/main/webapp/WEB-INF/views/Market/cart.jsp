@@ -1,62 +1,43 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<c:set var="path" value="${pageContext.request.contextPath}" /> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>팜스토리::장바구니</title>
-    <link rel="stylesheet" href="../css/main.css"/>
+    <link rel="stylesheet" href="${path}/css/main.css" />
 </head>
 <body>
     <div id="container">
-        <header>
-            <a href="../index.html" class="logo"><img src="../images/logo.png" alt="로고"/></a>
-            <p>
-                <a href="../index.html">HOME |</a>
-                <a href="#">로그인 |</a>
-                <a href="#">회원가입 |</a>                
-                <a href="#">나의정보 |</a>
-                <a href="#">로그아웃 |</a>
-                <a href="#">관리자 |</a>
-                <a href="#">고객센터</a>
-            </p>
-            <img src="../images/head_txt_img.png" alt="3만원 이상 무료배송"/>
-            
-            <ul class="gnb">
-                <li><a href="../Introduction/hello.html">팜스토리소개</a></li>
-                <li><a href="./list.html"><img src="../images/head_menu_badge.png" alt="30%"/>장바구니</a></li>
-                <li><a href="#">농작물이야기</a></li>
-                <li><a href="#">이벤트</a></li>
-                <li><a href="#">커뮤니티</a></li>
-            </ul>
-        </header>
+        <%@ include file="/WEB-INF/views/inc/_header.jsp" %>
 
         <div id="sub">
-            <div><img src="../images/sub_top_tit2.png" alt="MARKET"></div>
+            <div><img src="${path}/images/sub_top_tit2.png" alt="MARKET"></div>
             <section class="market">
                 <aside>
-                    <img src="../images/sub_aside_cate2_tit.png" alt="장보기"/>
-
+                    <img src="${path}/images/sub_aside_cate2_tit.png" alt="장보기"/>
                     <ul class="lnb">
-                        <li class="on"><a href="./market.html">장보기</a></li>
+                        <li class="on"><a href="${path}/market/list.do">장보기</a></li>
                     </ul>
                 </aside>
+                
                 <article class="cart">
                     <nav>
-                        <img src="../images/sub_nav_tit_cate2_tit1.png" alt="장보기"/>
-                        <p>
-                            HOME > 장보기 > <em>장보기</em>
-                        </p>
+                        <img src="${path}/images/sub_nav_tit_cate2_tit1.png" alt="장보기"/>
+                        <p>HOME > 장보기 > <em>장보기</em></p>
                     </nav>
 
-                    <!-- 내용 시작 -->
                     <p class="sort">
-                        <a href="#" class="on">장바구니 전체(10)</a>
+                        <a href="#" class="on">장바구니 전체(${cartList.size()})</a>
                     </p>
+                    
                     <table border="0">
                         <thead>
                             <tr>
                                 <th>
-                                    <input type="checkbox" name="all">
+                                    <input type="checkbox" name="all" id="chkAll">
                                 </th>
                                 <th>이미지</th>
                                 <th>종류</th>
@@ -69,107 +50,79 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="empty">
-                                <td colspan="9">장바구니에 상품이 없습니다.</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="">
-                                </td>
-                                <td>
-                                    <a href="./productDetail.html"><img src="../images/market_item1.jpg" class="thumb" alt="사과 500g"></a>
-                                </td>
-                                <td>과일</td>
-                                <td><a href="#">사과 500g</a></td>
-                                <td>1</td>
-                                <td>10%</td>
-                                <td>40P</td>
-                                <td>4,000</td>
-                                <td><strong>3,600</strong>원</td>    
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="">
-                                </td>
-                                <td>
-                                    <a href="./productDetail.html"><img src="../images/market_item1.jpg" class="thumb" alt="사과 500g"></a>
-                                </td>
-                                <td>과일</td>
-                                <td><a href="#">사과 500g</a></td>
-                                <td>1</td>
-                                <td>10%</td>
-                                <td>40P</td>
-                                <td>4,000</td>
-                                <td><strong>3,600</strong>원</td>    
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="">
-                                </td>
-                                <td>
-                                    <a href="./productDetail.html"><img src="../images/market_item1.jpg" class="thumb" alt="사과 500g"></a>
-                                </td>
-                                <td>과일</td>
-                                <td><a href="#">사과 500g</a></td>
-                                <td>1</td>
-                                <td>10%</td>
-                                <td>40P</td>
-                                <td>4,000</td>
-                                <td><strong>3,600</strong>원</td>    
-                            </tr>
+                            <c:if test="${empty cartList}">
+                                <tr class="empty">
+                                    <td colspan="9">장바구니에 상품이 없습니다.</td>
+                                </tr>
+                            </c:if>
                             
+                            <c:if test="${not empty cartList}">
+                                <c:forEach var="cart" items="${cartList}">
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" name="cartChk" value="${cart.cartNo}" class="cartChk">
+                                        </td>
+                                        <td>
+                                            <a href="${path}/market/view.do?prodNo=${cart.prodNo}">
+                                                <img src="${path}${cart.thumb}" class="thumb" alt="${cart.prodName}">
+                                            </a>
+                                        </td>
+                                        <td>${cart.cate}</td>
+                                        <td>
+                                            <a href="${path}/market/view.do?prodNo=${cart.prodNo}">${cart.prodName}</a>
+                                        </td>
+                                        <td>${cart.count}</td>
+                                        <td>${cart.discount}%</td>
+                                        <td><fmt:formatNumber value="${cart.point * cart.count}" type="number"/>P</td>
+                                        <td><fmt:formatNumber value="${cart.price}" type="number"/>원</td>
+                                        <td>
+                                            <strong>
+                                                <fmt:formatNumber value="${(cart.price - (cart.price * cart.discount / 100)) * cart.count}" type="number"/>
+                                            </strong>원
+                                        </td>    
+                                    </tr>
+                                </c:forEach>
+                            </c:if>
                         </tbody>                        
                     </table>
-                    <input type="button" name="del" value="선택삭제">
+                    <input type="button" id="btnDeleteSelected" value="선택삭제">
 
                     <div class="info">                        
                         <table border="0">
                             <caption>전체합계</caption>                            
                             <tr>
                                 <th>상품수</th>
-                                <td>1</td>
+                                <td id="totalCount">0</td>
                             </tr>
                             <tr>
                                 <th>상품금액</th>
-                                <td>27,000</td>
+                                <td id="totalPrice">0원</td>
                             </tr>
                             <tr>
                                 <th>할인금액</th>
-                                <td>5,0000원</td>
+                                <td id="totalDiscount">0원</td>
                             </tr>
                             <tr>
                                 <th>배송비</th>
-                                <td class="delivery">5,0000원</td>
+                                <td id="totalDelivery" class="delivery">0원</td>
                             </tr>
                             <tr>
                                 <th>포인트</th>
-                                <td>4,000원</td>
+                                <td id="totalPoint">0원</td>
                             </tr>
                             <tr>
                                 <th>전체주문금액</th>
-                                <td class="total">22,000</td>
-                            </tr>
+                                <td id="finalOrderPrice" class="total">0원</td>
                             </tr>
                         </table>                        
                         <input type="submit" class="btnOrder" value="주문하기">
                     </div>
-                    <!-- 내용 끝 -->
-
-                </article>
+                    </article>
             </section>
-
         </div>
         
-        
-        <footer>
-            <img src="../images/footer_logo.png" alt="로고"/>
-            <p>
-                (주)팜스토리 / 사업자등록번호 123-45-67890 / 통신판매업신고 제 2013-팜스토리구-123호 / 벤처기업확인 서울지방중소기업청 제 012345678-9-01234호<br />
-                등록번호 팜스토리01234 (2013.04.01) / 발행인 : 홍길동<br />
-                대표 : 홍길동 / 이메일 : email@mail.mail / 전화 : 01) 234-5678 / 경기도 성남시 잘한다구 신난다동 345<br />
-                <em>Copyright(C)홍길동 All rights reserved.</em>
-            </p>
-        </footer>
+         <script src="${path}/js/cart.js"></script>
+        <%@ include file="/WEB-INF/views/inc/_footer.jsp" %>
     </div>    
 </body>
 </html>

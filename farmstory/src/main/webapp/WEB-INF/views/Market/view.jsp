@@ -1,99 +1,107 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<c:set var="path" value="${pageContext.request.contextPath}" /> 
+
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <title>팜스토리::상품상세</title>
-        <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="${path}/css/main.css" />
     </head>
     <body>
         <div id="container">
-            <header>
-                <a href="../index.html" class="logo"><img src="../images/logo.png" alt="로고" /></a>
-                <p>
-                    <a href="../index.html">HOME |</a>
-                    <a href="#">로그인 |</a>
-                    <a href="#">회원가입 |</a>
-                    <a href="#">나의정보 |</a>
-                    <a href="#">로그아웃 |</a>
-                    <a href="#">관리자 |</a>
-                    <a href="#">고객센터</a>
-                </p>
-                <img src="../images/head_txt_img.png" alt="3만원 이상 무료배송" />
-
-                <ul class="gnb">
-                    <li><a href="../Introduction/hello.html">팜스토리소개</a></li>
-                    <li>
-                        <a href="./list.html"><img src="../images/head_menu_badge.png" alt="30%" />장바구니</a>
-                    </li>
-                    <li><a href="#">농작물이야기</a></li>
-                    <li><a href="#">이벤트</a></li>
-                    <li><a href="#">커뮤니티</a></li>
-                </ul>
-            </header>
+            <%@ include file="/WEB-INF/views/inc/_header.jsp" %>
 
             <div id="sub">
-                <div><img src="../images/sub_top_tit2.png" alt="MARKET" /></div>
+                <div><img src="${path}/images/sub_top_tit2.png" alt="MARKET" /></div>
                 <section class="market">
                     <aside>
-                        <img src="../images/sub_aside_cate2_tit.png" alt="장보기" />
-
+                        <img src="${path}/images/sub_aside_cate2_tit.png" alt="장보기" />
                         <ul class="lnb">
-                            <li class="on"><a href="./market.html">장보기</a></li>
+                            <li class="on"><a href="${path}/market/list.do">장보기</a></li>
                         </ul>
                     </aside>
+                    
                     <article class="view">
                         <nav>
-                            <img src="../images/sub_nav_tit_cate2_tit1.png" alt="장보기" />
+                            <img src="${path}/images/sub_nav_tit_cate2_tit1.png" alt="장보기" />
                             <p>HOME > 장보기 > <em>장보기</em></p>
                         </nav>
 
-                        <!-- 내용 시작 -->
                         <h3>기본정보</h3>
                         <div class="basic">
-                            <img src="../images/market_item_thumb.jpg" alt="딸기 500g" />
+                            <img src="${path}${product.infoImg}" alt="${product.prodName}" class="thumbnail" />
 
                             <table border="0">
                                 <tr>
                                     <td>상품명</td>
-                                    <td>딸기 500g</td>
+                                    <td><strong>${product.prodName}</strong></td>
                                 </tr>
                                 <tr>
                                     <td>상품코드</td>
-                                    <td>01</td>
+                                    <td>${product.prodNo}</td>
                                 </tr>
                                 <tr>
                                     <td>배송비</td>
                                     <td>
-                                        <span>5,000</span>원
-                                        <em>3만원 이상 무료배송</em>
+                                        <span><fmt:formatNumber value="${product.delivery}" type="number"/></span>원
+                                        <c:choose>
+                                            <c:when test="${product.delivery == 0}">
+                                                <em>무료배송 상품입니다.</em>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <em>3만원 이상 무료배송</em>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>판매가격</td>
-                                    <td>4,000원</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${product.discount > 0}">
+                                                <del><fmt:formatNumber value="${product.price}" type="number"/>원</del> 
+                                                <span class="discount" style="color:red; font-weight:bold;">[${product.discount}% 할인]</span><br/>
+                                                <strong style="font-size:1.2em; color:#ff4500;">
+                                                    <fmt:formatNumber value="${product.price - (product.price * product.discount / 100)}" type="number"/>원
+                                                </strong>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <strong><fmt:formatNumber value="${product.price}" type="number"/>원</strong>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>구매수량</td>
                                     <td>
-                                        <input type="number" name="count" min="1" value="1" />
+                                        <input type="number" name="count" id="productCount" min="1" value="1" 
+                                               data-price="${product.price - (product.price * product.discount / 100)}" />
+                                        <input type="hidden" id="productStock" value="${product.stock}" />
+                                        <input type="hidden" id="productNo" value="${product.prodNo}" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>합계</td>
-                                    <td class="total">4,000원</td>
+                                    <td class="total">
+                                        <strong id="totalPrice">
+                                            <fmt:formatNumber value="${product.price - (product.price * product.discount / 100)}" type="number"/>원
+                                        </strong>
+                                    </td>
                                 </tr>
-                                <style></style>
                             </table>
 
                             <div style="float: right; margin-top: 10px">
-                                <a href="./cart.html" id="btnCart" class="btn btnCart">장바구니</a>
-                                <a href="./order.html" id="btnOrder" class="btn btnOrder">바로구매</a>
-                            </div>
+							    <a href="#" id="btnCart" class="btn btnCart">장바구니</a>
+							    <a href="#" id="btnOrder" class="btn btnOrder">바로구매</a>
+							</div>
                         </div>
+
                         <h3>상품설명</h3>
                         <div class="detail">
-                            <img src="../images/market_detail_sample.jpg" alt="" />
+                            <img src="${path}${product.detailImg}" alt="상품 상세 설명" />
                         </div>
 
                         <h3>배송정보</h3>
@@ -126,22 +134,11 @@
                                 </tr>
                             </table>
                         </div>
-                        <!-- 내용 끝 -->
                     </article>
                 </section>
             </div>
-
-            <footer>
-                <img src="../images/footer_logo.png" alt="로고" />
-                <p>
-                    (주)팜스토리 / 사업자등록번호 123-45-67890 / 통신판매업신고 제 2013-팜스토리구-123호 / 벤처기업확인
-                    서울지방중소기업청 제 012345678-9-01234호<br />
-                    등록번호 팜스토리01234 (2013.04.01) / 발행인 : 홍길동<br />
-                    대표 : 홍길동 / 이메일 : email@mail.mail / 전화 : 01) 234-5678 / 경기도 성남시 잘한다구 신난다동
-                    345<br />
-                    <em>Copyright(C)홍길동 All rights reserved.</em>
-                </p>
-            </footer>
+			<script src="${path}/js/market.js"></script>
+            <%@ include file="/WEB-INF/views/inc/_footer.jsp" %>
         </div>
     </body>
 </html>
