@@ -1,60 +1,41 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<c:set var="path" value="${pageContext.request.contextPath}" /> 
+
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <title>팜스토리::상품목록</title>
-        <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="${path}/css/main.css" />
     </head>
     <body>
         <div id="container">
-            <header>
-                <a href="../index.html" class="logo"><img src="../images/logo.png" alt="로고" /></a>
-                <p>
-                    <a href="../index.html">HOME |</a>
-                    <a href="#">로그인 |</a>
-                    <a href="#">회원가입 |</a>
-                    <a href="#">나의정보 |</a>
-                    <a href="#">로그아웃 |</a>
-                    <a href="#">관리자 |</a>
-                    <a href="#">고객센터</a>
-                </p>
-                <img src="../images/head_txt_img.png" alt="3만원 이상 무료배송" />
-
-                <ul class="gnb">
-                    <li><a href="../Introduction/hello.html">팜스토리소개</a></li>
-                    <li>
-                        <a href="./list.html"><img src="../images/head_menu_badge.png" alt="30%" />장바구니</a>
-                    </li>
-                    <li><a href="#">농작물이야기</a></li>
-                    <li><a href="#">이벤트</a></li>
-                    <li><a href="#">커뮤니티</a></li>
-                </ul>
-            </header>
+            <%@ include file="/WEB-INF/views/inc/_header.jsp" %>
 
             <div id="sub">
-                <div><img src="../images/sub_top_tit2.png" alt="MARKET" /></div>
+                <div><img src="${path}/images/sub_top_tit2.png" alt="MARKET" /></div>
                 <section class="market">
                     <aside>
-                        <img src="../images/sub_aside_cate2_tit.png" alt="장보기" />
+                        <img src="${path}/images/sub_aside_cate2_tit.png" alt="장보기" />
 
                         <ul class="lnb">
-                            <li class="on"><a href="./market.html">장보기</a></li>
+                            <li class="on"><a href="${path}/market/list.do">장보기</a></li>
                         </ul>
                     </aside>
                     <article class="list">
                         <nav>
-                            <img src="../images/sub_nav_tit_cate2_tit1.png" alt="장보기" />
+                            <img src="${path}/images/sub_nav_tit_cate2_tit1.png" alt="장보기" />
                             <p>HOME > 장보기 > <em>장보기</em></p>
                         </nav>
 
-                        <!-- 내용 시작 -->
                         <p class="sort">
-                            <a href="#" class="on">전체(10) |</a>
-                            <a href="#">과일 |</a>
-                            <a href="#">야채 |</a>
-                            <a href="#">곡류</a>
-                        </p>
+						    <a href="${path}/market/list.do" class="${empty param.cate ? 'on' : ''}">전체(${totalCount}) |</a>
+						    <a href="${path}/market/list.do?cate=과일" class="${param.cate eq '과일' ? 'on' : ''}">과일 |</a>
+						    <a href="${path}/market/list.do?cate=야채" class="${param.cate eq '야채' ? 'on' : ''}">야채 |</a>
+						    <a href="${path}/market/list.do?cate=곡류" class="${param.cate eq '곡류' ? 'on' : ''}">곡류</a>
+						</p>
                         <table border="0">
                             <thead>
                                 <tr>
@@ -67,110 +48,66 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <a href="./view.html"
-                                            ><img src="../images/market_item1.jpg" class="thumbnail" alt="사과 500g"
-                                        /></a>
-                                    </td>
-                                    <td class="type">과일</td>
-                                    <td class="title"><a href="#">사과 500g</a></td>
-                                    <td class="discount">10%</td>
-                                    <td class="point">400P</td>
-                                    <td class="price">
-                                        <strong>3,600</strong>
-                                        <del>4,000</del>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="./view.html"
-                                            ><img src="../images/market_item2.jpg" class="thumbnail" alt="사과 500g"
-                                        /></a>
-                                    </td>
-                                    <td class="type">과일</td>
-                                    <td class="title"><a href="#">전남 완주 배 5kg</a></td>
-                                    <td class="discount">10%</td>
-                                    <td class="point">400P</td>
-                                    <td class="price">
-                                        <strong>3,600</strong>
-                                        <del>4,000</del>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="./view.html"
-                                            ><img src="../images/market_item3.jpg" class="thumbnail" alt="사과 500g"
-                                        /></a>
-                                    </td>
-                                    <td class="type">과일</td>
-                                    <td class="title"><a href="#">방울 토마토</a></td>
-                                    <td class="discount">10%</td>
-                                    <td class="point">400P</td>
-                                    <td class="price">
-                                        <strong>3,600</strong>
-                                        <del>4,000</del>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="./view.html"
-                                            ><img src="../images/market_item6.jpg" class="thumbnail" alt="사과 500g"
-                                        /></a>
-                                    </td>
-                                    <td class="type">곡류</td>
-                                    <td class="title"><a href="#">무농약 현미</a></td>
-                                    <td class="discount">10%</td>
-                                    <td class="point">400P</td>
-                                    <td class="price">
-                                        <strong>3,600</strong>
-                                        <del>4,000</del>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="./view.html"
-                                            ><img src="../images/market_item7.jpg" class="thumbnail" alt="사과 500g"
-                                        /></a>
-                                    </td>
-                                    <td class="type">야채</td>
-                                    <td class="title"><a href="#">팜스토리 하루야채 샐러드</a></td>
-                                    <td class="discount">10%</td>
-                                    <td class="point">400P</td>
-                                    <td class="price">
-                                        <strong>3,600</strong>
-                                        <del>4,000</del>
-                                    </td>
-                                </tr>
+                                <c:choose>
+                                    <c:when test="${not empty products}">
+                                        <c:forEach var="product" items="${products}">
+                                            <tr>
+                                                <td>
+                                                    <a href="${path}/market/view.do?prodNo=${product.prodNo}">
+                                                        <img src="${path}${product.thumb}" class="thumbnail" alt="${product.prodName}" />
+                                                    </a>
+                                                </td>
+                                                <td class="type">${product.cate}</td>
+                                                <td class="title">
+                                                    <a href="${path}/market/view.do?prodNo=${product.prodNo}">${product.prodName}</a>
+                                                </td>
+                                                <td class="discount">${product.discount}%</td>
+                                                <td class="point">
+                                                    <fmt:parseNumber value="${product.price / 100}" integerOnly="true"/>P
+                                                </td> 
+                                                <td class="price">
+                                                    <strong>
+                                                        <fmt:formatNumber value="${product.price - (product.price * product.discount / 100)}" type="number"/>
+                                                    </strong>
+                                                    <br>
+                                                    <del><fmt:formatNumber value="${product.price}" type="number"/></del>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <tr>
+                                            <td colspan="6" style="text-align:center; padding:30px; color:#666;">
+                                                등록된 상품이 존재하지 않습니다.
+                                            </td>
+                                        </tr>
+                                    </c:otherwise>
+                                </c:choose>
                             </tbody>
                         </table>
 
                         <p class="paging">
-                            <a href="#"></a>
-                            <a href="#" class="on">[1]</a>
-                            <a href="#">[2]</a>
-                            <a href="#">[3]</a>
-                            <a href="#">[4]</a>
-                            <a href="#">[5]</a>
-                            <a href="#">></a>
+                            <c:if test="${not empty pageGroup}">
+                            
+                                <c:if test="${pageGroup.start > 1}">
+                                    <a href="${path}/market/list.do?page=${pageGroup.start - 1}&cate=${param.cate}">&lt;</a>
+                                </c:if>
+                            
+                                <c:forEach var="i" begin="${pageGroup.start}" end="${pageGroup.end}">
+                                    <a href="${path}/market/list.do?page=${i}&cate=${param.cate}" class="${currentPage == i ? 'on' : ''}">[${i}]</a>
+                                </c:forEach>
+                            
+                                <c:if test="${pageGroup.end < lastPageNum}">
+                                    <a href="${path}/market/list.do?page=${pageGroup.end + 1}&cate=${param.cate}">&gt;</a>
+                                </c:if>
+                                
+                            </c:if>
                         </p>
-
-                        <!-- 내용 끝 -->
                     </article>
                 </section>
             </div>
 
-            <footer>
-                <img src="../images/footer_logo.png" alt="로고" />
-                <p>
-                    (주)팜스토리 / 사업자등록번호 123-45-67890 / 통신판매업신고 제 2013-팜스토리구-123호 / 벤처기업확인
-                    서울지방중소기업청 제 012345678-9-01234호<br />
-                    등록번호 팜스토리01234 (2013.04.01) / 발행인 : 홍길동<br />
-                    대표 : 홍길동 / 이메일 : email@mail.mail / 전화 : 01) 234-5678 / 경기도 성남시 잘한다구 신난다동
-                    345<br />
-                    <em>Copyright(C)홍길동 All rights reserved.</em>
-                </p>
-            </footer>
+            <%@ include file="/WEB-INF/views/inc/_footer.jsp" %>
         </div>
     </body>
 </html>
