@@ -19,8 +19,11 @@ public class FileDAO extends DBHelper {
 		try {
 			conn = getConnection();
 			 
-			psmt = conn.prepareStatement(ArticleSQL.INSERT_ARTICLE);
-	        
+			psmt = conn.prepareStatement(ArticleSQL.INSERT_FILE);
+			psmt.setInt(1, dto.getAno());
+			psmt.setString(2, dto.getOfname());
+			psmt.setString(3, dto.getSfname());
+			
 	        psmt.executeUpdate();
 
 	        closeAll();

@@ -5,8 +5,8 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>팜스토리::텃밭가꾸기</title>
-        <link rel="stylesheet" href="../css/crop.css" />
+        <title>팜스토리::${cateTitle}</title>
+        <link rel="stylesheet" href="${path}/css/crop.css" />
     </head>
     <body>
         <div id="container">
@@ -46,27 +46,19 @@
                                     <th>날짜</th>
                                     <th>조회</th>
                                 </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td><a href="./view.html">텃밭가꾸기 게시물입니다.[3]</a></td>
-                                    <td>길동이</td>
-                                    <td>20-05-12</td>
-                                    <td>12</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td><a href="./view.html">텃밭가꾸기 게시물입니다.[3]</a></td>
-                                    <td>길동이</td>
-                                    <td>20-05-12</td>
-                                    <td>12</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td><a href="./view.html">텃밭가꾸기 게시물입니다.[3]</a></td>
-                                    <td>길동이</td>
-                                    <td>20-05-12</td>
-                                    <td>12</td>
-                                </tr>
+                                <c:forEach var="dto" items="${dtoList}">
+	                                <tr>
+	                                    <td>${dto.ano}</td>
+	                                    <td><a href="./view.html">${dto.title}
+		                                    <c:if test="${dto.commentCount > 0}">
+		                                    	[${dto.commentCount}]
+		                                    </c:if>
+	                                    </a></td>
+	                                    <td>${dto.writer}</td>
+	                                    <td>${dto.wdate}</td>
+	                                    <td>${dto.hit}</td>
+	                                </tr>
+                                </c:forEach>
                             </table>
 
                             <div class="page">

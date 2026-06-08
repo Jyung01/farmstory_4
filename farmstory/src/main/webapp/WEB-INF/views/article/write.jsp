@@ -5,8 +5,8 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>팜스토리::오늘의식단</title>
-        <link rel="stylesheet" href="../css/crop.css" />
+        <title>팜스토리::${cateTitle}</title>
+        <link rel="stylesheet" href="${path}/css/crop.css" />
     </head>
     <body>
         <div id="container">
@@ -49,8 +49,8 @@
                                         <th>파일</th>
                                         <td>
                                             <p>최대 2개 파일 첨부 가능, 각 파일당 최대 10MB까지 가능</p>
-                                            <input type="file" name="file1" />
-                                            <input type="file" name="file2" />
+                                            <input type="file" name="file" />
+                                            <input type="file" name="file" />
                                         </td>
                                     </tr>
                                 </table>
