@@ -19,10 +19,10 @@
                             <span>상품관리</span>
                             <ul>
                                 <li>
-                                    <a href="./productList.html">L <span>상품목록</span></a>
+                                    <a href="/farmstory/admin/prodList.do">L <span>상품목록</span></a>
                                 </li>
                                 <li>
-                                    <a href="./productAdd.html">L <span>상품등록</span></a>
+                                    <a href="/farmstory/admin/register.do">L <span>상품등록</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -30,7 +30,7 @@
                             <span>주문관리</span>
                             <ul>
                                 <li>
-                                    <a href="./orderList.html">L <span>주문목록</span></a>
+                                    <a href="/farmstory/admin/orderList.do">L <span>주문목록</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -38,7 +38,7 @@
                             <span>회원관리</span>
                             <ul>
                                 <li>
-                                    <a href="./userList.html">L <span>회원목록</span></a>
+                                    <a href="/farmstory/admin/userList.do">L <span>회원목록</span></a>
                                 </li>
                             </ul>
                         </li>

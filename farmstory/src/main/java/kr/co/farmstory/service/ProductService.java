@@ -3,7 +3,7 @@ package kr.co.farmstory.service;
 
 import java.util.List;
 
-import kr.co.farmstory.dao.ProductDAO;
+import kr.co.farmstory.dao.admin.ProductDAO;
 import kr.co.farmstory.dto.admin.ProductDTO;
 
 public enum ProductService {

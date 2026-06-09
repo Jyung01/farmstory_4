@@ -56,6 +56,8 @@ public class ProductAddController extends HttpServlet {
 		
 		service.register(dto);
 		
+		req.setAttribute("fileList", fileList);
+		
 		resp.sendRedirect("/farmstory/admin/list.do?register=success");
 	}
 }

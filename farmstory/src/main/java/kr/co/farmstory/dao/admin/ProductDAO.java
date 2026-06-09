@@ -1,4 +1,4 @@
-package kr.co.farmstory.dao;
+package kr.co.farmstory.dao.admin;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
