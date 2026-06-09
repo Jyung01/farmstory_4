@@ -121,7 +121,6 @@
             </section>
         </div>
         
-         <script src="${path}/js/cart.js"></script>
         <%@ include file="/WEB-INF/views/inc/_footer.jsp" %>
     </div>    
 </body>

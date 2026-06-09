@@ -1,0 +1,6 @@
+/.metadata/
+Servers/
+*.mwb
+*.mwb.bak
+farmstory/build/
+*.class

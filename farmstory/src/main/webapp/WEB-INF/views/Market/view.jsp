@@ -92,7 +92,10 @@
                                     </td>
                                 </tr>
                             </table>
-
+							
+							<input type="hidden" id="loginCheck" value="${empty sessionScope.sessUser}">
+							<input type="hidden" id="Path" value="${path}">
+							
                             <div style="float: right; margin-top: 10px">
 							    <a href="#" id="btnCart" class="btn btnCart">장바구니</a>
 							    <a href="#" id="btnOrder" class="btn btnOrder">바로구매</a>
