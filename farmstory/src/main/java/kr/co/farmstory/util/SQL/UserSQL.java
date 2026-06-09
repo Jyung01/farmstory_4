@@ -7,21 +7,27 @@ public class UserSQL {
         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     // 로그인
-    public static final String SELECT_USER_LOGIN = 
-        "SELECT * FROM user WHERE userid = ?";
+    public static final String SELECT_USER_LOGIN =
+    "SELECT * FROM user WHERE userid = ? AND pass = ? AND leaveDate IS NULL";
     
     // 아이디 중복확인
     public static final String SELECT_USERID_CHECK = 
         "SELECT userid FROM user WHERE userid = ?";
     
     // 닉네임 중복확인
-    public static final String SELECT_NICK_CHECK = 
-        "SELECT nick FROM user WHERE nick = ?";
+    public static final String SELECT_NICK_CHECK =
+    	    "SELECT nick FROM user WHERE nick = ?";
     
     
     // 이메일 중복확인
     public static final String SELECT_EMAIL_CHECK =
         "SELECT email FROM user WHERE email = ?";
+    
+    // 회원 탈퇴
+    public static final String UPDATE_LEAVE_DATE = 
+    	"UPDATE user SET leaveDate = NOW() WHERE userid = ?";
+    
+    
     
     
     // 관리자 - 회원목록 조회

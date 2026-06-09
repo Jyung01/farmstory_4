@@ -37,10 +37,10 @@ public class LoginController extends HttpServlet {
 
         // 3. DB에서 유저 조회
         UserService service = UserService.INSTANCE;
-        UserDTO dto = service.selectUser(userid);
+        UserDTO dto = service.selectUser(userid, pass);
 
         // 4. 로그인 처리
-        if(dto != null && dto.getPass().equals(pass)) {
+        if(dto != null) {
             HttpSession session = req.getSession();
             session.setAttribute("sessUser", dto);   // loginUser -> sessUser
             resp.sendRedirect(req.getContextPath() + "/index.jsp");
