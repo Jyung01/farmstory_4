@@ -18,8 +18,8 @@ import kr.co.farmstory.service.article.CommentService;
 import kr.co.farmstory.service.article.FileService;
 import kr.co.farmstory.util.ArticleSwitch;
 
-@WebServlet("/article/view.do")
-public class ViewController extends HttpServlet {
+@WebServlet("/article/modify.do")
+public class ModifyController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	

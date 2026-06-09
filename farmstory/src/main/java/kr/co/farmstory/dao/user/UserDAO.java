@@ -1,5 +1,9 @@
 package kr.co.farmstory.dao.user;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 import kr.co.farmstory.dto.user.UserDTO;
 import kr.co.farmstory.util.DBHelper;
 import kr.co.farmstory.util.SQL.UserSQL;
@@ -37,6 +41,59 @@ public class UserDAO extends DBHelper {
 
         return result;
     }
+
+	public UserDTO selectUser(String userid) {
+		UserDTO dto = null;
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(UserSQL.SELECT_USER_LOGIN);
+			psmt.setString(1, userid);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				dto = new UserDTO();
+				dto.setUserid(rs.getString("userid"));
+	            dto.setPass(rs.getString("pass"));
+	            dto.setName(rs.getString("name"));
+	            dto.setNick(rs.getString("nick"));
+	            dto.setEmail(rs.getString("email"));
+	            dto.setHp(rs.getString("hp"));
+	            dto.setRole(rs.getString("role"));
+			}
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+	        try { closeAll(); } catch(Exception e) { e.printStackTrace(); }
+	    }
+	    return dto;
+	}
+
+
+	public List<UserDTO> selectAll() {
+		List<UserDTO> dtoList = new ArrayList<>();
+		try {
+	        conn = getConnection();
+	        stmt = conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(UserSQL.SELECT_USER_FOR_ADMIN);
+	        while(rs.next()) {
+	        	UserDTO dto = new UserDTO();
+	        	dto.setUserid(rs.getString(1));
+	        	dto.setName(rs.getString(2));
+	        	dto.setNick(rs.getString(3));
+	        	dto.setEmail(rs.getString(4));
+	        	dto.setHp(rs.getString(5));
+	        	dto.setRole(rs.getString(6));
+	        	dto.setRegDate(rs.getString(7));
+	        	dtoList.add(dto);
+	        }
+		} catch(Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try { closeAll(); } catch(Exception e) { e.printStackTrace(); }
+	    }
+	    return dtoList;
+	}
 
     // =========================
     // 로그인

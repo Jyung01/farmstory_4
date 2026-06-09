@@ -11,16 +11,7 @@
     </head>
     <body>
         <div id="container">
-            <header>
-                <a href="./index.html" class="logo">
-                    <img src="${path}/images/admin/admin_logo.jpg" alt="로고" />
-                </a>
-                <ul>
-                    <li><a href="#">HOME |</a></li>
-                    <li><a href="#">로그아웃 |</a></li>
-                    <li><a href="#">고객센터</a></li>
-                </ul>
-            </header>
+            <%@ include file="/WEB-INF/views/inc/_admin_header.jsp" %>
 
             <main>
                 <aside>
@@ -122,7 +113,7 @@
                             </div>
                             
                             <div class="buttons">
-		                        <a href="#" class="cancel">취소</a>
+		                        <a href="/farmstory/admin/prodList.do" class="cancel">취소</a>
 		                        <input type="submit" value="상품등록" class="add_product"/>
 		                   	 </div>
                         </form>
@@ -132,10 +123,7 @@
                 </section>
             </main>
 
-            <footer>
-                <p>FARMSTORY ADMINISTRATOR Version 1.0.1</p>
-                <p>Copyrightⓒ 김철학(개발에반하다.) All rights reserved.</p>
-            </footer>
+            <%@ include file="/WEB-INF/views/inc/_admin_footer.jsp" %>
         </div>
     </body>
 </html>

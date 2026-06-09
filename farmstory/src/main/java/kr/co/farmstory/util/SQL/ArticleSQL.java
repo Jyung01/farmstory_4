@@ -1,8 +1,9 @@
 package kr.co.farmstory.util.SQL;
 
 public class ArticleSQL {
-	
+	// ------------------------------
 	// 게시판
+	// ------------------------------
 	public static final String INSERT_ARTICLE =  "INSERT INTO article "
 											      + "(groupName, cate, title, content, writer, regip, fileCount) "
 											      + "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -42,8 +43,9 @@ public class ArticleSQL {
 
 	public static final String SEARCH_WRITER = "AND u.nick LIKE ? ";
 	
-	
+	// ------------------------------
 	// 파일
+	// ------------------------------
 	public static final String INSERT_FILE = "INSERT INTO file "
 											      + "(ano, ofname, sfname) "
 											      + "VALUES (?, ?, ?)";
@@ -53,5 +55,32 @@ public class ArticleSQL {
 	public static final String SELECT_FILE = "SELECT * FROM file WHERE fno=?";
 
 	public static final String UPDATE_DOWNLOAD = "UPDATE file SET download = download + 1 WHERE fno=?";
+	
+	// ------------------------------
+	// 댓글
+	// ------------------------------
+	
+	public static final String INSERT_COMMENT = "INSERT INTO comment "
+											      + "(parent, content, writer, regip) "
+											      + "VALUES (?, ?, ?, ?)";
+	
+	public static final String UPDATE_COMMENT_COUNT = "UPDATE article "
+													      + "SET commentCount = commentCount + 1 "
+													      + "WHERE ano=?";
+	
+	public static final String SELECT_ALL_COMMENT = "SELECT c.*, u.nick "
+												      + "FROM comment AS c "
+												      + "JOIN user AS u "
+												      + "ON c.writer = u.userid "
+												      + "WHERE c.parent=? "
+												      + "ORDER BY c.cno ASC";
+	
+	public static final String SELECT_COMMENT = "SELECT * FROM comment WHERE cno=?";
+	
+	public static final String UPDATE_COMMENT = "UPDATE comment SET content=? WHERE cno=?";
+	
+	public static final String DELETE_COMMENT = "DELETE FROM comment WHERE cno=?";
+	
+	public static final String DECREASE_COMMENT_COUNT = "UPDATE article SET commentCount = commentCount - 1 WHERE ano=?";
 	
 }

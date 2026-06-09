@@ -60,18 +60,38 @@
                                 <c:forEach var="cart" items="${cartList}">
                                     <tr>
                                         <td>
-                                            <input type="checkbox" name="cartChk" value="${cart.cartNo}" class="cartChk">
-                                        </td>
+										    <c:choose>
+										        <c:when test="${cart.stock <= 0}">
+										            <input type="checkbox" name="cartNo" value="${cart.cartNo}" disabled />
+										        </c:when>
+										        <c:otherwise>
+										            <input type="checkbox" name="cartNo" value="${cart.cartNo}" class="cart-checkbox" />
+										        </c:otherwise>
+										    </c:choose>
+										</td>
                                         <td>
                                             <a href="${path}/market/view.do?prodNo=${cart.prodNo}">
                                                 <img src="${path}${cart.thumb}" class="thumb" alt="${cart.prodName}">
                                             </a>
                                         </td>
                                         <td>${cart.cate}</td>
-                                        <td>
+                                        <td style="text-align: left; padding-left: 15px;">
                                             <a href="${path}/market/view.do?prodNo=${cart.prodNo}">${cart.prodName}</a>
+                                            <c:if test="${cart.stock <= 0}">
+										        <span style="color: gray; font-weight: bold;">(품절)</span>
+										    </c:if>
                                         </td>
-                                        <td>${cart.count}</td>
+										<td>
+											 <div class="qty-wrap" style="display: flex; align-items: center; justify-content: center; gap: 3px;">
+											    <input type="number" name="count" value="${cart.count}" min="1" max="${cart.stock}" style="width: 40px; text-align: center; height: 18px;" class="cart-qty-input"/>
+											        
+											    <button type="button" class="btnUpdateQty" data-prodno="${cart.prodNo}" 
+											           style="padding: 1px 3px; min-width: 35px; white-space: nowrap; border: 1px solid #bebebe; background: #f7f7f7; cursor: pointer; font-size: 10px; line-height: 12px; height: 18px; box-sizing: border-box;">
+											            변경
+											    </button>
+											    <input type="hidden" class="contextPath" value="${path}"/>
+											 </div>
+										</td>
                                         <td>${cart.discount}%</td>
                                         <td><fmt:formatNumber value="${cart.point * cart.count}" type="number"/>P</td>
                                         <td><fmt:formatNumber value="${cart.price}" type="number"/>원</td>
@@ -88,39 +108,39 @@
                     <input type="button" id="btnDeleteSelected" value="선택삭제">
 
                     <div class="info">                        
-                        <table border="0">
-                            <caption>전체합계</caption>                            
-                            <tr>
-                                <th>상품수</th>
-                                <td id="totalCount">0</td>
-                            </tr>
-                            <tr>
-                                <th>상품금액</th>
-                                <td id="totalPrice">0원</td>
-                            </tr>
-                            <tr>
-                                <th>할인금액</th>
-                                <td id="totalDiscount">0원</td>
-                            </tr>
-                            <tr>
-                                <th>배송비</th>
-                                <td id="totalDelivery" class="delivery">0원</td>
-                            </tr>
-                            <tr>
-                                <th>포인트</th>
-                                <td id="totalPoint">0원</td>
-                            </tr>
-                            <tr>
-                                <th>전체주문금액</th>
-                                <td id="finalOrderPrice" class="total">0원</td>
-                            </tr>
-                        </table>                        
-                        <input type="submit" class="btnOrder" value="주문하기">
-                    </div>
+					    <table border="0">
+					        <caption>전체합계</caption>                            
+					        <tr>
+					            <th>상품수</th>
+					            <td style="text-align: right; padding-right: 15px;"><span id="totalCount">0개</span></td>
+					        </tr>
+					        <tr>
+					            <th>상품금액</th>
+					            <td style="text-align: right; padding-right: 15px;"><span id="cartTotalPrice">0원</span></td> 
+					        </tr>
+					        <tr>
+					            <th>할인금액</th>
+					            <td style="text-align: right; padding-right: 15px;"><span id="totalDiscount">0원</span></td>
+					        </tr>
+					        <tr>
+					            <th>배송비</th>
+					            <td class="delivery" style="text-align: right; padding-right: 15px;"><span id="totalDelivery">0원</span></td>
+					        </tr>
+					        <tr>
+					            <th>포인트</th>
+					            <td style="text-align: right; padding-right: 15px;"><span id="totalPoint">0원</span></td>
+					        </tr>
+					        <tr>
+					            <th>전체주문금액</th>
+					            <td class="total" style="text-align: right; padding-right: 15px;"><span id="finalOrderPrice">0원</span></td>
+					        </tr>
+					    </table>                        
+					    <input type="submit" class="btnOrder" value="주문하기">
+					</div>
                     </article>
             </section>
         </div>
-        
+        <script src="${path}/js/market.js"></script>
         <%@ include file="/WEB-INF/views/inc/_footer.jsp" %>
     </div>    
 </body>

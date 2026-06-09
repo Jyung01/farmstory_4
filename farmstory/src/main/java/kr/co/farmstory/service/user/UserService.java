@@ -1,5 +1,7 @@
 package kr.co.farmstory.service.user;
 
+import java.util.List;
+
 import kr.co.farmstory.dao.user.UserDAO;
 import kr.co.farmstory.dto.user.UserDTO;
 
@@ -30,8 +32,13 @@ public enum UserService {
 	public int updateUser(UserDTO dto) {
 	    return dao.updateUser(dto);
 	}
+	
 	public int selectUserCheck(String type, String value) {
 	    return dao.selectUserCheck(type, value);
+	    
+	}
+	public List<UserDTO> selectAll() {
+		return dao.selectAll();
 	}
 	
 }

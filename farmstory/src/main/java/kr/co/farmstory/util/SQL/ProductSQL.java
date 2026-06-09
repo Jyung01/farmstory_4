@@ -20,7 +20,7 @@ public class ProductSQL {
 	public static final String SELECT_ALL_PRODUCT = "SELECT * FROM product";
 
 	// 관리자 주문 목록
-	public static final String SELECT_PRODUCT_JOIN_ORDER = "SELECT i.*, p.prodName, o.delivery, o.totalPrice, o.regDate, u.name "
+	public static final String SELECT_PRODUCT_JOIN_ORDER = "SELECT i.orderNo, p.prodName, i.price, i.count,  o.delivery, o.totalPrice, u.name , o.regDate "
 															+ "FROM order_item AS i "
 															+ "JOIN product AS p ON i.prodNo = p.prodNo "
 															+ "JOIN orders AS o ON i.orderNo = o.orderNo "

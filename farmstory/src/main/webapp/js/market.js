@@ -1,64 +1,43 @@
 document.addEventListener('DOMContentLoaded', function() {
-    
-    // 💡 [테스트] 버튼과 입력창들을 제대로 읽어오고 있는지 확인하는 돋보기 로그
-    console.log("1. 장바구니버튼:", document.getElementById('btnCart'));
-    console.log("2. 바로구매버튼:", document.getElementById('btnOrder'));
-    console.log("3. 상품번호태그:", document.getElementById('productNo'));
-    console.log("4. 재고태그:", document.getElementById('productStock'));
-    console.log("5. 수량태그:", document.getElementById('productCount'));
-    console.log("6. 패스타그:", document.getElementById('Path'));
-    console.log("7. 로그인태그:", document.getElementById('loginCheck'));
 
-    //-----------------
-    //합계
-    //-----------------
-    const countInput = document.getElementById('productCount');
-    const totalPriceEl = document.getElementById('totalPrice');
+    var countInput = document.getElementById('productCount');
+    var detailTotalPriceEl = document.getElementById('totalPrice');
 
-    if (countInput && totalPriceEl) {
+    if (countInput && detailTotalPriceEl) {
         countInput.addEventListener('input', function() {
-            const unitPrice = parseFloat(this.dataset.price) || 0;
-            let count = parseInt(this.value);
+            var unitPrice = parseFloat(this.dataset.price) || 0;
+            var count = parseInt(this.value);
             if (isNaN(count) || count < 1) count = 1;
             
-            const total = unitPrice * count;
-            totalPriceEl.innerText = total.toLocaleString() + '원';
+            var total = unitPrice * count;
+            detailTotalPriceEl.innerText = total.toLocaleString() + '원';
         });
     }
 
-    //-----------------
-    // 장바구니
-    //-----------------
-    const btnCart = document.getElementById('btnCart');
-    const btnOrder = document.getElementById('btnOrder');
+    var btnCart = document.getElementById('btnCart');
+    var btnOrder = document.getElementById('btnOrder');
     
-    const prodNoInput = document.getElementById('productNo'); 
-    const stockInput = document.getElementById('productStock');
-    const pathInput = document.getElementById('Path');       
-    const loginInput = document.getElementById('loginCheck'); 
+    var prodNoInput = document.getElementById('productNo'); 
+    var stockInput = document.getElementById('productStock');
+    var pathInput = document.getElementById('Path');       
+    var loginInput = document.getElementById('loginCheck'); 
 
     if (btnCart && btnOrder && countInput && stockInput && prodNoInput && pathInput && loginInput) {
         
         function checkStockAndCount(e) {
             e.preventDefault(); 
-            const contextPath = pathInput.value;
-            const isNotLoggedIn = loginInput.value === 'true';
+            var contextPath = pathInput.value;
+            var isNotLoggedIn = loginInput.value === 'true';
 
-            //-------------------
-            //로그인체크
-            //-------------------
             if (isNotLoggedIn) {
                 alert('로그인 후 시도하세요.');
-                window.location.href = contextPath + '/test/login.do'; //로그인 구현 후 바꿔야함!!!
+                window.location.href = contextPath + '/user/login.do';
                 return false;
             }
 
-            //-------------------
-            //재고 체크
-            //-------------------
-            const stock = parseInt(stockInput.value) || 0;
-            let count = parseInt(countInput.value) || 1;
-            const prodNo = prodNoInput.value;
+            var stock = parseInt(stockInput.value) || 0;
+            var count = parseInt(countInput.value) || 1;
+            var prodNo = prodNoInput.value;
 
             if (stock <= 0) {
                 alert('해당 상품은 품절입니다.');
@@ -71,11 +50,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (e.currentTarget.id === 'btnCart') {
-                
                 console.log("JS 변수 확인 -> prodNo:", prodNo, " / count:", count);
-                
-                // 처음에는 중복 확인 및 기본 담기 시도 (checkOri=true 파라미터 추가)
-                let requestUrl = contextPath + '/market/cart.do?prodNo=' + prodNo + '&count=' + count + '&checkOri=true';
+                var requestUrl = contextPath + '/market/cart.do?prodNo=' + prodNo + '&count=' + count + '&checkOri=true';
 
                 function sendCartRequest(url) {
                     fetch(url, {
@@ -84,11 +60,13 @@ document.addEventListener('DOMContentLoaded', function() {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }
                     })
-                    .then(response => response.json()) // 서버에서 JSON 형태로 응답을 받음
-                    .then(data => {
+                    .then(function(response) { 
+                        return response.json(); 
+                    })
+                    .then(function(data) {
                         if (data.result === 'DUPLICATE') {
                             if (confirm('이미 장바구니에 있는 상품입니다. 추가하시겠습니까?')) {
-                                const updateUrl = contextPath + '/market/cart.do?prodNo=' + prodNo + '&count=' + count + '&confirmed=true';
+                                var updateUrl = contextPath + '/market/cart.do?prodNo=' + prodNo + '&count=' + count + '&confirmed=true';
                                 sendCartRequest(updateUrl);
                             }
                         } else if (data.result === 'SUCCESS') {
@@ -100,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             alert('재고가 부족하여 해당 수량만큼 추가 구매가 불가합니다.');
                         }
                     })
-                    .catch(err => {
+                    .catch(function(err) {
                         console.error('에러 발생:', err);
                         alert('장바구니 담기 중 오류가 발생했습니다.');
                     });
@@ -109,12 +87,162 @@ document.addEventListener('DOMContentLoaded', function() {
                 sendCartRequest(requestUrl);
 
             } else if (e.currentTarget.id === 'btnOrder') {
-                // 💡 괄호가 정상적으로 매칭되어 이제 이 블록이 똑바로 실행됩니다.
                 console.log('바로구매 실행');
             }
         }
 
         btnCart.addEventListener('click', checkStockAndCount);
         btnOrder.addEventListener('click', checkStockAndCount);
+    }
+	
+    var cartCheckboxes = document.querySelectorAll('.cart-checkbox:not([disabled])');
+    var totalCountEl = document.getElementById('totalCount');
+    var cartTotalPriceEl = document.getElementById('cartTotalPrice'); 
+    var totalDiscountEl = document.getElementById('totalDiscount');
+    var totalDeliveryEl = document.getElementById('totalDelivery');
+    var totalPointEl = document.getElementById('totalPoint');
+    var finalOrderPriceEl = document.getElementById('finalOrderPrice');
+
+    function updateCartTotal() {
+        var totalCount = 0;      
+        var totalPrice = 0;      
+        var totalDiscount = 0;  
+        var totalPoint = 0;     
+        var totalDelivery = 0;   
+
+        var checkedBoxes = document.querySelectorAll('.cart-checkbox:checked:not([disabled])');
+        
+        checkedBoxes.forEach(function(box) { 
+            var row = box.closest('tr');
+            if (!row) return;
+
+            var qtyInput = row.querySelector('.cart-qty-input');
+            var count = qtyInput ? (parseInt(qtyInput.value) || 0) : (parseInt(row.querySelector('td:nth-child(5)').innerText.replace(/[^0-9]/g, '')) || 0);
+            
+            var price = parseInt(row.querySelector('td:nth-child(8)').innerText.replace(/[^0-9]/g, '')) || 0;
+            var discountPercent = parseInt(row.querySelector('td:nth-child(6)').innerText.replace(/[^0-9]/g, '')) || 0;
+            var unitPoint = parseInt(row.querySelector('td:nth-child(7)').innerText.replace(/[^0-9]/g, '')) || 0;
+
+            var singlePoint = Math.round(unitPoint / (parseInt(qtyInput.defaultValue) || count));
+            if (isNaN(singlePoint) || singlePoint === Infinity) singlePoint = 0;
+
+            totalCount += 1; 
+            totalPrice += (price * count);
+            totalDiscount += (price * (discountPercent / 100) * count);
+            totalPoint += (singlePoint * count); 
+        }); 
+
+        if (totalPrice >= 30000 || checkedBoxes.length === 0) {
+            totalDelivery = 0;
+        } else {
+            totalDelivery = 3000; 
+        }
+
+        var finalOrderPrice = totalPrice - totalDiscount + totalDelivery;
+
+        if (totalCountEl) totalCountEl.innerText = checkedBoxes.length + "개"; 
+        if (cartTotalPriceEl) cartTotalPriceEl.innerText = totalPrice.toLocaleString() + '원';
+        if (totalDiscountEl) totalDiscountEl.innerText = totalDiscount.toLocaleString() + '원';
+        if (totalDeliveryEl) totalDeliveryEl.innerText = totalDelivery.toLocaleString() + '원';
+        if (totalPointEl) totalPointEl.innerText = totalPoint.toLocaleString() + '원'; 
+        if (finalOrderPriceEl) finalOrderPriceEl.innerText = finalOrderPrice.toLocaleString() + '원';
+    }
+
+    if (cartCheckboxes.length > 0) {
+        cartCheckboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', updateCartTotal);
+        });
+    }
+
+    var checkAll = document.getElementById('chkAll'); 
+    if (checkAll) {
+        checkAll.addEventListener('change', function() {
+            var isChecked = this.checked;
+            cartCheckboxes.forEach(function(cb) {
+                cb.checked = isChecked;
+            });
+            updateCartTotal(); 
+        });
+    }
+
+    var btnUpdateQtys = document.querySelectorAll('.btnUpdateQty');
+
+    if (btnUpdateQtys.length > 0) {
+        btnUpdateQtys.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var prodNo = this.getAttribute('data-prodno');
+                var row = this.closest('tr');
+                var qtyInput = row.querySelector('.cart-qty-input');
+                var count = parseInt(qtyInput.value) || 0;
+                
+                var pathElement = document.querySelector('.contextPath');
+                var contextPath = pathElement ? pathElement.value : '';
+
+                if (count < 1) {
+                    alert('수량은 1개 이상이어야 합니다.');
+                    qtyInput.value = 1;
+                    return;
+                }
+
+                var maxStock = parseInt(qtyInput.getAttribute('max')) || 0;
+                if (count > maxStock) {
+                    alert('재고가 부족합니다. (현재 재고: ' + maxStock + '개)');
+                    qtyInput.value = qtyInput.defaultValue;
+                    return;
+                }
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', contextPath + '/market/cart.do', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var data = JSON.parse(xhr.responseText);
+                        
+                        if (data.result === 'SUCCESS') {
+                            alert('수량이 변경되었습니다.');
+                            updateRowSubtotalAndPoint(row, count);
+                            updateCartTotal();
+                        } else if (data.result === 'NOT_LOGGED_IN') {
+                            alert('로그인이 필요합니다.');
+                            window.location.href = contextPath + '/user/login.do';
+                        } else if (data.result === 'LACK') {
+                            alert('선택하신 수량이 남아있는 상품 재고를 초과했습니다.');
+                            qtyInput.value = qtyInput.defaultValue;
+                        } else {
+                            alert('수량 변경에 실패했습니다.');
+                        }
+                    }
+                };
+
+                xhr.send('prodNo=' + prodNo + '&count=' + count + '&isCartPage=true');
+            });
+        });
+    }
+
+    function updateRowSubtotalAndPoint(row, count) {
+        var price = parseInt(row.querySelector('td:nth-child(8)').innerText.replace(/[^0-9]/g, '')) || 0;
+        var discountPercent = parseInt(row.querySelector('td:nth-child(6)').innerText.replace(/[^0-9]/g, '')) || 0;
+        var pointTd = row.querySelector('td:nth-child(7)');
+
+        if (pointTd) {
+            var qtyInput = row.querySelector('.cart-qty-input');
+            var currentPoint = parseInt(pointTd.innerText.replace(/[^0-9]/g, '')) || 0;
+            var basePoint = Math.round(currentPoint / (parseInt(qtyInput.defaultValue) || count));
+            pointTd.innerText = (basePoint * count).toLocaleString() + 'P';
+            qtyInput.defaultValue = count; 
+        }
+
+        var discountPrice = price * (discountPercent / 100);
+        var finalPrice = (price - discountPrice) * count;
+
+        var subtotalStrong = row.querySelector('td:nth-child(9) strong');
+        if (subtotalStrong) {
+            subtotalStrong.innerText = finalPrice.toLocaleString();
+        }
+    }
+
+    if (cartTotalPriceEl) {
+        updateCartTotal();
     }
 });

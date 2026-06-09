@@ -129,6 +129,7 @@ public class MarketDAO extends DBHelper {
 	            dto.setInfoImg(rs.getString("infoImg"));
 	            dto.setDetailImg(rs.getString("detailImg"));
 	            dto.setRegDate(rs.getString("regDate"));
+	            
 	        }
 	        closeAll();
 	        
@@ -186,6 +187,7 @@ public class MarketDAO extends DBHelper {
 			    dto.setDiscount(rs.getInt("discount"));
 			    dto.setPoint(rs.getInt("point"));
 			    dto.setPrice(rs.getInt("price"));
+			    dto.setStock(rs.getInt("stock"));
 			    
 			    cartList.add(dto);
 			}
@@ -246,6 +248,26 @@ public class MarketDAO extends DBHelper {
             conn.setAutoCommit(true); 
             
             psmt = conn.prepareStatement(MarketSQL.UPDATE_CART);
+            psmt.setInt(1, count);
+            psmt.setString(2, userid);
+            psmt.setInt(3, prodNo);
+            
+            result = psmt.executeUpdate();
+            closeAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    public int updateCartCount2(int count, String userid, int prodNo) {
+        int result = 0;
+        try {
+            conn = getConnection();
+            
+            conn.setAutoCommit(true); 
+            
+            psmt = conn.prepareStatement(MarketSQL.UPDATE_CART_COUNT);
             psmt.setInt(1, count);
             psmt.setString(2, userid);
             psmt.setInt(3, prodNo);

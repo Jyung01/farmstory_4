@@ -6,7 +6,15 @@
     <head>
         <meta charset="UTF-8" />
         <title>팜스토리::${cateTitle}</title>
-        <link rel="stylesheet" href="../css/crop.css" />
+        <link rel="stylesheet" href="${path}/css/crop.css" />
+        <script>
+			const parent = '${dto.ano}';
+			const groupName = '${groupName}';
+			const cate = '${cate}';
+			const page = '${page}';
+			const path = '${path}';
+		</script>
+		<script src="${path}/js/comment.js" defer></script>
     </head>
     <body>
         <div id="container">
@@ -47,7 +55,7 @@
 						                </c:if>
 						                <c:forEach var="file" items="${fileList}">
 						                    <p>
-						                        <a href="${path}/file/download.do?fno=${file.fno}">
+						                        <a href="${path}/article/download.do?fno=${file.fno}">
 						                            ${file.ofname}
 						                        </a>
 						                        &nbsp;<span>${file.download}</span>회 다운로드
@@ -66,8 +74,8 @@
 						
 						    <div>
 								<c:if test="${not empty sessUser and (sessUser.userid eq dto.writer or sessUser.role eq 'admin')}">						
-							        <a href="${path}/article/delete.do?ano=${dto.ano}&groupName=${groupName}&cate=${cate}&page=${page}" class="btn btnRemove">삭제</a>
 							        <a href="${path}/article/modify.do?ano=${dto.ano}&groupName=${groupName}&cate=${cate}&page=${page}" class="btn btnModify">수정</a>
+							        <a href="${path}/article/delete.do?ano=${dto.ano}&groupName=${groupName}&cate=${cate}&page=${page}" class="btn btnRemove">삭제</a>
 								</c:if>
 						        <a href="${path}/article/list.do?groupName=${groupName}&cate=${cate}&page=${page}" class="btn btnList">목록</a>
 						    </div>
@@ -81,37 +89,50 @@
 						
 						        <c:forEach var="comment" items="${commentList}">
 						            <article>
-						                <span class="date">${comment.formatDate}</span>
+						            	<input type="hidden" class="cno" value="${comment.cno}">
+						                <span class="date">${comment.wdate}</span>
 						                <span class="nick">${comment.nick}</span>
 						                <p class="content">${comment.content}</p>
 						
 						                <div>
-						                    <c:if test="${sessUser.userid eq comment.writer || sessUser.role eq 'admin'}">
-						                        <a href="${path}/comment/delete.do?cno=${comment.cno}&ano=${dto.ano}&groupName=${groupName}&cate=${cate}&page=${page}" class="remove">삭제</a>
-						                        <a href="#" class="modify">수정</a>
+						                    <c:if test="${not empty sessUser and (sessUser.userid eq comment.writer or sessUser.role eq 'admin')}">
+						                        <a href="#" class="modify">수정</a> |
+						                        <a href="${path}/comment/delete.do?cno=${comment.cno}&parent=${dto.ano}&groupName=${groupName}&cate=${cate}&page=${page}" 
+						                        class="remove"
+						                        onclick="return confirm('댓글을 삭제하시겠습니까?');">삭제</a>
 						                    </c:if>
 						                </div>
 						            </article>
 						        </c:forEach>
 						    </section>
-						
-						    <section class="commentForm">
-						        <h3>댓글쓰기</h3>
-						
-						        <form action="${path}/comment/write.do" method="post">
-						            <input type="hidden" name="parent" value="${dto.ano}" />
-						            <input type="hidden" name="groupName" value="${groupName}" />
-						            <input type="hidden" name="cate" value="${cate}" />
-						            <input type="hidden" name="page" value="${page}" />
-						
-						            <textarea name="content" placeholder="댓글내용 입력"></textarea>
-						
-						            <div>
-						                <a href="${path}/article/view.do?ano=${dto.ano}&groupName=${groupName}&cate=${cate}&page=${page}" class="btn btnCancel">취소</a>
-						                <input type="submit" value="작성완료" class="btn btnComplete" />
-						            </div>
-						        </form>
-						    </section>
+							<!-- 로그인 세션 검사 후 댓글입력 창 출력 -->
+							<c:choose>
+								<c:when test="${not empty sessUser}">
+								    <section class="commentForm">
+								        <h3>댓글쓰기</h3>
+								
+								        <form action="${path}/comment/write.do" method="post">
+								            <input type="hidden" name="parent" value="${dto.ano}" />
+								            <input type="hidden" name="groupName" value="${groupName}" />
+								            <input type="hidden" name="cate" value="${cate}" />
+								            <input type="hidden" name="page" value="${page}" />
+								
+								            <textarea name="content" placeholder="댓글내용 입력"></textarea>
+								
+								            <div>
+								                <a href="${path}/article/view.do?ano=${dto.ano}&groupName=${groupName}&cate=${cate}&page=${page}" class="btn btnCancel">취소</a>
+								                <input type="submit" value="작성완료" class="btn btnComplete" />
+								            </div>
+								        </form>
+								    </section>
+							    </c:when>
+							    <c:otherwise>
+							        <section class="commentForm">
+							            <h3>댓글쓰기</h3>
+							            <p>댓글 작성은 로그인 후 이용 가능합니다.</p>
+							        </section>
+							    </c:otherwise>
+						    </c:choose>
 						</section>
                         <!-- 내용 끝 -->
                     </article>

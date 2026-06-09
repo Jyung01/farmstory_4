@@ -23,10 +23,14 @@ public class MarketSQL {
 	public static final String UPDATE_CART = "UPDATE cart SET count = count + ? WHERE userid = ? and prodNo = ?";
 	public static final String SELECT_DUPLICATE_CART_PRODUCT = "SELECT COUNT(*) FROM cart WHERE userid = ? AND prodNo = ?";
 	
+	
 	//장바구니 뿌리기
-	public static final String SELECT_CART = "SELECT c.cartNo, c.userid, c.prodNo, c.count, p.cate, p.prodName, p.thumb, p.discount, p.point, p.price, (p.price - (p.price * p.discount / 100)) * c.count AS total "
+	public static final String SELECT_CART = "SELECT c.*, p.stock, p.cate, p.prodName, p.thumb, p.discount, p.point, p.price, (p.price - (p.price * p.discount / 100)) * c.count AS total "
 											+ "FROM cart AS c JOIN product AS p "
 											+ "ON c.prodNo = p.prodNo WHERE c.userid = ?";
+	
+	//수량 변경
+	public static final String UPDATE_CART_COUNT = "UPDATE cart SET count = ? WHERE userid = ? and prodNo = ?";
 	
 	//품절체크
 	public static final String SELECT_CHECK_SOLDOUT = "SELECT COUNT(*) FROM cart AS c "

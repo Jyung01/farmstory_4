@@ -85,8 +85,13 @@ public enum MarketService {
     public int updateCartCount(int count, String userid, int prodNo) {
         return MarketDAO.getInstance().updateCartCount(count, userid, prodNo);
     }
+    
+    public int updateCartCount2(int count, String userid, int prodNo) {
+        return MarketDAO.getInstance().updateCartCount2(count, userid, prodNo);
+    }
 
     public int checkDuplicateCart(String userid, int prodNo) {
         return MarketDAO.getInstance().checkDuplicateCart(userid, prodNo);
     }
+    
 }
