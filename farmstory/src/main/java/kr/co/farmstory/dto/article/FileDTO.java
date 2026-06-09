@@ -5,7 +5,7 @@ public class FileDTO {
 	private int ano;
 	private String ofname;
 	private String sfname;
-	private String download;
+	private int download;
 	private String regDate;
 	
 	public int getFno() {
@@ -32,10 +32,11 @@ public class FileDTO {
 	public void setSfname(String sfname) {
 		this.sfname = sfname;
 	}
-	public String getDownload() {
+
+	public int getDownload() {
 		return download;
 	}
-	public void setDownload(String download) {
+	public void setDownload(int download) {
 		this.download = download;
 	}
 	public String getRegDate() {
@@ -43,6 +44,11 @@ public class FileDTO {
 	}
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
+	}
+	@Override
+	public String toString() {
+		return "FileDTO [fno=" + fno + ", ano=" + ano + ", ofname=" + ofname + ", sfname=" + sfname + ", download="
+				+ download + ", regDate=" + regDate + "]";
 	}
 	
 	

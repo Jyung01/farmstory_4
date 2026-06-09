@@ -25,8 +25,8 @@
         <li>
             <a href="${path}/market/list.jsp"><img src="${path}/images/head_menu_badge.png" alt="30%" />장보기</a>
         </li>
-        <li><a href="${path}/croptalk/story.jsp">농작물이야기</a></li>
+        <li><a href="${path}/article/list.do?groupName=crop&cate=story">농작물이야기</a></li>
         <li><a href="${path}/event/event.jsp">이벤트</a></li>
-        <li><a href="${path}/community/notice.jsp">커뮤니티</a></li>
+        <li><a href="${path}/article/list.do?groupName=community&cate=notice">커뮤니티</a></li>
     </ul>
 </header>
