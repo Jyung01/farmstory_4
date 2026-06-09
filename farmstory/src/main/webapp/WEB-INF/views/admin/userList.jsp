@@ -11,16 +11,7 @@
     </head>
     <body>
         <div id="container">
-            <header>
-                <a href="./index.html" class="logo">
-                    <img src="${path}/images/admin/admin_logo.jpg" alt="로고" />
-                </a>
-                <ul>
-                    <li><a href="#">HOME |</a></li>
-                    <li><a href="#">로그아웃 |</a></li>
-                    <li><a href="#">고객센터</a></li>
-                </ul>
-            </header>
+            <%@ include file="/WEB-INF/views/inc/_admin_header.jsp" %>
 
             <main>
                 <aside>
@@ -72,61 +63,47 @@
                                 <th>가입일</th>
                                 <th>확인</th>
                             </tr>
-
-                            <tr>
-                                <td><input type="checkbox" /></td>
-                                <td>a101</td>
-                                <td>김유신</td>
-                                <td>유신101</td>
-                                <td>yusin101@naver.com</td>
-                                <td>010-1234-1001</td>
-                                <td>
-                                    <select name="grade">
-                                        <option value="1">1</option>
-                                        <option value="1">2</option>
-                                        <option value="1">3</option>
-                                    </select>
-                                </td>
-                                <td>2023-01-01 13:06:14</td>
-                                <td><a href="#">[상세확인]</a></td>
-                            </tr>
-
-                            <tr>
-                                <td><input type="checkbox" /></td>
-                                <td>a102</td>
-                                <td>김춘추</td>
-                                <td>춘추102</td>
-                                <td>chunchu102@naver.com</td>
-                                <td>010-1234-1002</td>
-                                <td>
-                                    <select name="grade">
-                                        <option value="1">1</option>
-                                        <option value="1">2</option>
-                                        <option value="1">3</option>
-                                    </select>
-                                </td>
-                                <td>2023-01-01 13:06:14</td>
-                                <td><a href="#">[상세확인]</a></td>
-                            </tr>
-
-                            <tr>
-                                <td><input type="checkbox" /></td>
-                                <td>a103</td>
-                                <td>장보고</td>
-                                <td>보고103</td>
-                                <td>bogo103@naver.com</td>
-                                <td>010-1234-1003</td>
-                                <td>
-                                    <select name="grade">
-                                        <option value="1">1</option>
-                                        <option value="1">2</option>
-                                        <option value="1">3</option>
-                                    </select>
-                                </td>
-                                <td>2023-01-01 13:06:14</td>
-                                <td><a href="#">[상세확인]</a></td>
-                            </tr>
+                            
+                            <c:forEach var="user" items="${dtoList}">
+                            	<tr>
+	                                <td><input type="checkbox" /></td>
+	                                <td>${user.userid}</td>
+	                                <td>${user.name}</td>
+	                                <td>${user.nick}</td>
+	                                <td>${user.email}</td>
+	                                <td>${user.hp}</td>
+	                                <c:choose>
+									    <c:when test="${user.role eq 'admin'}">
+									        <td>1</td>
+									    </c:when>
+									    <c:when test="${user.role eq 'member'}">
+									        <td>2</td>
+									    </c:when>
+									    <c:otherwise>
+									        <td>3</td>
+									    </c:otherwise>
+									</c:choose>
+									
+									<!-- 
+		                                <td>
+		                                    <select name="grade">
+		                                        <option value="1" ${user.role eq 'admin' ? 'selected' : ''}>1</option>
+		                                        <option value="2" ${user.role eq 'member' ? 'selected' : ''}>2</option>
+		                                        <option value="3" ${user.role eq 'guest' ? 'selected' : ''}>3</option>
+		                                    </select>
+		                                </td>
+	                                 -->
+	                                <td>${user.regDate}</td>
+	                                <td><a href="#">[상세확인]</a></td>
+	                            </tr>
+                            
+                            </c:forEach>
                         </table>
+                        
+                        <c:if test="${empty dtoList}">
+						    <p style="text-align:center; padding:20px 0;">회원 목록이 없습니다.</p>
+						</c:if>
+						
                     </section>
 
                     <!-- 페이지네이션 -->
@@ -144,10 +121,7 @@
                 </section>
             </main>
 
-            <footer>
-                <p>FARMSTORY ADMINISTRATOR Version 1.0.1</p>
-                <p>Copyrightⓒ 김철학(개발에반하다.) All rights reserved.</p>
-            </footer>
+            <%@ include file="/WEB-INF/views/inc/_admin_footer.jsp" %>
         </div>
     </body>
 </html>

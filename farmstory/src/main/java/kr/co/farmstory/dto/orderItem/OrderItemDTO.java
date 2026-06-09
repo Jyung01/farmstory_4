@@ -5,9 +5,51 @@ public class OrderItemDTO {
 	private int orderNo;
 	private int prodNo;
 	private int count;
-	private int prcie;
+	private int price;
 	
+	// 관리자 주문목록을 위한 추가필드
+	private int delivery;
+	private int totalPrice;
+	private String regDate;
+	private String name;
+	private String prodName;
 	
+	public int getDelivery() {
+		return delivery;
+	}
+	public void setDelivery(int delivery) {
+		this.delivery = delivery;
+	}
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public String getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getProdName() {
+		return prodName;
+	}
+	public void setProdName(String prodName) {
+		this.prodName = prodName;
+	}
 	public int getItemNo() {
 		return itemNo;
 	}
@@ -32,16 +74,11 @@ public class OrderItemDTO {
 	public void setCount(int count) {
 		this.count = count;
 	}
-	public int getPrcie() {
-		return prcie;
-	}
-	public void setPrcie(int prcie) {
-		this.prcie = prcie;
-	}
+	
 	
 	@Override
 	public String toString() {
 		return "OrdersDTO [itemNo=" + itemNo + ", orderNo=" + orderNo + ", prodNo=" + prodNo + ", count=" + count
-				+ ", prcie=" + prcie + "]";
+				+ ", price=" + price + "]";
 	}
 }

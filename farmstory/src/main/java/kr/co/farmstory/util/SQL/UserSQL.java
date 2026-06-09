@@ -24,4 +24,8 @@ public class UserSQL {
         "SELECT email FROM user WHERE email = ?";
     
     
+    // 관리자 - 회원목록 조회
+    public static final String SELECT_USER_FOR_ADMIN =
+    	"SELECT userid, name, nick, email, hp, role, regDate FROM user";
+    
 }
