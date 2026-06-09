@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.farmstory.dto.admin.ProductDTO;
-import kr.co.farmstory.service.ProductService;
+import kr.co.farmstory.service.admin.ProductService;
 
 @WebServlet("/admin/prodList.do")
 public class ProductListController extends HttpServlet{

@@ -11,16 +11,7 @@
     </head>
     <body>
         <div id="container">
-            <header>
-                <a href="./index.html" class="logo">
-                    <img src="${path}/images/admin/admin_logo.jpg" alt="로고" />
-                </a>
-                <ul>
-                    <li><a href="#">HOME |</a></li>
-                    <li><a href="#">로그아웃 |</a></li>
-                    <li><a href="#">고객센터</a></li>
-                </ul>
-            </header>
+            <%@ include file="/WEB-INF/views/inc/_admin_header.jsp" %>
 
             <main>
                 <aside>
@@ -73,19 +64,26 @@
                                 <th>주문일</th>
                                 <th>확인</th>
                             </tr>
-                            <tr>
-                                <td><input type="checkbox" /></td>
-                                <td>1001</td>
-                                <td>사과 500g</td>
-                                <td>4,000원</td>
-                                <td>2</td>
-                                <td>3,000원</td>
-                                <td>11,000원</td>
-                                <td>김유신</td>
-                                <td>2023-01-01 13:06:14</td>
-                                <td><a href="#">[상세확인]</a></td>
-                            </tr>
+                            <c:forEach var="order" items="${dtoList}">
+                            	<tr>
+	                                <td><input type="checkbox" /></td>
+	                                <td>${order.orderNo}</td>
+	                                <td>${order.prodName}</td>
+	                                <td>${order.price}원</td>
+	                                <td>${order.count}</td>
+	                                <td>${order.delivery}원</td>
+	                                <td>${order.totalPrice}원</td>
+	                                <td>${order.name}</td>
+	                                <td>${order.regDate}</td>
+	                                <td><a href="#">[상세확인]</a></td>
+                            	</tr>
+                            </c:forEach>
+                           
                         </table>
+                        
+                       	<c:if test="${empty dtoList}">
+						    <p style="text-align:center; padding:20px 0;">주문 목록이 없습니다.</p>
+						</c:if>
                     </section>
 
                     <div class="buttons">
@@ -107,10 +105,7 @@
                 </section>
             </main>
 
-            <footer>
-                <p>FARMSTORY ADMINISTRATOR Version 1.0.1</p>
-                <p>Copyrightⓒ 김철학(개발에반하다.) All rights reserved.</p>
-            </footer>
+            <%@ include file="/WEB-INF/views/inc/_admin_footer.jsp" %>
         </div>
     </body>
 </html>

@@ -63,31 +63,23 @@
                                 <th>재고</th>
                                 <th>등록일</th>
                             </tr>
-                            <tr>
-                                <td>1011</td>
-                                <td>사과 500g</td>
-                                <td>과일</td>
-                                <td>4,000원</td>
-                                <td>100</td>
-                                <td>2023-01-01</td>
-                            </tr>
-                            <tr>
-                                <td>1011</td>
-                                <td>사과 500g</td>
-                                <td>과일</td>
-                                <td>4,000원</td>
-                                <td>100</td>
-                                <td>2023-01-01</td>
-                            </tr>
-                            <tr>
-                                <td>1011</td>
-                                <td>사과 500g</td>
-                                <td>과일</td>
-                                <td>4,000원</td>
-                                <td>100</td>
-                                <td>2023-01-01</td>
-                            </tr>
+                            
+                            <c:forEach var="product" items="${prodList}">
+	                            <tr>
+	                                <td>${product.prodNo}</td>
+	                                <td>${product.prodName}</td>
+	                                <td>${product.cate}</td>
+	                                <td>${product.price}원</td>
+	                                <td>${product.stock}</td>
+	                                <td>${product.regDate}</td>
+	                            </tr>
+                            </c:forEach>
                         </table>
+                        
+                        <c:if test="${empty prodList}">
+						    <p style="text-align:center; padding:20px 0;">상품 목록이 없습니다.</p>
+						</c:if>
+                        
                     </section>
 
                     <!-- 주문현황 -->
@@ -107,37 +99,24 @@
                                 <th>주문자</th>
                                 <th>주문일</th>
                             </tr>
-                            <tr>
-                                <td>1011</td>
-                                <td>사과 500g</td>
-                                <td>4,000원</td>
-                                <td>2개</td>
-                                <td>3,000원</td>
-                                <td>8,000원</td>
-                                <td>홍길동</td>
-                                <td>2023-01-01</td>
-                            </tr>
-                            <tr>
-                                <td>1011</td>
-                                <td>사과 500g</td>
-                                <td>4,000원</td>
-                                <td>2개</td>
-                                <td>3,000원</td>
-                                <td>8,000원</td>
-                                <td>홍길동</td>
-                                <td>2023-01-01</td>
-                            </tr>
-                            <tr>
-                                <td>1011</td>
-                                <td>사과 500g</td>
-                                <td>4,000원</td>
-                                <td>2개</td>
-                                <td>3,000원</td>
-                                <td>8,000원</td>
-                                <td>홍길동</td>
-                                <td>2023-01-01</td>
-                            </tr>
+                            
+                            <c:forEach var="order" items="${orderList}">
+                            	<tr>
+ 	                                <td>${order.orderNo}</td>
+	                                <td>${order.prodName}</td>
+	                                <td>${order.price}원</td>
+	                                <td>${order.count}</td>
+	                                <td>${order.delivery}원</td>
+	                                <td>${order.totalPrice}원</td>
+	                                <td>${order.name}</td>
+	                                <td>${order.regDate}</td>
+                            	</tr>
+                            </c:forEach>
                         </table>
+                        
+                        <c:if test="${empty orderList}">
+						    <p style="text-align:center; padding:20px 0;">주문 목록이 없습니다.</p>
+						</c:if>
                     </section>
 
                     <!-- 회원현황 -->
@@ -156,34 +135,44 @@
                                 <th>등급</th>
                                 <th>회원가입일</th>
                             </tr>
-                            <tr>
-                                <td>a101</td>
-                                <td>김유신</td>
-                                <td>유신123</td>
-                                <td>010-1234-1001</td>
-                                <td>yusin123@naver.com</td>
-                                <td>2</td>
-                                <td>2023-01-01</td>
-                            </tr>
-                            <tr>
-                                <td>a101</td>
-                                <td>김유신</td>
-                                <td>유신123</td>
-                                <td>010-1234-1001</td>
-                                <td>yusin123@naver.com</td>
-                                <td>2</td>
-                                <td>2023-01-01</td>
-                            </tr>
-                            <tr>
-                                <td>a101</td>
-                                <td>김유신</td>
-                                <td>유신123</td>
-                                <td>010-1234-1001</td>
-                                <td>yusin123@naver.com</td>
-                                <td>2</td>
-                                <td>2023-01-01</td>
-                            </tr>
+                            
+                            <c:forEach var="user" items="${userList}">
+                            	<tr>
+ 	                                <td>${user.userid}</td>
+	                                <td>${user.name}</td>
+	                                <td>${user.nick}</td>
+	                                <td>${user.email}</td>
+	                                <td>${user.hp}</td>
+	                                <c:choose>
+									    <c:when test="${user.role eq 'admin'}">
+									        <td>1</td>
+									    </c:when>
+									    <c:when test="${user.role eq 'member'}">
+									        <td>2</td>
+									    </c:when>
+									    <c:otherwise>
+									        <td>3</td>
+									    </c:otherwise>
+									</c:choose>
+	                                
+	                                <!-- 
+		                                <td>
+		                                    <select name="grade">
+		                                        <option value="1" ${user.role eq 'admin' ? 'selected' : ''}>1</option>
+		                                        <option value="2" ${user.role eq 'member' ? 'selected' : ''}>2</option>
+		                                        <option value="3" ${user.role eq 'guest' ? 'selected' : ''}>3</option>
+		                                    </select>
+		                                    
+		                                </td>
+	                                -->
+	                                <td>${user.regDate}</td>
+	                            </tr>
+                            </c:forEach>
                         </table>
+                        
+                        <c:if test="${empty userList}">
+						    <p style="text-align:center; padding:20px 0;">회원 목록이 없습니다.</p>
+						</c:if>
                     </section>
                 </section>
             </main>

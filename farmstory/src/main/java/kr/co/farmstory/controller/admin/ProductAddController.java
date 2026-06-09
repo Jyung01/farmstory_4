@@ -11,8 +11,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.farmstory.dto.admin.FileDTO;
 import kr.co.farmstory.dto.admin.ProductDTO;
-import kr.co.farmstory.service.FileService;
-import kr.co.farmstory.service.ProductService;
+import kr.co.farmstory.service.admin.FileService;
+import kr.co.farmstory.service.admin.ProductService;
 
 @WebServlet("/admin/register.do")
 public class ProductAddController extends HttpServlet {
@@ -58,6 +58,6 @@ public class ProductAddController extends HttpServlet {
 		
 		req.setAttribute("fileList", fileList);
 		
-		resp.sendRedirect("/farmstory/admin/list.do?register=success");
+		resp.sendRedirect("/farmstory/admin/prodList.do?register=success");
 	}
 }

@@ -1,5 +1,9 @@
 package kr.co.farmstory.dao.user;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 import kr.co.farmstory.dto.user.UserDTO;
 import kr.co.farmstory.util.DBHelper;
 import kr.co.farmstory.util.SQL.UserSQL;
@@ -81,6 +85,31 @@ public class UserDAO extends DBHelper{
 	        try { closeAll(); } catch(Exception e) { e.printStackTrace(); }
 	    }
 	    return result;
+	}
+	
+	public List<UserDTO> selectAll() {
+		List<UserDTO> dtoList = new ArrayList<>();
+		try {
+	        conn = getConnection();
+	        stmt = conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(UserSQL.SELECT_USER_FOR_ADMIN);
+	        while(rs.next()) {
+	        	UserDTO dto = new UserDTO();
+	        	dto.setUserid(rs.getString(1));
+	        	dto.setName(rs.getString(2));
+	        	dto.setNick(rs.getString(3));
+	        	dto.setEmail(rs.getString(4));
+	        	dto.setHp(rs.getString(5));
+	        	dto.setRole(rs.getString(6));
+	        	dto.setRegDate(rs.getString(7));
+	        	dtoList.add(dto);
+	        }
+		} catch(Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try { closeAll(); } catch(Exception e) { e.printStackTrace(); }
+	    }
+	    return dtoList;
 	}
 }
 

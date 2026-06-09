@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <c:set var="path" value="${pageContext.request.contextPath}" /> 
 <header>
-    <a href="./index.html" class="logo">
+    <a href="/farmstory/admin/main.do" class="logo">
         <img src="${path}/images/admin/admin_logo.jpg" alt="로고" />
     </a>
     <ul>

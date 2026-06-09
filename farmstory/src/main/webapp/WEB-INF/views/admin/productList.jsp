@@ -11,16 +11,7 @@
     </head>
     <body>
         <div id="container">
-            <header>
-                <a href="./index.html" class="logo">
-                    <img src="${path}/images/admin/admin_logo.jpg" alt="로고" />
-                </a>
-                <ul>
-                    <li><a href="#">HOME |</a></li>
-                    <li><a href="#">로그아웃 |</a></li>
-                    <li><a href="#">고객센터</a></li>
-                </ul>
-            </header>
+            <%@ include file="/WEB-INF/views/inc/_admin_header.jsp" %>
 
             <main>
                 <aside>
@@ -84,13 +75,16 @@
 	                                <td>${product.regDate}</td>
 	                            </tr>
                             </c:forEach>
-                            
                         </table>
+                        
+                        <c:if test="${empty dtoList}">
+						    <p style="text-align:center; padding:20px 0;">상품 목록이 없습니다.</p>
+						</c:if>
                     </section>
 
                     <div class="buttons">
                         <a href="#">선택삭제</a>
-                        <a href="#" class="add_product"><p>상품등록</p></a>
+                        <a href="/farmstory/admin/register.do" class="add_product"><p>상품등록</p></a>
                     </div>
 
                     <!-- 페이지네이션 -->
@@ -107,11 +101,7 @@
                     </div>
                 </section>
             </main>
-
-            <footer>
-                <p>FARMSTORY ADMINISTRATOR Version 1.0.1</p>
-                <p>Copyrightⓒ 김철학(개발에반하다.) All rights reserved.</p>
-            </footer>
+			<%@ include file="/WEB-INF/views/inc/_admin_footer.jsp" %>
         </div>
     </body>
 </html>

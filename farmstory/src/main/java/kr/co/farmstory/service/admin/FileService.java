@@ -1,4 +1,4 @@
-package kr.co.farmstory.service;
+package kr.co.farmstory.service.admin;
 
 import java.io.File;
 import java.util.ArrayList;
