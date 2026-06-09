@@ -1,11 +1,15 @@
 package kr.co.farmstory.dto.cart;
 
-public class CartDTO {
+import kr.co.farmstory.dto.product.ProductDTO;
+
+public class CartDTO extends ProductDTO {
 	private int cartNo;
 	private String userid;
 	private int prodNo;
 	private int count;
 	private String regDate;
+	
+	
 	public int getCartNo() {
 		return cartNo;
 	}
@@ -41,7 +45,8 @@ public class CartDTO {
 	public String toString() {
 		return "CartDTO [cartNo=" + cartNo + ", userid=" + userid + ", prodNo=" + prodNo + ", count=" + count
 				+ ", regDate=" + regDate + "]";
-	}
+	}    
+	
 	
 	
 }

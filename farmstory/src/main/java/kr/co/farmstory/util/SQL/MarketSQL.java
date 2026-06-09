@@ -19,7 +19,25 @@ public class MarketSQL {
 								            + "count = ?, "
 								            + "regDate = NOW()";
 	
+	//동일상품 추가구매
+	public static final String UPDATE_CART = "UPDATE cart SET count = count + ? WHERE userid = ? and prodNo = ?";
+	public static final String SELECT_DUPLICATE_CART_PRODUCT = "SELECT COUNT(*) FROM cart WHERE userid = ? AND prodNo = ?";
+	
+	//장바구니 뿌리기
 	public static final String SELECT_CART = "SELECT c.cartNo, c.userid, c.prodNo, c.count, p.cate, p.prodName, p.thumb, p.discount, p.point, p.price, (p.price - (p.price * p.discount / 100)) * c.count AS total "
 											+ "FROM cart AS c JOIN product AS p "
 											+ "ON c.prodNo = p.prodNo WHERE c.userid = ?";
+	
+	//품절체크
+	public static final String SELECT_CHECK_SOLDOUT = "SELECT COUNT(*) FROM cart AS c "
+												   + "JOIN product AS p ON c.prodNo = p.prodNo "
+												   + "WHERE c.userid = ? AND c.prodNo = ? AND p.stock <= 0";
+	
+	//재고체크
+	public static final String SELECT_CHECK_STOCK = "SELECT COUNT(*) FROM cart AS c " 
+													+ "JOIN product AS p ON c.prodNo = p.prodNo " 
+													+ "WHERE c.userid = ? AND c.prodNo = ? AND (c.count + ?) > p.stock";
+	
+	//장바구니 삭제
+	public static final String DELETE_CART = "";
 }
