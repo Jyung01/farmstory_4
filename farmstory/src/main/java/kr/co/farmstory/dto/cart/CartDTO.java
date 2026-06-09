@@ -8,8 +8,35 @@ public class CartDTO extends ProductDTO {
 	private int prodNo;
 	private int count;
 	private String regDate;
+	private int stock;
+	private String prodName;
+    private int price;
+    private int discount;
 	
-	
+	public int getStock() {
+		return stock;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+	public String getProdName() {
+		return prodName;
+	}
+	public void setProdName(String prodName) {
+		this.prodName = prodName;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public int getDiscount() {
+		return discount;
+	}
+	public void setDiscount(int discount) {
+		this.discount = discount;
+	}
 	public int getCartNo() {
 		return cartNo;
 	}
@@ -44,8 +71,11 @@ public class CartDTO extends ProductDTO {
 	@Override
 	public String toString() {
 		return "CartDTO [cartNo=" + cartNo + ", userid=" + userid + ", prodNo=" + prodNo + ", count=" + count
-				+ ", regDate=" + regDate + "]";
-	}    
+				+ ", regDate=" + regDate + ", stock=" + stock + ", prodName=" + prodName + ", price=" + price
+				+ ", discount=" + discount + "]";
+	}
+	
+	
 	
 	
 	
