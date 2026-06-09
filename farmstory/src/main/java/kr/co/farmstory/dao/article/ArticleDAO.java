@@ -52,16 +52,31 @@ public class ArticleDAO extends DBHelper {
 		return ano;
 	}
 	
-	public List<ArticleDTO> selectAll(String groupName, String cate) {
+	public List<ArticleDTO> selectAll(String groupName, String cate, int start, String searchType, String keyword) {
 		List<ArticleDTO> dtoList = new ArrayList<>();
 		
 		try {
 			conn = getConnection();
 			 
-			psmt = conn.prepareStatement(ArticleSQL.SELECT_ALL_ARTICLES);
+			String sql = ArticleSQL.SELECT_ALL_BASE;
+			
+			if(keyword != null && !keyword.equals("")) {
+	            if("title".equals(searchType)) sql += ArticleSQL.SEARCH_TITLE;
+	            else if("content".equals(searchType)) sql += ArticleSQL.SEARCH_CONTENT;
+	            else if("writer".equals(searchType)) sql += ArticleSQL.SEARCH_WRITER;
+	        }
+			
+			sql += ArticleSQL.ORDER_LIMIT;
+	        psmt = conn.prepareStatement(sql);
 			
 			psmt.setString(1, groupName);
 	        psmt.setString(2, cate);
+	        if(keyword != null && !keyword.equals("")) {
+	            psmt.setString(3, "%" + keyword + "%");
+	            psmt.setInt(4, start);
+	        } else {
+	            psmt.setInt(3, start);
+	        }
 	        
 	        rs = psmt.executeQuery();
 	        
@@ -75,6 +90,7 @@ public class ArticleDAO extends DBHelper {
 	            dto.setWdate(rs.getString("wdate"));
 	            dto.setHit(rs.getInt("hit"));
 	            dto.setCommentCount(rs.getInt("commentCount"));
+	            dto.setNick(rs.getString("nick"));
 	            dtoList.add(dto);
 	        }
 
@@ -90,5 +106,94 @@ public class ArticleDAO extends DBHelper {
 		
 		
 		return dtoList;
+	}
+	
+	public ArticleDTO select(int ano) {
+
+	    ArticleDTO dto = null;
+
+	    try {
+
+	        conn = getConnection();
+
+	        psmt = conn.prepareStatement(ArticleSQL.SELECT_ARTICLE);
+
+	        psmt.setInt(1, ano);
+
+	        rs = psmt.executeQuery();
+
+	        if(rs.next()) {
+	            dto = new ArticleDTO();
+	            dto.setAno(rs.getInt("ano"));
+	            dto.setTitle(rs.getString("title"));
+	            dto.setContent(rs.getString("content"));
+	            dto.setWriter(rs.getString("writer"));
+	            dto.setNick(rs.getString("nick"));
+	            dto.setHit(rs.getInt("hit"));
+	            dto.setWdate(rs.getString("wdate"));
+	        }
+
+	        closeAll();
+
+	    } catch (Exception e) {
+
+	        e.printStackTrace();
+	    }
+
+	    return dto;
+	}
+	
+	public void updateHit(int ano) {
+
+	    try {
+	        conn = getConnection();
+	        psmt = conn.prepareStatement(ArticleSQL.UPDATE_HIT);
+	        psmt.setInt(1, ano);
+	        psmt.executeUpdate();
+	        
+	        closeAll();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	// 게시판 글 갯수 가져오기
+	public int selectCount(String groupName, String cate, String searchType, String keyword) {
+
+	    int total = 0;
+
+	    try {
+	        conn = getConnection();
+	        
+	        String sql = ArticleSQL.SELECT_COUNT_BASE;
+	        
+	        if(keyword != null && !keyword.equals("")) {
+	            if("title".equals(searchType)) sql += ArticleSQL.SEARCH_TITLE;
+	            else if("content".equals(searchType)) sql += ArticleSQL.SEARCH_CONTENT;
+	            else if("writer".equals(searchType)) sql += ArticleSQL.SEARCH_WRITER;
+	        }
+	        
+	        psmt = conn.prepareStatement(sql);
+	        psmt.setString(1, groupName);
+	        psmt.setString(2, cate);
+	        
+	        if(keyword != null && !keyword.equals("")) {
+	            psmt.setString(3, "%" + keyword + "%");
+	        }
+
+	        rs = psmt.executeQuery();
+
+	        if(rs.next()) {
+	            total = rs.getInt(1);
+	        }
+
+	        closeAll();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return total;
 	}
 }

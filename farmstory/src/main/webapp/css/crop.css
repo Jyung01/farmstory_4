@@ -287,21 +287,31 @@ footer .version {
     height: auto;
 }
 
-#crop #board > .list > nav > form {
+#crop .list form {
     float: right;
+    display: flex;
+    gap: 5px;
 }
 
-#crop #board > .list > nav > form > input[name="search"] {
+#crop .list form select {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #d7d7d7;
+}
+
+#crop .list form input[name="keyword"] {
     width: 200px;
-    height: 26px;
+    height: 28px;
     text-indent: 6px;
     border: 1px solid #d7d7d7;
 }
-#crop #board > .list > nav > form > input[type="submit"] {
+
+#crop .list form input[type="submit"] {
+    height: 30px;
     border: 1px solid #d7d7d7;
     background: #f2f2f2;
     color: #111;
-    padding: 6px;
+    padding: 0 10px;
 }
 
 #crop #board > .list > table {
