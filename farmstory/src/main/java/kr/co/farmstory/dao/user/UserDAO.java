@@ -67,6 +67,8 @@ public class UserDAO extends DBHelper{
 	            psmt = conn.prepareStatement(UserSQL.SELECT_USERID_CHECK);
 	        } else if(type.equals("nick")) {
 	            psmt = conn.prepareStatement(UserSQL.SELECT_NICK_CHECK);
+	        } else if(type.equals("email")) {
+	            psmt = conn.prepareStatement(UserSQL.SELECT_EMAIL_CHECK);
 	        }
 	        psmt.setString(1, value);
 	        rs = psmt.executeQuery();
@@ -80,8 +82,6 @@ public class UserDAO extends DBHelper{
 	    }
 	    return result;
 	}
-	
-	
 }
 
 

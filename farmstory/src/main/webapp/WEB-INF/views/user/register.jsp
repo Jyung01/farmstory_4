@@ -4,10 +4,11 @@
 <!doctype html>
 <html lang="en">
     <head>
-    <script src="${path}/js/register.js"></script>
+    
         <meta charset="UTF-8" />
         <title>팜스토리::회원가입</title>
         <link rel="stylesheet" href="${path}/css/register.css" />
+    	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     </head>
     <body>
         <div id="container">
@@ -33,7 +34,7 @@
             </header>
             <div id="user">
                 <section class="register">
-                    <form action="${path}/user/register.do" method="post">
+                    <form action="${path}/user/register.do" method="post" onsubmit="return validateForm()">
                         <h2 class="tit">사이트 이용정보 입력</h2>
                         <table border="1">
                             <tr>
@@ -73,14 +74,16 @@
                                 <td>이메일</td>
                                 <td>
                                     <input type="email" name="email" placeholder="이메일 입력" />
-                                    <button type="button">
+                                    <button type="button" onclick="sendEmail()">
                                         <img src="${path}/images/user/chk_auth.gif" alt="인증번호 받기" />
                                     </button>
-                                    <div class="auth">
+                                    <span class="emailResult"></span>
+                                    <div class="auth" style="display:none;">
                                         <input type="text" name="auth" placeholder="인증번호 입력" />
-                                        <button type="button">
+                                        <button type="button" onclick="checkAuth()">
                                             <img src="${path}/images/user/chk_confirm.gif" alt="확인" />
                                         </button>
+                                        <span class="authResult"></span>
                                     </div>
                                 </td>
                             </tr>
@@ -91,11 +94,11 @@
                             <tr>
                                 <td>주소</td>
                                 <td>
-                                    <input type="text" name="zip" placeholder="우편번호" />
-                                    <button type="button">
+                                    <input type="text" name="zip" placeholder="우편번호" readonly />
+                                    <button type="button" onclick="searchZip()">
                                         <img src="${path}/images/user/chk_post.gif" alt="우편번호찾기" />
                                     </button>
-                                    <input type="text" name="addr1" placeholder="주소 검색" />
+                                    <input type="text" name="addr1" placeholder="주소 검색" readonly/>
                                     <input type="text" name="addr2" placeholder="상세주소 입력" />
                                 </td>
                             </tr>
@@ -119,4 +122,5 @@
             </footer>
         </div>
     </body>
+     <script src="${path}/js/register.js"></script>
 </html>

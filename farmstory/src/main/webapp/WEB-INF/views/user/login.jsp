@@ -32,6 +32,7 @@
         </header>
         <div id="user">
             <section class="login">
+            	
                 <form action="${path}/user/login.do" method="post">
                     <table border="0">
                         <tr>
@@ -41,6 +42,13 @@
                         <tr>
                             <td><img src="${path}/images/user/login_ico_pw.png" alt="비밀번호"/></td>
                             <td><input type="password" name="pass" placeholder="비밀번호 입력"/></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="2">
+                        		<c:if test="${not empty error }">
+            					<p style="color:red; text-align:center;">${error}</p>
+            	<				</c:if>
+                        	</td>
                         </tr>
                     </table>
                     <input type="submit" value="로그인" class="btnLogin"/>

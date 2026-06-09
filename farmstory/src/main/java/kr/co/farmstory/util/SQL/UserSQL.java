@@ -17,4 +17,11 @@ public class UserSQL {
     // 닉네임 중복확인
     public static final String SELECT_NICK_CHECK = 
         "SELECT nick FROM user WHERE nick = ?";
+    
+    
+    // 이메일 중복확인
+    public static final String SELECT_EMAIL_CHECK =
+        "SELECT email FROM user WHERE email = ?";
+    
+    
 }
