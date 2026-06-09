@@ -119,4 +119,5 @@
             </footer>
         </div>
     </body>
+     <script src="${path}/js/register.js"></script>
 </html>
