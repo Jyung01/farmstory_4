@@ -581,6 +581,27 @@ footer .version {
     color: #fff;
 }
 
+/* modal창 css */
+.commentModifyForm {
+    margin-top: 8px;
+}
+
+.commentModifyForm textarea {
+    width: 100%;
+    height: 70px;
+    box-sizing: border-box;
+    padding: 8px;
+    border: 1px solid #ccc;
+    resize: vertical;
+}
+
+.commentModifyForm .modifyBtns {
+    margin-top: 6px;
+    text-align: right;
+}
+
+
+
 /* 이벤트 사이드바 hover */
 #crop > .event .lnb > li:nth-child(1) > a {
     background-image: url("../images/sub_cate4_lnb1.png");
