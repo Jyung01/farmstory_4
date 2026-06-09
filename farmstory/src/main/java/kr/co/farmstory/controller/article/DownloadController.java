@@ -14,12 +14,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kr.co.farmstory.dto.article.ArticleDTO;
 import kr.co.farmstory.dto.article.FileDTO;
-import kr.co.farmstory.dto.page.PageGroupDTO;
-import kr.co.farmstory.service.article.ArticleService;
 import kr.co.farmstory.service.article.FileService;
-import kr.co.farmstory.util.ArticleSwitch;
 
 @WebServlet("/article/download.do")
 public class DownloadController extends HttpServlet {
@@ -31,8 +27,10 @@ public class DownloadController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		// 다운로드할 파일 번호 받기
 		int fno = Integer.parseInt(req.getParameter("fno"));
-
+		
+		// db에서 파일 정보 dto 받기
         FileDTO dto = fileService.findFile(fno);
 
 
@@ -49,20 +47,25 @@ public class DownloadController extends HttpServlet {
             return;
         }
 
+        
+        // 파일 다운로드 증가
         fileService.updateDownload(fno);
 
         String encodedName = URLEncoder.encode(dto.getOfname(), "UTF-8").replaceAll("\\+", "%20");
-
+        
+        
+        // 다운로드 파일 설정 헤더
         resp.setContentType("application/octet-stream");
         resp.setHeader("Content-Disposition", "attachment; filename=\"" + encodedName + "\"");
         resp.setHeader("Content-Length", String.valueOf(file.length()));
 
-        try (
-            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
-            BufferedOutputStream bos = new BufferedOutputStream(resp.getOutputStream());
-        ) {
-            byte[] buffer = new byte[1024];
+        BufferedInputStream bis = null;
+        BufferedOutputStream bos = null;
 
+        try {
+            bis = new BufferedInputStream(new FileInputStream(file));
+            bos = new BufferedOutputStream(resp.getOutputStream());
+            byte[] buffer = new byte[1024];
             int read;
 
             while((read = bis.read(buffer)) != -1) {
@@ -70,15 +73,15 @@ public class DownloadController extends HttpServlet {
             }
 
             bos.flush();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+        	if(bis != null) bis.close();
+        	if(bos != null) bos.close();
         }
-		
-		
-		
-		
-		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/article/view.jsp");
-		dispatcher.forward(req, resp);
-		
 	}
 	
 	@Override
