@@ -6,8 +6,8 @@
     <p>
         <a href="${path}/index.jsp">HOME |</a>
         <c:choose>
-            <c:when test="${not empty loginUser}">
-                ${loginUser.name}님 반갑습니다! |
+            <c:when test="${not empty sessUser}">
+                ${sessUser.name}님 반갑습니다! |
                 <a href="${path}/myinfo/cart.jsp">나의정보 |</a>
                 <a href="${path}/user/logout.do">로그아웃 |</a>
             </c:when>
