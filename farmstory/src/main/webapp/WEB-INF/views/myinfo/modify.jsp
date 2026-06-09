@@ -1,41 +1,24 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <title>팜스토리::정보수정</title>
-        <link rel="stylesheet" href="../css/modify.css" />
+        <link rel="stylesheet" href="${path}/css/modify.css" />
     </head>
     <body>
         <div id="container">
-            <header>
-                <a href="./index.html" class="logo"><img src="./images/logo.png" alt="로고" /></a>
-                <p>
-                    <<a href="./index.html">HOME</a>| <a href="login.html">로그인</a>|
-                    <a href="terms.html">회원가입</a>|
-                    <a href="cart.html">나의정보 |</a>
-                    <a href="index.html">로그아웃 |</a>
-                    <a href="#">관리자</a>|
-                    <a href="#">고객센터</a>
-                </p>
-                <img src="./images/head_txt_img.png" alt="3만원 이상 무료배송" />
-
-                <ul class="gnb">
-                    <li><a href="#">팜스토리소개</a></li>
-                    <li>
-                        <a href="#"><img src="./images/head_menu_badge.png" alt="30%" />장바구니</a>
-                    </li>
-                    <li><a href="#">농작물이야기</a></li>
-                    <li><a href="#">이벤트</a></li>
-                    <li><a href="#">커뮤니티</a></li>
-                </ul>
-            </header>
+            <%@ include file="/WEB-INF/views/inc/_header.jsp" %>
+                
+            
 
             <div id="myinfo">
-                <div><img src="./images/myinfo/myinfo_top_tit.png" alt="MY INFO" /></div>
+                <div><img src="${path}/images/myinfo/myinfo_top_tit.png" alt="MY INFO" /></div>
                 <section>
                     <aside>
-                        <img src="./images/myinfo/myinfo_menu_tit.png" alt="나의정보" />
+                        <img src="${path}/images/myinfo/myinfo_menu_tit.png" alt="나의정보" />
                         <ul class="menu">
                             <li><a href="cart.html">장바구니</a></li>
                             <li><a href="ordered.html">주문내역</a></li>
@@ -44,18 +27,18 @@
                     </aside>
                     <article>
                         <nav>
-                            <img src="./images/myinfo/myinfo_nav_tit3.png" alt="정보수정" />
+                            <img src="${path}/images/myinfo/myinfo_nav_tit3.png" alt="정보수정" />
                             <p>HOME > 나의정보 > <em>정보수정</em></p>
                         </nav>
 
                         <!-- 내용 시작 -->
                         <section class="modify">
-                            <form action="#" method="post">
+                            <form action="${path}/user/modify.do" method="post">
                                 <h2>회원정보 설정</h2>
                                 <table border="1">
                                     <tr>
                                         <td>아이디</td>
-                                        <td>chhak1234</td>
+                                        <td>${sessUser.userid}</td>
                                     </tr>
                                     <tr>
                                         <td>비밀번호</td>
@@ -73,7 +56,7 @@
                                     </tr>
                                     <tr>
                                         <td>회원가입날짜</td>
-                                        <td>2022-01-01 12:45:12</td>
+                                        <td>${sessUser.regDate }</td>
                                     </tr>
                                 </table>
 
@@ -82,7 +65,7 @@
                                     <tr>
                                         <td>이름</td>
                                         <td>
-                                            <input type="text" name="name" value="" />
+                                            <input type="text" name="name" value="${sessUser.name}" />
                                             <span class="nameResult"></span>
                                         </td>
                                     </tr>
@@ -90,9 +73,9 @@
                                         <td>별명</td>
                                         <td>
                                             <p class="nickInfo">공백없는 한글, 영문, 숫자 입력</p>
-                                            <input type="text" name="nick" placeholder="별명 입력" />
+                                            <input type="text" name="nick" value="${sessUser.nick }"/>
                                             <button type="button" id="btnNickCheck">
-                                                <img src="./images/myinfo/chk_id.gif" alt="중복확인" />
+                                                <img src="${path}/images/myinfo/chk_id.gif" alt="중복확인" />
                                             </button>
                                             <span class="nickResult"></span>
                                         </td>
@@ -100,15 +83,15 @@
                                     <tr>
                                         <td>이메일</td>
                                         <td>
-                                            <input type="email" name="email" placeholder="이메일 입력" />
+                                            <input type="email" name="email" value="${sessUser.email }" />
                                             <span class="emailResult"></span>
                                             <button type="button" id="btnEmailAuth">
-                                                <img src="./images/myinfo/chk_auth.gif" alt="인증번호 받기" />
+                                                <img src="${path}/images/myinfo/chk_auth.gif" alt="인증번호 받기" />
                                             </button>
                                             <div class="auth">
                                                 <input type="text" name="auth" placeholder="인증번호 입력" />
                                                 <button type="button" id="btnEmailConfirm">
-                                                    <img src="./images/myinfo/chk_confirm.gif" alt="확인" />
+                                                    <img src="${path}/images/myinfo/chk_confirm.gif" alt="확인" />
                                                 </button>
                                             </div>
                                         </td>
@@ -116,7 +99,7 @@
                                     <tr>
                                         <td>휴대폰</td>
                                         <td>
-                                            <input type="text" name="hp" placeholder="휴대폰 입력" />
+                                            <input type="text" name="hp" value="${sessUser.hp }"/>
                                             <span class="hpResult"></span>
                                         </td>
                                     </tr>
@@ -127,20 +110,20 @@
                                                 type="text"
                                                 name="zip"
                                                 id="zip"
+												value="${sessUser.zip }"                                                
                                                 readonly="readonly"
-                                                placeholder="우편번호"
                                             />
                                             <button type="button">
-                                                <img src="./images/myinfo/chk_post.gif" alt="우편번호찾기" />
+                                                <img src="${path}/images/myinfo/chk_post.gif" alt="우편번호찾기" />
                                             </button>
-                                            <input type="text" name="addr1" id="addr1" placeholder="주소 검색" />
-                                            <input type="text" name="addr2" id="addr2" placeholder="상세주소 입력" />
+                                            <input type="text" name="addr1" id="addr1" value="${sessUser.addr1 }"/>
+                                            <input type="text" name="addr2" id="addr2"value="${sessUser.addr2 }" />
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>회원탈퇴</td>
                                         <td>
-                                            <button type="button" class="btnWithdraw">탈퇴하기</button>
+                                            <a href="${path}/user/leave.do" class="btnWithdraw">탈퇴하기</a>
                                         </td>
                                     </tr>
                                 </table>
@@ -157,7 +140,7 @@
             </div>
 
             <footer>
-                <img src="./images/footer_logo.png" alt="로고" />
+                <img src="${path}/images/footer_logo.png" alt="로고" />
                 <p>
                     (주)팜스토리 / 사업자등록번호 123-45-67890 / 통신판매업신고 제 2013-팜스토리구-123호 / 벤처기업확인
                     서울지방중소기업청 제 012345678-9-01234호<br />
@@ -168,5 +151,6 @@
                 </p>
             </footer>
         </div>
+        <script src="${path}/js/register.js"></script>
     </body>
 </html>

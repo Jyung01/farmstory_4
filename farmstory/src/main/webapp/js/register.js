@@ -148,3 +148,40 @@ function searchZip() {
         }
     }).open();
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const btnNick = document.getElementById('btnNickCheck');
+
+    if (!btnNick) return;
+
+    btnNick.addEventListener('click', function () {
+
+        const nick = document.querySelector('input[name="nick"]').value.trim();
+        const resultSpan = document.querySelector('.nickResult');
+
+        if (!nick) {
+            resultSpan.innerText = "닉네임을 입력하세요.";
+            resultSpan.style.color = "red";
+            return;
+        }
+
+        fetch(`${path}/user/check.do?type=nick&value=` + encodeURIComponent(nick))
+            .then(resp => resp.text())
+            .then(data => {
+
+                if (data == 1) {
+                    resultSpan.innerText = "❌ 사용 불가능한 닉네임입니다.";
+                    resultSpan.style.color = "red";
+                } else {
+                    resultSpan.innerText = "✅ 사용 가능한 닉네임입니다.";
+                    resultSpan.style.color = "green";
+                }
+
+            });
+
+    });
+
+});
+
+

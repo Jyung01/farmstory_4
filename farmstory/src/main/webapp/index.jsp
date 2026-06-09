@@ -256,5 +256,10 @@
             </main>
             <%@ include file="/WEB-INF/views/inc/_footer.jsp" %>
         </div>
+    	<c:if test="${param.leave == 'success'}">
+            <script>
+                alert('탈퇴가 완료되었습니다.');
+            </script>
+        </c:if>
     </body>
 </html>
