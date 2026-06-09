@@ -1,4 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<c:set var="path" value="${pageContext.request.contextPath}" />
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -10,7 +13,7 @@
         <div id="container">
             <header>
                 <a href="./index.html" class="logo">
-                    <img src="../images/admin/admin_logo.jpg" alt="로고" />
+                    <img src="${path}/images/admin/admin_logo.jpg" alt="로고" />
                 </a>
                 <ul>
                     <li><a href="#">HOME |</a></li>
@@ -27,10 +30,10 @@
                             <span>상품관리</span>
                             <ul>
                                 <li>
-                                    <a href="./productList.html">L <span>상품목록</span></a>
+                                    <a href="/farmstory/admin/prodList.do">L <span>상품목록</span></a>
                                 </li>
                                 <li>
-                                    <a href="./productAdd.html" class="active">L <span>상품등록</span></a>
+                                    <a href="/farmstory/admin/register.do" class="active">L <span>상품등록</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -38,7 +41,7 @@
                             <span>주문관리</span>
                             <ul>
                                 <li>
-                                    <a href="./orderList.html">L <span>주문목록</span></a>
+                                    <a href="/farmstory/admin/orderList.do">L <span>주문목록</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -46,7 +49,7 @@
                             <span>회원관리</span>
                             <ul>
                                 <li>
-                                    <a href="./userList.html">L <span>회원목록</span></a>
+                                    <a href="/farmstory/admin/userList.do">L <span>회원목록</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -57,47 +60,25 @@
                     <h2>상품등록</h2>
 
                     <section>
-                        <!-- <table>
-                            <tr>
-                                <th><input type="checkbox"></th>
-                                <th>사진</th>
-                                <th>상품번호</th>
-                                <th>상품명</th>
-                                <th>구분</th>
-                                <th>가격</th>
-                                <th>재고</th>
-                                <th>등록일</th>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td><img src="../images/market_item1.jpg" alt="item1"></td>
-                                <td>1011</td>
-                                <td>사과 500g</td>
-                                <td>과일</td>
-                                <td>4,000원</td>
-                                <td>100</td>
-                                <td>2023-01-01</td>
-                            </tr>
-                        </table> -->
-
-                        <form action="#">
+                        <form action="/farmstory/admin/register.do" method="post" enctype="multipart/form-data">
                             <div>
                                 <p>상품명</p>
-                                <input type="text" />
+                                <input type="text" name="name" />
                             </div>
                             <div>
                                 <p>종류</p>
                                 <select name="category">
-                                    <option value="initial">종류</option>
+                                    <option value="종류">종류</option>
+                                    <option value="과일">과일</option>
                                 </select>
                             </div>
                             <div>
                                 <p>가격</p>
-                                <input type="text" />
+                                <input type="text" name="price"/>
                             </div>
                             <div>
                                 <p>포인트</p>
-                                <input type="text" />
+                                <input type="text" name="point"/>
                             </div>
                             <div>
                                 <p>할인</p>
@@ -108,44 +89,46 @@
                             <div class="delivery">
                                 <p>배송비</p>
                                 <div>
-                                    <label><input type="radio" name="delivery" />2,000원</label>
-                                    <label><input type="radio" name="delivery" />3,000원</label>
-                                    <label><input type="radio" name="delivery" />5,000원</label>
-                                    <label><input type="radio" name="delivery" />무료</label>
+                                    <label><input type="radio" name="delivery" value="2000" />2,000원</label>
+                                    <label><input type="radio" name="delivery" value="3000" />3,000원</label>
+                                    <label><input type="radio" name="delivery" value="5000" />5,000원</label>
+                                    <label><input type="radio" name="delivery"  value="0"/>무료</label>
                                 </div>
                             </div>
                             <div>
                                 <p>재고</p>
-                                <input type="text" />
+                                <input type="text" name="stock"/>
                             </div>
                             <div class="proImg">
                                 <p>상품이미지</p>
                                 <div>
                                     <div>
                                         <span>상품목록 이미지(약 120 x 120)</span>
-                                        <input type="file" />
+                                        <input type="file" name="file1"/>
                                     </div>
                                     <div>
                                         <span>상품목록 이미지(약 120 x 120)</span>
-                                        <input type="file" />
+                                        <input type="file" name="file2" />
                                     </div>
                                     <div>
                                         <span>상품목록 이미지(약 120 x 120)</span>
-                                        <input type="file" />
+                                        <input type="file" name="file3"/>
                                     </div>
                                 </div>
                             </div>
                             <div>
                                 <p>기타</p>
-                                <textarea name="" id=""></textarea>
+                                <textarea name="discript" id=""></textarea>
                             </div>
+                            
+                            <div class="buttons">
+		                        <a href="#" class="cancel">취소</a>
+		                        <input type="submit" value="상품등록" class="add_product"/>
+		                   	 </div>
                         </form>
                     </section>
 
-                    <div class="buttons">
-                        <a href="#" class="cancel">취소</a>
-                        <a href="#" class="add_product"><p>상품등록</p></a>
-                    </div>
+                    
                 </section>
             </main>
 

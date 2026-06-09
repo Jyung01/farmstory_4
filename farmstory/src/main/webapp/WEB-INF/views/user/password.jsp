@@ -3,55 +3,55 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>íì¤í ë¦¬::ë¹ë°ë²í¸ì°¾ê¸°</title>
+        <title>팜스토리::비밀번호찾기</title>
         <link rel="stylesheet" href="../css/password.css" />
     </head>
     <body>
         <div id="container">
             <header>
                 <a href="./index.html" class="logo">
-                    <img src="../images/logo.png" alt="ë¡ê³ " />
+                    <img src="../images/logo.png" alt="로고" />
                 </a>
                 <p>
-                    <a href="./index.html">HOME</a>| <a href="login.html">ë¡ê·¸ì¸</a>| <a href="terms.html">íìê°ì</a>|
-                    <a href="cart.html">ëìì ë³´ |</a>
-                    <a href="index.html">ë¡ê·¸ìì |</a>
-                    <a href="#">ê´ë¦¬ì</a>|
-                    <a href="#">ê³ ê°ì¼í°</a>
+                    <a href="./index.html">HOME</a>| <a href="login.html">로그인</a>| <a href="terms.html">회원가입</a>|
+                    <a href="cart.html">나의정보 |</a>
+                    <a href="index.html">로그아웃 |</a>
+                    <a href="#">관리자</a>|
+                    <a href="#">고객센터</a>
                 </p>
-                <img src="../images/head_txt_img.png" alt="3ë§ì ì´ì ë¬´ë£ë°°ì¡" />
+                <img src="../images/head_txt_img.png" alt="3만원 이상 무료배송" />
                 <ul class="gnb">
-                    <li><a href="./introduction/hello.html">íì¤í ë¦¬ìê°</a></li>
+                    <li><a href="./introduction/hello.html">팜스토리소개</a></li>
                     <li>
-                        <a href="./market/list.html"> <img src="../images/head_menu_badge.png" alt="30%" />ì¥ë³´ê¸° </a>
+                        <a href="./market/list.html"> <img src="../images/head_menu_badge.png" alt="30%" />장보기 </a>
                     </li>
-                    <li><a href="./croptalk/story.html">ëìë¬¼ì´ì¼ê¸°</a></li>
-                    <li><a href="./event/event.html">ì´ë²¤í¸</a></li>
-                    <li><a href="./community/notice.html">ì»¤ë®¤ëí°</a></li>
+                    <li><a href="./croptalk/story.html">농작물이야기</a></li>
+                    <li><a href="./event/event.html">이벤트</a></li>
+                    <li><a href="./community/notice.html">커뮤니티</a></li>
                 </ul>
             </header>
 
             <div id="find">
                 <section class="password">
                     <form action="#">
-                        <h2>ë¹ë°ë²í¸ ì°¾ê¸°</h2>
+                        <h2>비밀번호 찾기</h2>
                         <table border="0">
                             <tr>
-                                <td>ìì´ë</td>
+                                <td>아이디</td>
                                 <td>
-                                    <input type="text" name="uid" placeholder="ìì´ë ìë ¥" />
+                                    <input type="text" name="uid" placeholder="아이디 입력" />
                                 </td>
                             </tr>
                             <tr>
-                                <td>ì´ë©ì¼</td>
+                                <td>이메일</td>
                                 <td>
                                     <div>
-                                        <input type="email" name="email" placeholder="ì´ë©ì¼ ìë ¥" />
-                                        <button type="button" class="btnAuth">ì¸ì¦ë²í¸ ë°ê¸°</button>
+                                        <input type="email" name="email" placeholder="이메일 입력" />
+                                        <button type="button" class="btnAuth">인증번호 받기</button>
                                     </div>
                                     <div>
-                                        <input type="text" name="auth" placeholder="ì¸ì¦ë²í¸ ìë ¥" />
-                                        <button type="button" class="btnConfirm">íì¸</button>
+                                        <input type="text" name="auth" placeholder="인증번호 입력" />
+                                        <button type="button" class="btnConfirm">확인</button>
                                     </div>
                                 </td>
                             </tr>
@@ -59,26 +59,26 @@
                     </form>
 
                     <p>
-                        ë¹ë°ë²í¸ë¥¼ ì°¾ê³ ì íë ìì´ëì ì´ë©ì¼ì ìë ¥í´ ì£¼ì¸ì.<br />
-                        íìê°ìì ìë ¥í ìì´ëì ì´ë©ì¼ ì£¼ìê° ê°ìì¼, ì¸ì¦ë²í¸ë¥¼ ë°ì ì ììµëë¤.<br />
-                        ì¸ì¦ë²í¸ë¥¼ ìë ¥ í íì¸ ë²í¼ì ëë¥´ì¸ì.
+                        비밀번호를 찾고자 하는 아이디와 이메일을 입력해 주세요.<br />
+                        회원가입시 입력한 아이디와 이메일 주소가 같아야, 인증번호를 받을 수 있습니다.<br />
+                        인증번호를 입력 후 확인 버튼을 누르세요.
                     </p>
 
                     <div>
-                        <a href="./login.html" class="btn btnCancel">ì·¨ì</a>
-                        <a href="./password.html" class="btn btnNext">ë¤ì</a>
+                        <a href="./login.html" class="btn btnCancel">취소</a>
+                        <a href="./password.html" class="btn btnNext">다음</a>
                     </div>
                 </section>
             </div>
             <footer>
-                <img src="./images/footer_logo.png" alt="ë¡ê³ " />
+                <img src="./images/footer_logo.png" alt="로고" />
                 <p>
-                    (ì£¼)íì¤í ë¦¬ / ì¬ììë±ë¡ë²í¸ 123-45-67890 / íµì íë§¤ìì ê³  ì  2013-ë¶ì°ì§êµ¬-123í¸ / ë²¤ì²ê¸°ìíì¸
-                    ìì¸ì§ë°©ì¤ìê¸°ìì²­ ì  012345678-9-01234í¸<br />
-                    ë±ë¡ë²í¸ íì¤í ë¦¬01234 (2013.04.01) / ë°íì¸ : íê¸¸ë<br />
-                    ëí : ê¹ì² í / ì´ë©ì¼ : chhak0503@gmail.com / ì í : 01) 234-5678 / ë¶ì°ê´ì­ì ë¶ì°ì§êµ¬ ë¶ì ë
+                    (주)팜스토리 / 사업자등록번호 123-45-67890 / 통신판매업신고 제 2013-부산진구-123호 / 벤처기업확인
+                    서울지방중소기업청 제 012345678-9-01234호<br />
+                    등록번호 팜스토리01234 (2013.04.01) / 발행인 : 홍길동<br />
+                    대표 : 김철학 / 이메일 : chhak0503@gmail.com / 전화 : 01) 234-5678 / 부산광역시 부산진구 부전동
                     123<br />
-                    <span class="copyright">copyrightâ ê¹ì² í(ê°ë°ìë°íë¤.) All rights reserved.</span>
+                    <span class="copyright">copyrightⓒ 김철학(개발에반하다.) All rights reserved.</span>
                     <span class="version">farmstory ver1.0.1</span>
                 </p>
             </footer>

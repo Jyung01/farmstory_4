@@ -1,4 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<c:set var="path" value="${pageContext.request.contextPath}" />
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -10,7 +13,7 @@
         <div id="container">
             <header>
                 <a href="./index.html" class="logo">
-                    <img src="../images/admin/admin_logo.jpg" alt="로고" />
+                    <img src="${path}/images/admin/admin_logo.jpg" alt="로고" />
                 </a>
                 <ul>
                     <li><a href="#">HOME |</a></li>
@@ -27,10 +30,10 @@
                             <span>상품관리</span>
                             <ul>
                                 <li>
-                                    <a href="./productList.html" class="active">L <span>상품목록</span></a>
+                                    <a href="/farmstory/admin/prodList.do" class="active">L <span>상품목록</span></a>
                                 </li>
                                 <li>
-                                    <a href="./productAdd.html">L <span>상품등록</span></a>
+                                    <a href="/farmstory/admin/register.do">L <span>상품등록</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -38,7 +41,7 @@
                             <span>주문관리</span>
                             <ul>
                                 <li>
-                                    <a href="./orderList.html">L <span>주문목록</span></a>
+                                    <a href="/farmstory/admin/orderList.do">L <span>주문목록</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -46,7 +49,7 @@
                             <span>회원관리</span>
                             <ul>
                                 <li>
-                                    <a href="./userList.html">L <span>회원목록</span></a>
+                                    <a href="/farmstory/admin/userList.do">L <span>회원목록</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -68,16 +71,20 @@
                                 <th>재고</th>
                                 <th>등록일</th>
                             </tr>
-                            <tr>
-                                <td><input type="checkbox" /></td>
-                                <td><img src="../images/market_item1.jpg" alt="item1" /></td>
-                                <td>1011</td>
-                                <td>사과 500g</td>
-                                <td>과일</td>
-                                <td>4,000원</td>
-                                <td>100</td>
-                                <td>2023-01-01</td>
-                            </tr>
+                            
+                            <c:forEach var="product" items="${dtoList}">
+	                            <tr>
+	                                <td><input type="checkbox" /></td>
+	                                <td><img src="${path}/upload/${product.thumb}" alt="item1" /></td>
+	                                <td>${product.prodNo}</td>
+	                                <td>${product.prodName}</td>
+	                                <td>${product.cate}</td>
+	                                <td>${product.price}원</td>
+	                                <td>${product.stock}</td>
+	                                <td>${product.regDate}</td>
+	                            </tr>
+                            </c:forEach>
+                            
                         </table>
                     </section>
 

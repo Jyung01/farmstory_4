@@ -1,0 +1,26 @@
+package kr.co.farmstory.service.user;
+
+import kr.co.farmstory.dao.user.UserDAO;
+import kr.co.farmstory.dto.user.UserDTO;
+
+
+public enum UserService {
+	INSTANCE;
+	
+	private UserDAO dao = new UserDAO();
+
+	public int insertUser(UserDTO dto) {
+		return dao.insertUser(dto);
+	}
+	
+	
+	public UserDTO selectUser(String userid) {
+		return dao.selectUser(userid);
+	}
+	
+	public int checkUser(String type, String value) {
+		return dao.selectUserCheck(type, value);
+		
+	}
+	
+}

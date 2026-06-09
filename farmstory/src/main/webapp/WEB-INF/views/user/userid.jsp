@@ -1,9 +1,10 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>팜스토리::아이디찾기결과</title>
-        <link rel="stylesheet" href="../css/useridResult.css" />
+        <title>팜스토리::아이디찾기</title>
+        <link rel="stylesheet" href="../css/userid.css" />
     </head>
     <body>
         <div id="container">
@@ -29,39 +30,43 @@
                 </ul>
             </header>
             <div id="find">
-                <section class="useridResult">
+                <section class="userid">
                     <form action="#">
-                        <h2 class="tit">아이디 찾기 결과</h2>
+                        <h2>아이디 찾기</h2>
                         <table border="0">
                             <tr>
                                 <td>이름</td>
-                                <td>홍길동</td>
-                            </tr>
-                            <tr>
-                                <td>아이디</td>
-                                <td>honggildong</td>
+                                <td><input type="text" name="name" placeholder="이름 입력" /></td>
                             </tr>
                             <tr>
                                 <td>이메일</td>
-                                <td>honggildong@gmail.com</td>
-                            </tr>
-                            <tr>
-                                <td>가입일</td>
-                                <td>2022-11-16 10:20</td>
+                                <td>
+                                    <div>
+                                        <input type="email" name="email" placeholder="이메일 입력" />
+                                        <button type="button" class="btnAuth">인증번호 받기</button>
+                                    </div>
+                                    <div>
+                                        <input type="text" name="auth" disabled placeholder="인증번호 입력" />
+                                        <button type="button" class="btnConfirm">확인</button>
+                                    </div>
+                                </td>
                             </tr>
                         </table>
                     </form>
 
-                    <p>고객님의 정보와 일치하는 아이디 입니다.</p>
+                    <p>
+                        회원가입시 이메일 주소와 입력한 이메일 주소가 같아야, 인증번호를 받을 수 있습니다.<br />
+                        인증번호를 입력 후 확인 버튼을 누르세요.
+                    </p>
 
                     <div>
-                        <a href="./login.html" class="btn btnCancel">로그인</a>
-                        <a href="./register.html" class="btn btnNext">비밀번호 찾기</a>
+                        <a href="./login.html" class="btn btnCancel">취소</a>
+                        <a href="./useridResult.html" class="btn btnNext">다음</a>
                     </div>
                 </section>
             </div>
             <footer>
-                <img src="../images/footer_logo.png" alt="로고" />
+                <img src="./images/footer_logo.png" alt="로고" />
                 <p>
                     (주)팜스토리 / 사업자등록번호 123-45-67890 / 통신판매업신고 제 2013-부산진구-123호 / 벤처기업확인
                     서울지방중소기업청 제 012345678-9-01234호<br />
