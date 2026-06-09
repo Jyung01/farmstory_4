@@ -30,10 +30,10 @@
                             <span>상품관리</span>
                             <ul>
                                 <li>
-                                    <a href="./productList.html">L <span>상품목록</span></a>
+                                    <a href="/farmstory/admin/prodList.do">L <span>상품목록</span></a>
                                 </li>
                                 <li>
-                                    <a href="./productAdd.html" class="active">L <span>상품등록</span></a>
+                                    <a href="/farmstory/admin/register.do" class="active">L <span>상품등록</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -41,7 +41,7 @@
                             <span>주문관리</span>
                             <ul>
                                 <li>
-                                    <a href="./orderList.html">L <span>주문목록</span></a>
+                                    <a href="/farmstory/admin/orderList.do">L <span>주문목록</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -49,7 +49,7 @@
                             <span>회원관리</span>
                             <ul>
                                 <li>
-                                    <a href="./userList.html">L <span>회원목록</span></a>
+                                    <a href="/farmstory/admin/userList.do">L <span>회원목록</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -68,8 +68,8 @@
                             <div>
                                 <p>종류</p>
                                 <select name="category">
-                                    <option value="initial">종류</option>
-                                    <option value="fruit">과일</option>
+                                    <option value="종류">종류</option>
+                                    <option value="과일">과일</option>
                                 </select>
                             </div>
                             <div>
@@ -118,12 +118,12 @@
                             </div>
                             <div>
                                 <p>기타</p>
-                                <textarea name=discript id=""></textarea>
+                                <textarea name="discript" id=""></textarea>
                             </div>
                             
                             <div class="buttons">
 		                        <a href="#" class="cancel">취소</a>
-		                        <input type="submit" value="상품등록"class="add_product"/>
+		                        <input type="submit" value="상품등록" class="add_product"/>
 		                   	 </div>
                         </form>
                     </section>
