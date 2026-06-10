@@ -75,7 +75,7 @@
 						    <div>
 								<c:if test="${not empty sessUser and (sessUser.userid eq dto.writer or sessUser.role eq 'admin')}">						
 							        <a href="${path}/article/modify.do?ano=${dto.ano}&groupName=${groupName}&cate=${cate}&page=${page}" class="btn btnModify">수정</a>
-							        <a href="${path}/article/delete.do?ano=${dto.ano}&groupName=${groupName}&cate=${cate}&page=${page}" class="btn btnRemove">삭제</a>
+							        <a href="${path}/article/delete.do?ano=${dto.ano}&groupName=${groupName}&cate=${cate}&page=${page}" class="btn btnRemove" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
 								</c:if>
 						        <a href="${path}/article/list.do?groupName=${groupName}&cate=${cate}&page=${page}" class="btn btnList">목록</a>
 						    </div>

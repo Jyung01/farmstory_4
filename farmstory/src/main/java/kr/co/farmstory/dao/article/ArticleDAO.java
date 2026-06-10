@@ -52,6 +52,7 @@ public class ArticleDAO extends DBHelper {
 		return ano;
 	}
 	
+	// 글 목록 조회 list
 	public List<ArticleDTO> selectAll(String groupName, String cate, int start, String searchType, String keyword) {
 		List<ArticleDTO> dtoList = new ArrayList<>();
 		
@@ -93,21 +94,16 @@ public class ArticleDAO extends DBHelper {
 	            dto.setNick(rs.getString("nick"));
 	            dtoList.add(dto);
 	        }
-
-	        
-
-
 	        closeAll();
-			
-			
+	        
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		
 		return dtoList;
 	}
 	
+	// view
 	public ArticleDTO select(int ano) {
 
 	    ArticleDTO dto = null;
@@ -143,6 +139,61 @@ public class ArticleDAO extends DBHelper {
 	    return dto;
 	}
 	
+	// 글 수정 modify
+	public void update(ArticleDTO dto) {
+
+	    try {
+	        conn = getConnection();
+
+	        psmt = conn.prepareStatement(ArticleSQL.UPDATE_ARTICLE);
+	        psmt.setString(1, dto.getTitle());
+	        psmt.setString(2, dto.getContent());
+	        psmt.setInt(3, dto.getAno());
+
+	        psmt.executeUpdate();
+
+	        closeAll();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	// 글 수정시 파일 갯수 다시 계산
+	public void updateFileCount(int ano, int fileCount) {
+
+	    try {
+	        conn = getConnection();
+
+	        psmt = conn.prepareStatement(ArticleSQL.UPDATE_FILE_COUNT);
+	        psmt.setInt(1, fileCount);
+	        psmt.setInt(2, ano);
+
+	        psmt.executeUpdate();
+
+	        closeAll();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	// 글 삭제 delete
+	public void delete(int ano) {
+		try {
+			conn = getConnection();
+	        psmt = conn.prepareStatement(ArticleSQL.DELETE_ARTICLE);
+	        psmt.setInt(1, ano);
+	        psmt.executeUpdate();
+	        
+	        closeAll();
+	        
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// 조회수 증가
 	public void updateHit(int ano) {
 
 	    try {
@@ -157,6 +208,7 @@ public class ArticleDAO extends DBHelper {
 	        e.printStackTrace();
 	    }
 	}
+
 	
 	// 게시판 글 갯수 가져오기
 	public int selectCount(String groupName, String cate, String searchType, String keyword) {

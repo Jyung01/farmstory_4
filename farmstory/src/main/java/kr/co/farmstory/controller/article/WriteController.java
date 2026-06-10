@@ -32,6 +32,9 @@ public class WriteController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		HttpSession session = req.getSession(false);
+	    UserDTO sessUser = (UserDTO) session.getAttribute("sessUser");
+		
 		// 파라미터 값 저장
 		String groupName = req.getParameter("groupName");
 		String cate = req.getParameter("cate");
@@ -41,6 +44,14 @@ public class WriteController extends HttpServlet {
 		req.setAttribute("groupTitle", ArticleSwitch.GROUP_TITLE.get(groupName));
 		req.setAttribute("cateTitle", ArticleSwitch.CATE_TITLE.get(cate));
 		req.setAttribute("navImage", ArticleSwitch.NAV_IMAGE.get(cate));
+		
+		// notice 게시판에서 관리자인지 확인
+		if("notice".equals(cate) && !"admin".equals(sessUser.getRole())) {
+		    resp.sendRedirect(req.getContextPath()
+		            + "/article/list.do?groupName=" + groupName
+		            + "&cate=" + cate);
+		    return;
+		}
 		
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/article/write.jsp");
@@ -84,6 +95,14 @@ public class WriteController extends HttpServlet {
 		String groupName = req.getParameter("groupName");
 		String cate = req.getParameter("cate");
 		String regip = req.getRemoteAddr();
+		
+		// notice 게시판에서 관리자인지 확인
+		if("notice".equals(cate) && !"admin".equals(sessUser.getRole())) {
+		    resp.sendRedirect(req.getContextPath()
+		            + "/article/list.do?groupName=" + groupName
+		            + "&cate=" + cate);
+		    return;
+		}
 	    
 	    // 게시판 테이블에 저장하기위해 dto 생성
 	    ArticleDTO dto = new ArticleDTO();

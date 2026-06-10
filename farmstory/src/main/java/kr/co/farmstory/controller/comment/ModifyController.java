@@ -21,21 +21,31 @@ public class ModifyController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doGet(req, resp);
+		HttpSession session = req.getSession(false);
+	    UserDTO sessUser = (UserDTO) session.getAttribute("sessUser");
+		
+		// 전달 파라미터 저장
+		int cno = Integer.parseInt(req.getParameter("cno"));
+        int parent = Integer.parseInt(req.getParameter("parent"));
+
+        String groupName = req.getParameter("groupName");
+        String cate = req.getParameter("cate");
+        String page = req.getParameter("page");
+	    
+        if(!service.isOwnerOrAdmin(cno, sessUser)) {
+            resp.sendRedirect(req.getContextPath()
+                    + "/article/view.do?ano=" + parent
+                    + "&groupName=" + groupName
+                    + "&cate=" + cate
+                    + "&page=" + page);
+            return;
+        }
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		HttpSession session = req.getSession(false);
-		
-		// 로그인 했는지 검사
-	    if(session == null || session.getAttribute("sessUser") == null) {
-	        resp.sendRedirect(req.getContextPath() + "/user/login.do");
-	        return;
-	    }
-	    
 	    UserDTO sessUser = (UserDTO) session.getAttribute("sessUser");
 		
 		// 전달 파라미터 저장
@@ -47,20 +57,7 @@ public class ModifyController extends HttpServlet {
         String cate = req.getParameter("cate");
         String page = req.getParameter("page");
 	    
-        CommentDTO origin = service.findById(cno);
-        
-        // 해당 댓글이 존재하지 않으면 리다이렉트
-        if(origin == null) {
-            resp.sendRedirect(req.getContextPath()
-                    + "/article/view.do?ano=" + parent
-                    + "&groupName=" + groupName
-                    + "&cate=" + cate
-                    + "&page=" + page);
-            return;
-        }
-        
-        // 권한이 없으면 리다이렉트
-        if(!sessUser.getUserid().equals(origin.getWriter()) && !"admin".equals(sessUser.getRole())) {
+        if(!service.isOwnerOrAdmin(cno, sessUser)) {
             resp.sendRedirect(req.getContextPath()
                     + "/article/view.do?ano=" + parent
                     + "&groupName=" + groupName

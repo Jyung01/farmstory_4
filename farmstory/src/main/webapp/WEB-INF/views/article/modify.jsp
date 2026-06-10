@@ -7,14 +7,6 @@
         <meta charset="UTF-8" />
         <title>팜스토리::${cateTitle}</title>
         <link rel="stylesheet" href="${path}/css/crop.css" />
-        <script>
-			const parent = '${dto.ano}';
-			const groupName = '${groupName}';
-			const cate = '${cate}';
-			const page = '${page}';
-			const path = '${path}';
-		</script>
-		<script src="${path}/js/comment.js" defer></script>
     </head>
     <body>
         <div id="container">
@@ -39,6 +31,9 @@
                         </nav>
                         <section class="modify">
 	                        <h1>글수정</h1>
+	                        <c:if test="${not empty msg}">
+							    <p style="color:red;">${msg}</p>
+							</c:if>
 	                        <form action="${path}/article/modify.do" method="post" enctype="multipart/form-data">
 
 							    <input type="hidden" name="ano" value="${dto.ano}">
@@ -62,14 +57,13 @@
 							                    첨부파일이 없습니다.
 							                </c:if>
 							                <c:forEach var="file" items="${fileList}">
-							                    <p>
-							                        ${file.ofname}
-							                        <label>
-							                            <input type="checkbox" name="deleteFile" value="${file.fno}">
-							                            삭제
-							                        </label>
-							                    </p>
-							                </c:forEach>
+											    <p class="fileItem">
+											        <span>${file.ofname}</span>
+											
+											        <input type="checkbox" id="deleteFile${file.fno}" name="deleteFile" value="${file.fno}">
+											        <label for="deleteFile${file.fno}">삭제</label>
+											    </p>
+											</c:forEach>
 							            </td>
 							        </tr>
 							
@@ -94,7 +88,7 @@
                 </section>
             </div>
 
-            <!-- header import -->
+            <!-- footer import -->
             <jsp:include page="/WEB-INF/views/inc/_footer.jsp"></jsp:include>
         </div>
     </body>

@@ -43,6 +43,12 @@ public class ArticleSQL {
 
 	public static final String SEARCH_WRITER = "AND u.nick LIKE ? ";
 	
+	public static final String UPDATE_ARTICLE = "UPDATE article SET title=?, content=? WHERE ano=?";
+	
+	public static final String UPDATE_FILE_COUNT = "UPDATE article SET fileCount=? WHERE ano=?";
+	
+	public static final String DELETE_ARTICLE = "DELETE FROM article WHERE ano = ?";
+	
 	// ------------------------------
 	// 파일
 	// ------------------------------
@@ -55,6 +61,11 @@ public class ArticleSQL {
 	public static final String SELECT_FILE = "SELECT * FROM file WHERE fno=?";
 
 	public static final String UPDATE_DOWNLOAD = "UPDATE file SET download = download + 1 WHERE fno=?";
+	
+	public static final String DELETE_FILE = "DELETE FROM file WHERE fno=?";
+
+	public static final String COUNT_FILES = "SELECT COUNT(*) FROM file WHERE ano=?";
+	
 	
 	// ------------------------------
 	// 댓글
