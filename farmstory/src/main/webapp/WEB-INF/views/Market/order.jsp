@@ -1,57 +1,38 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<c:set var="path" value="${pageContext.request.contextPath}" /> 
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <title>팜스토리::상품주문</title>
-        <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="${path}/css/main.css" />
     </head>
     <body>
         <div id="container">
-            <header>
-                <a href="../index.html" class="logo"><img src="../images/logo.png" alt="로고" /></a>
-                <p>
-                    <a href="../index.html">HOME |</a>
-                    <a href="#">로그인 |</a>
-                    <a href="#">회원가입 |</a>
-                    <a href="#">나의정보 |</a>
-                    <a href="#">로그아웃 |</a>
-                    <a href="#">관리자 |</a>
-                    <a href="#">고객센터</a>
-                </p>
-                <img src="../images/head_txt_img.png" alt="3만원 이상 무료배송" />
-
-                <ul class="gnb">
-                    <li><a href="../Introduction/hello.html">팜스토리소개</a></li>
-                    <li>
-                        <a href="./list.html"><img src="../images/head_menu_badge.png" alt="30%" />장바구니</a>
-                    </li>
-                    <li><a href="#">농작물이야기</a></li>
-                    <li><a href="#">이벤트</a></li>
-                    <li><a href="#">커뮤니티</a></li>
-                </ul>
-            </header>
+            <%@ include file="/WEB-INF/views/inc/_header.jsp" %>
 
             <div id="sub">
-                <div><img src="../images/sub_top_tit2.png" alt="MARKET" /></div>
+                <div><img src="${path}/images/sub_top_tit2.png" alt="MARKET" /></div>
                 <section class="market">
                     <aside>
-                        <img src="../images/sub_aside_cate2_tit.png" alt="장보기" />
-
+                        <img src="${path}/images/sub_aside_cate2_tit.png" alt="장보기" />
                         <ul class="lnb">
-                            <li class="on"><a href="./market.html">장보기</a></li>
+                            <li class="on"><a href="${path}/market/list.do">장보기</a></li>
                         </ul>
                     </aside>
+                    
                     <article class="order">
                         <nav>
-                            <img src="../images/sub_nav_tit_cate2_tit1.png" alt="장보기" />
+                            <img src="${path}/images/sub_nav_tit_cate2_tit1.png" alt="장보기" />
                             <p>HOME > 장보기 > <em>장보기</em></p>
                         </nav>
 
-                        <!-- 내용 시작 -->
                         <p class="sort">
-                            <a href="#" class="on">주문상춤 전체(10)</a>
+                            <a href="#" class="on">주문상품 전체(${orderList.size()})</a>
                         </p>
+                        
                         <table border="0">
                             <thead>
                                 <tr>
@@ -66,85 +47,72 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <a href="./productDetail.html"
-                                            ><img src="../images/market_item1.jpg" class="thumb" alt="사과 500g"
-                                        /></a>
-                                    </td>
-                                    <td>과일</td>
-                                    <td><a href="#">사과 500g</a></td>
-                                    <td>1</td>
-                                    <td>10%</td>
-                                    <td>40P</td>
-                                    <td>4,000</td>
-                                    <td><strong>3,600</strong>원</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="./productDetail.html"
-                                            ><img src="../images/market_item1.jpg" class="thumb" alt="사과 500g"
-                                        /></a>
-                                    </td>
-                                    <td>과일</td>
-                                    <td><a href="#">사과 500g</a></td>
-                                    <td>1</td>
-                                    <td>10%</td>
-                                    <td>40P</td>
-                                    <td>4,000</td>
-                                    <td><strong>3,600</strong>원</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="./productDetail.html"
-                                            ><img src="../images/market_item1.jpg" class="thumb" alt="사과 500g"
-                                        /></a>
-                                    </td>
-                                    <td>과일</td>
-                                    <td><a href="#">사과 500g</a></td>
-                                    <td>1</td>
-                                    <td>10%</td>
-                                    <td>40P</td>
-                                    <td>4,000</td>
-                                    <td><strong>3,600</strong>원</td>
-                                </tr>
+                                <c:if test="${empty orderList}">
+                                    <tr class="empty">
+                                        <td colspan="8" style="text-align: center; padding: 20px;">주문할 상품이 선택되지 않았습니다.</td>
+                                    </tr>
+                                </c:if>
+                                
+                                <c:if test="${not empty orderList}">
+                                    <c:forEach var="item" items="${orderList}">
+                                        <tr class="order-item-row" data-cartno="${item.cartNo}" data-prodno="${item.prodNo}">
+                                            <td>
+                                                <a href="${path}/market/view.do?prodNo=${item.prodNo}">
+                                                    <img src="${path}${item.thumb}" class="thumb" alt="${item.prodName}" />
+                                                </a>
+                                            </td>
+                                            <td>${item.cate}</td>
+                                            <td style="text-align: left; padding-left: 15px;">
+                                                <a href="${path}/market/view.do?prodNo=${item.prodNo}">${item.prodName}</a>
+                                            </td>
+                                            <td class="item-count" data-count="${item.count}">${item.count}</td>
+                                            <td class="item-discount" data-discount="${item.discount}">${item.discount}%</td>
+                                            <td class="item-point" data-point="${item.point * item.count}"><fmt:formatNumber value="${item.point * item.count}" type="number"/>P</td>
+                                            <td class="item-price" data-price="${item.price}"><fmt:formatNumber value="${item.price}" type="number"/>원</td>
+                                            <td class="item-subtotal">
+                                                <strong>
+                                                    <fmt:formatNumber value="${(item.price - (item.price * item.discount / 100)) * item.count}" type="number"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:if>
                             </tbody>
                         </table>
+
                         <div class="final">
                             <table border="0">
-                                <caption>
-                                    최종결제정보
-                                </caption>
+                                <caption>최종결제정보</caption>
                                 <tr>
                                     <th>상품수</th>
-                                    <td>1</td>
+                                    <td><span id="totalCount">0</span></td>
                                 </tr>
                                 <tr>
                                     <th>상품금액</th>
-                                    <td>27,000</td>
+                                    <td><span id="cartTotalPrice">0</span></td>
                                 </tr>
                                 <tr>
                                     <th>할인금액</th>
-                                    <td>5,0000원</td>
+                                    <td><span id="totalDiscount">0</span></td>
                                 </tr>
                                 <tr>
                                     <th>포인트사용</th>
-                                    <td>2000P</td>
+                                    <td><span id="displayedUsedPoint">0</span>P</td>
                                 </tr>
                                 <tr>
                                     <th>배송비</th>
-                                    <td class="delivery">5,0000원</td>
+                                    <td class="delivery"><span id="totalDelivery">0</span></td>
                                 </tr>
                                 <tr>
                                     <th>포인트적립</th>
-                                    <td>400P</td>
+                                    <td><span id="totalSavePoint">0</span>P</td>
                                 </tr>
                                 <tr>
                                     <th>전체주문금액</th>
-                                    <td class="total">22,000</td>
+                                    <td class="total"><span id="finalOrderPrice">0</span></td>
                                 </tr>
                             </table>
-                            <input type="submit" class="btnOrder" value="결제하기" />
+                            <input type="button" class="btnOrder" id="btnPaySubmit" value="결제하기" />
                         </div>
 
                         <h3>주문정보 입력</h3>
@@ -152,72 +120,65 @@
                             <table>
                                 <tr>
                                     <td>주문자</td>
-                                    <td><input type="text" name="orderer" value="홍길동" readonly /></td>
+                                    <td><input type="text" id="orderer" value="${sessUser.name}" readonly /></td>
                                 </tr>
                                 <tr>
                                     <td>휴대폰</td>
-                                    <td><input type="text" name="orderer" value="010-1234-1001" readonly /></td>
+                                    <td><input type="text" id="ordererHp" value="${sessUser.hp}" readonly /></td>
                                 </tr>
                                 <tr>
                                     <td>포인트사용</td>
                                     <td>
-                                        <input type="text" name="pointUse" value="" />
-                                        <button>사용하기</button>
-                                        <p class="point">사용가능 <span>2,000</span></p>
+                                        <input type="number" id="inputPoint" value="0" min="0" max="${sessUser.point}" style="text-align: right; width: 100px;" />
+                                        <button type="button" id="btnApplyPoint">사용하기</button>
+                                        <p class="point">사용가능 <span id="availablePoint"><fmt:formatNumber value="${sessUser.point}" type="number"/></span></p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>받는분</td>
-                                    <td><input type="text" name="receiver" /></td>
+                                    <td><input type="text" id="receiver" required /></td>
                                 </tr>
                                 <tr>
                                     <td>연락처</td>
-                                    <td><input type="text" name="hp" /></td>
+                                    <td><input type="text" id="receiverHp" required /></td>
                                 </tr>
                                 <tr>
                                     <td>배송주소</td>
                                     <td>
-                                        <input type="text" name="zip" readonly /><button id="btnZip">
-                                            우편번호 검색
-                                        </button>
-                                        <input type="text" name="addr1" placeholder="기본주소 검색" />
-                                        <input type="text" name="addr2" placeholder="상세주소 입력" />
+                                        <input type="text" id="zip" readonly /><button type="button" id="btnZip">우편번호 검색</button>
+                                        <input type="text" id="addr1" placeholder="기본주소 검색" readonly />
+                                        <input type="text" id="addr2" placeholder="상세주소 입력" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>결제방법</td>
                                     <td>
-                                        <label><input type="radio" name="payment" />계좌이체</label>
-                                        <label><input type="radio" name="payment" />신용카드</label>
-                                        <label><input type="radio" name="payment" />체크카드</label>
-                                        <label><input type="radio" name="payment" />휴대폰</label>
+                                        <label><input type="radio" name="payment_view" value="계좌이체" checked />계좌이체</label>
+                                        <label><input type="radio" name="payment_view" value="신용카드" />신용카드</label>
+                                        <label><input type="radio" name="payment_view" value="체크카드" />체크카드</label>
+                                        <label><input type="radio" name="payment_view" value="휴대폰" />휴대폰</label>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>기타</td>
+                                    <td>기타(배송메모)</td>
                                     <td>
-                                        <textarea name="etc"></textarea>
+                                        <textarea id="memo" placeholder="배송 메시지를 입력해주세요."></textarea>
                                     </td>
                                 </tr>
                             </table>
                         </div>
-
-                        <!-- 내용 끝 -->
+                        
                     </article>
                 </section>
             </div>
-
-            <footer>
-                <img src="../images/footer_logo.png" alt="로고" />
-                <p>
-                    (주)팜스토리 / 사업자등록번호 123-45-67890 / 통신판매업신고 제 2013-팜스토리구-123호 / 벤처기업확인
-                    서울지방중소기업청 제 012345678-9-01234호<br />
-                    등록번호 팜스토리01234 (2013.04.01) / 발행인 : 홍길동<br />
-                    대표 : 홍길동 / 이메일 : email@mail.mail / 전화 : 01) 234-5678 / 경기도 성남시 잘한다구 신난다동
-                    345<br />
-                    <em>Copyright(C)홍길동 All rights reserved.</em>
-                </p>
-            </footer>
+            
+            <form id="formOrderFinal" action="${path}/market/orderResult.do" method="POST" style="display:none;"></form>
+            
+            <input type="hidden" class="contextPath" value="${path}"/>
+            <input type="hidden" id="hiddenUserid" value="${sessUser.userid}"/>
+            
+            <script src="${path}/js/market.js"></script>
+            <%@ include file="/WEB-INF/views/inc/_footer.jsp" %>
         </div>
     </body>
 </html>

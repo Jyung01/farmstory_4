@@ -16,6 +16,7 @@
         <div id="sub">
             <div><img src="${path}/images/sub_top_tit2.png" alt="MARKET"></div>
             <section class="market">
+             
                 <aside>
                     <img src="${path}/images/sub_aside_cate2_tit.png" alt="장보기"/>
                     <ul class="lnb">
@@ -38,7 +39,7 @@
                             <tr>
                                 <th>
                                     <input type="checkbox" name="all" id="chkAll">
-                                </th>
+                                        </th>
                                 <th>이미지</th>
                                 <th>종류</th>
                                 <th>상품명</th>
@@ -55,19 +56,12 @@
                                     <td colspan="9">장바구니에 상품이 없습니다.</td>
                                 </tr>
                             </c:if>
-                            
+       
                             <c:if test="${not empty cartList}">
                                 <c:forEach var="cart" items="${cartList}">
                                     <tr>
                                         <td>
-										    <c:choose>
-										        <c:when test="${cart.stock <= 0}">
-										            <input type="checkbox" name="cartNo" value="${cart.cartNo}" disabled />
-										        </c:when>
-										        <c:otherwise>
-										            <input type="checkbox" name="cartNo" value="${cart.cartNo}" class="cart-checkbox" />
-										        </c:otherwise>
-										    </c:choose>
+                                            <input type="checkbox" name="cartNo" value="${cart.cartNo}" class="cart-checkbox" data-stock="${cart.stock}" />
 										</td>
                                         <td>
                                             <a href="${path}/market/view.do?prodNo=${cart.prodNo}">
@@ -83,12 +77,14 @@
                                         </td>
 										<td>
 											 <div class="qty-wrap" style="display: flex; align-items: center; justify-content: center; gap: 3px;">
-											    <input type="number" name="count" value="${cart.count}" min="1" max="${cart.stock}" style="width: 40px; text-align: center; height: 18px;" class="cart-qty-input"/>
+											    <input type="number" name="count" value="${cart.count}" min="1" max="${cart.stock}" style="width: 40px; text-align: center; height: 18px;" class="cart-qty-input" ${cart.stock <= 0 ? 'disabled' : ''}/>
 											        
-											    <button type="button" class="btnUpdateQty" data-prodno="${cart.prodNo}" 
-											           style="padding: 1px 3px; min-width: 35px; white-space: nowrap; border: 1px solid #bebebe; background: #f7f7f7; cursor: pointer; font-size: 10px; line-height: 12px; height: 18px; box-sizing: border-box;">
-											            변경
-											    </button>
+											    <c:if test="${cart.stock > 0}">
+												    <button type="button" class="btnUpdateQty" data-prodno="${cart.prodNo}" 
+												           style="padding: 1px 3px; min-width: 35px; white-space: nowrap; border: 1px solid #bebebe; background: #f7f7f7; cursor: pointer; font-size: 10px; line-height: 12px; height: 18px; box-sizing: border-box;">
+												            변경
+												    </button>
+											    </c:if>
 											    <input type="hidden" class="contextPath" value="${path}"/>
 											 </div>
 										</td>
@@ -107,7 +103,7 @@
                     </table>
                     <input type="button" id="btnDeleteSelected" value="선택삭제">
 
-                    <div class="info">                        
+                    <div class="info">           
 					    <table border="0">
 					        <caption>전체합계</caption>                            
 					        <tr>
@@ -135,9 +131,9 @@
 					            <td class="total" style="text-align: right; padding-right: 15px;"><span id="finalOrderPrice">0원</span></td>
 					        </tr>
 					    </table>                        
-					    <input type="submit" class="btnOrder" value="주문하기">
+					    <input type="button" class="btnOrder" id="btnOrderSubmit" value="주문하기">
 					</div>
-                    </article>
+                </article>
             </section>
         </div>
         <script src="${path}/js/market.js"></script>

@@ -11,8 +11,16 @@ public class UserDTO {
     private String zip;
     private String addr1;
     private String addr2;
+    private int point;
     private String regip;
-    private String regDate;
+    
+    public int getPoint() {
+		return point;
+	}
+	public void setPoint(int point) {
+		this.point = point;
+	}
+	private String regDate;
     private String leaveDate;
     
 	public String getUserid() {
@@ -93,14 +101,13 @@ public class UserDTO {
 	public void setLeaveDate(String leaveDate) {
 		this.leaveDate = leaveDate;
 	}
+	
 	@Override
 	public String toString() {
 		return "UserDTO [userid=" + userid + ", pass=" + pass + ", name=" + name + ", nick=" + nick + ", email=" + email
 				+ ", hp=" + hp + ", role=" + role + ", zip=" + zip + ", addr1=" + addr1 + ", addr2=" + addr2
-				+ ", regip=" + regip + ", regDate=" + regDate + ", leaveDate=" + leaveDate + "]";
+				+ ", point=" + point + ", regip=" + regip + ", regDate=" + regDate + ", leaveDate=" + leaveDate + "]";
 	}
-    
-	
-	
+
     
 }
