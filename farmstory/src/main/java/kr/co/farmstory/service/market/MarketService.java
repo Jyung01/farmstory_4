@@ -71,27 +71,35 @@ public enum MarketService {
 	}
 	
 	public List<CartDTO> selectCartList(String userid) {
-	    return MarketDAO.getInstance().selectCartList(userid);
+	    return dao.selectCartList(userid);
 	}
 
     public int checkSoldOut(String userid, int prodNo) {
-        return MarketDAO.getInstance().checkSoldOut(userid, prodNo);
+        return dao.checkSoldOut(userid, prodNo);
     }
 
     public int checkStockLack(String userid, int prodNo, int count) {
-        return MarketDAO.getInstance().checkStockLack(userid, prodNo, count);
+        return dao.checkStockLack(userid, prodNo, count);
     }
 
     public int updateCartCount(int count, String userid, int prodNo) {
-        return MarketDAO.getInstance().updateCartCount(count, userid, prodNo);
+        return dao.updateCartCount(count, userid, prodNo);
     }
     
     public int updateCartCount2(int count, String userid, int prodNo) {
-        return MarketDAO.getInstance().updateCartCount2(count, userid, prodNo);
+        return dao.updateCartCount2(count, userid, prodNo);
     }
 
     public int checkDuplicateCart(String userid, int prodNo) {
-        return MarketDAO.getInstance().checkDuplicateCart(userid, prodNo);
+        return dao.checkDuplicateCart(userid, prodNo);
+    }
+    
+    public void deleteCart(int cartNo) {
+    	dao.deleteCart(cartNo);
+    }
+    
+    public List<CartDTO> selectCartListByCartNo(String[] cartNoArr) {
+    	return dao.selectCartListByCartNo(cartNoArr);
     }
     
 }

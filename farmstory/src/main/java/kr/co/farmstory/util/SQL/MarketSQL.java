@@ -14,17 +14,17 @@ public class MarketSQL {
 	
 	//장바구니
 	public static final String INSERT_CART = "INSERT INTO `cart` SET "
-								            + "userid = ?, "
-								            + "prodNo = ?, "
-								            + "count = ?, "
-								            + "regDate = NOW()";
+								+ "userid = ?, "
+								+ "prodNo = ?, "
+								+ "count = ?, "
+								+ "regDate = NOW()";
 	
 	//동일상품 추가구매
 	public static final String UPDATE_CART = "UPDATE cart SET count = count + ? WHERE userid = ? and prodNo = ?";
 	public static final String SELECT_DUPLICATE_CART_PRODUCT = "SELECT COUNT(*) FROM cart WHERE userid = ? AND prodNo = ?";
 	
 	
-	//장바구니 뿌리기
+	//장바구니 뿌리기 + 주문
 	public static final String SELECT_CART = "SELECT c.*, p.stock, p.cate, p.prodName, p.thumb, p.discount, p.point, p.price, (p.price - (p.price * p.discount / 100)) * c.count AS total "
 											+ "FROM cart AS c JOIN product AS p "
 											+ "ON c.prodNo = p.prodNo WHERE c.userid = ?";
@@ -34,14 +34,48 @@ public class MarketSQL {
 	
 	//품절체크
 	public static final String SELECT_CHECK_SOLDOUT = "SELECT COUNT(*) FROM cart AS c "
-												   + "JOIN product AS p ON c.prodNo = p.prodNo "
-												   + "WHERE c.userid = ? AND c.prodNo = ? AND p.stock <= 0";
+												+ "JOIN product AS p ON c.prodNo = p.prodNo "
+												+ "WHERE c.userid = ? AND c.prodNo = ? AND p.stock <= 0";
 	
 	//재고체크
 	public static final String SELECT_CHECK_STOCK = "SELECT COUNT(*) FROM cart AS c " 
 													+ "JOIN product AS p ON c.prodNo = p.prodNo " 
 													+ "WHERE c.userid = ? AND c.prodNo = ? AND (c.count + ?) > p.stock";
+
 	
 	//장바구니 삭제
-	public static final String DELETE_CART = "";
+	public static final String DELETE_CART = "DELETE FROM cart WHERE cartNo = ?";
+	
+	//장바구니 주문 상품
+	public static final String SELECT_ORDER_PRODUCT = "SELECT a.*, b.prodName, b.price, b.discount, b.point, b.thumb, b.cate, b.stock "
+										            + "FROM cart AS a JOIN product AS b ON a.prodNo = b.prodNo "
+										            + "WHERE a.cartNo = ?";
+	
+	//주문 삽입 - 주문테이블
+	public static final String INSERT_ORDER = "INSERT INTO orders SET"
+											+ " userid = ?,"
+											+ " orderer = ?,"
+											+ " hp = ?,"
+											+ " receiver = ?,"
+											+ " receiverHp = ?,"
+											+ " zip = ?,"
+											+ " addr1 = ?,"
+											+ " addr2 = ?,"
+											+ " usedPoint = ?,"
+											+ " savePoint = ?,"
+											+ " delivery = ?,"
+											+ " totalPrice = ?,"
+											+ " payment = ?,"
+											+ " memo = '주문완료',"
+											+ " status = ?,"
+											+ " regDate = NOW()";
+	
+	//주문 삽입 - 주문상품테이블
+	public static final String INSERT_ORDER_ITEM = "INSERT INTO order_item SET"
+												   + " orderNo = ?,"
+												   + " prodNo  = ?,"
+												   + " count   = ?,"
+												   + " price   = ?";
+	//포인트변경
+	public static final String UPDATE_USER_USE_POINT ="UPDATE user SET point = point - ? WHERE userid = ?";
 }

@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (e.currentTarget.id === 'btnCart') {
-                console.log("JS 변수 확인 -> prodNo:", prodNo, " / count:", count);
                 var requestUrl = contextPath + '/market/cart.do?prodNo=' + prodNo + '&count=' + count + '&checkOri=true';
 
                 function sendCartRequest(url) {
@@ -240,6 +239,78 @@ document.addEventListener('DOMContentLoaded', function() {
         if (subtotalStrong) {
             subtotalStrong.innerText = finalPrice.toLocaleString();
         }
+    }
+
+    var btnPaySubmit = document.getElementById('btnPaySubmit');
+    
+    if (btnPaySubmit) {
+        btnPaySubmit.addEventListener('click', function() {
+            var form = document.getElementById('formOrderFinal');
+            if (!form) return;
+            
+            form.innerHTML = '';
+            
+            var elHiddenUserid = document.getElementById('hiddenUserid');
+            var elOrderer = document.getElementById('orderer');
+            var elOrdererHp = document.getElementById('ordererHp');
+            var elInputPoint = document.getElementById('inputPoint');
+            var elReceiver = document.getElementById('receiver');
+            var elReceiverHp = document.getElementById('receiverHp');
+            var elZip = document.getElementById('zip');
+            var elAddr1 = document.getElementById('addr1');
+            var elAddr2 = document.getElementById('addr2');
+            var elMemo = document.getElementById('memo');
+            var elPayment = document.querySelector('input[name="payment_view"]:checked');
+            
+            var fields = {
+                userid: elHiddenUserid ? elHiddenUserid.value : '',
+                orderer: elOrderer ? elOrderer.value : '',
+                ordererHp: elOrdererHp ? elOrdererHp.value : '',
+                usedPoint: elInputPoint ? elInputPoint.value : '0',
+                receiver: elReceiver ? elReceiver.value : '',
+                receiverHp: elReceiverHp ? elReceiverHp.value : '',
+                zip: elZip ? elZip.value : '',
+                addr1: elAddr1 ? elAddr1.value : '',
+                addr2: elAddr2 ? elAddr2.value : '',
+                memo: elMemo ? elMemo.value : '',
+                payment: elPayment ? elPayment.value : '계좌이체'
+            };
+            
+            if (!fields.receiver.trim()) { alert('받는 분 이름을 입력해주세요.'); if(elReceiver) elReceiver.focus(); return; }
+            if (!fields.receiverHp.trim()) { alert('연락처를 입력해주세요.'); if(elReceiverHp) elReceiverHp.focus(); return; }
+            if (!fields.zip.trim()) { alert('우편번호를 검색해주세요.'); return; }
+            
+            for (var key in fields) {
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = fields[key];
+                form.appendChild(input);
+            }
+            
+            var rows = document.querySelectorAll('.order-item-row');
+            rows.forEach(function(row) {
+                var cartNo = row.getAttribute('data-cartno');
+                var prodNo = row.getAttribute('data-prodno');
+                
+                if (cartNo) {
+                    var inputCart = document.createElement('input');
+                    inputCart.type = 'hidden';
+                    inputCart.name = 'cartNo';
+                    inputCart.value = cartNo;
+                    form.appendChild(inputCart);
+                }
+                if (prodNo) {
+                    var inputProd = document.createElement('input');
+                    inputProd.type = 'hidden';
+                    inputProd.name = 'prodNo';
+                    inputProd.value = prodNo;
+                    form.appendChild(inputProd);
+                }
+            });
+            
+            form.submit();
+        });
     }
 
     if (cartTotalPriceEl) {

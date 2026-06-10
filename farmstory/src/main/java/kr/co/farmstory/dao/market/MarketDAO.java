@@ -298,4 +298,52 @@ public class MarketDAO extends DBHelper {
         }
         return result;
     }
+    
+    public void deleteCart(int cartNo) {
+    	try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(MarketSQL.DELETE_CART);
+			psmt.setInt(1, cartNo);
+			psmt.executeUpdate();
+			closeAll();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public List<CartDTO> selectCartListByCartNo(String[] cartNoArr) {
+        List<CartDTO> cartList = new ArrayList<>();
+        if (cartNoArr == null || cartNoArr.length == 0) return cartList;
+
+        try {
+            conn = getConnection();
+            psmt = conn.prepareStatement(MarketSQL.SELECT_ORDER_PRODUCT);
+            
+            for (String cartNoStr : cartNoArr) {
+                psmt.setInt(1, Integer.parseInt(cartNoStr));
+                rs = psmt.executeQuery();
+                
+                if (rs.next()) {
+                    CartDTO dto = new CartDTO();
+                    dto.setCartNo(rs.getInt("cartNo"));
+                    dto.setUserid(rs.getString("userid"));
+                    dto.setProdNo(rs.getInt("prodNo"));
+                    dto.setCount(rs.getInt("count"));
+                    dto.setCate(rs.getString("cate"));
+                    dto.setProdName(rs.getString("prodName"));
+                    dto.setThumb(rs.getString("thumb"));
+                    dto.setDiscount(rs.getInt("discount"));
+                    dto.setPoint(rs.getInt("point"));
+                    dto.setPrice(rs.getInt("price"));
+                    dto.setStock(rs.getInt("stock"));
+                    
+                    cartList.add(dto);
+                }
+            }
+            closeAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cartList;
+    }
 }
