@@ -678,38 +678,39 @@ footer .version {
     z-index: 9998;
 }
 
-#eventModal {
+#eventModal,
+#modifyModal {
     display: none;
-
     position: fixed;
     left: 50%;
     top: 50%;
-
     transform: translate(-50%, -50%);
-
     width: 400px;
     padding: 20px;
-
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
-
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
-
     z-index: 9999;
+    box-sizing: border-box;
 }
 
-#eventModal h3 {
+#eventModal h3,
+#modifyModal h3 {
     margin-bottom: 15px;
     font-size: 18px;
+    font-weight: bold;
 }
 
-#eventModal p {
+#eventModal p,
+#modifyModal p {
     margin-bottom: 10px;
 }
 
 #eventModal input[type="text"],
-#eventModal input[type="date"] {
+#eventModal input[type="date"],
+#modifyModal input[type="text"],
+#modifyModal input[type="date"] {
     width: 100%;
     height: 35px;
     margin-top: 5px;
@@ -718,28 +719,33 @@ footer .version {
     box-sizing: border-box;
 }
 
-#eventModal .btnArea {
+#eventModal .btnArea,
+#modifyModal .btnArea {
     margin-top: 15px;
     text-align: right;
 }
 
-#eventModal input[type="submit"] {
-    width: 70px;
+#eventModal input[type="submit"],
+#modifyModal input[type="submit"] {
+    width: 75px;
     height: 35px;
-
     border: 1px solid #3b3c3f;
     background: #4b545e;
     color: #fff;
-
     cursor: pointer;
 }
 
-#eventModal button {
+#eventModal button,
+#modifyModal button {
     width: 70px;
     height: 35px;
-
     border: 1px solid #ccc;
     background: #fff;
-
     cursor: pointer;
+}
+
+#btnDeleteEvent {
+    border: 1px solid #b94a48 !important;
+    background: #c94f4f !important;
+    color: #fff;
 }

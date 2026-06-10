@@ -104,8 +104,8 @@
 							        <a href="${path}/article/list.do?groupName=${groupName}&cate=${cate}&page=${pageGroup.end + 1}&searchType=${searchType}&keyword=${keyword}" class="next">다음</a>
 							    </c:if>
                             </div>
-							<!-- 로그인 체크 및 공지사항 게시판 관리자 권한 체크 -->
-                            <c:if test="${not empty sessUser and (cate ne 'notice' or sessUser.role eq 'admin')}">
+							<!-- 로그인 체크 및 공지사항/자주묻는질문 게시판 관리자 권한 체크 -->
+                            <c:if test="${not empty sessUser and ((cate ne 'notice' and cate ne 'faq') or sessUser.role eq 'admin')}">
 							    <a href="${path}/article/write.do?groupName=${groupName}&cate=${cate}" class="btn btnWrite">글쓰기</a>
 							</c:if>
                         </section>

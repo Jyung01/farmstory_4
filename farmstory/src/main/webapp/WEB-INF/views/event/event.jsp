@@ -59,6 +59,25 @@
 							        </div>
 							    </form>
 							</div>
+							<div id="modifyModal">
+							    <form action="${path}/event/modify.do" method="post">
+							
+							        <input type="hidden" name="eventNo" id="modifyEventNo">
+							
+							        <h3>이벤트 수정</h3>
+							
+							        <p>제목<input type="text" name="title" id="modifyTitle"></p>
+							        <p>시작일<input type="date" name="startDate" id="modifyStartDate"></p>
+							        <p>종료일<input type="date" name="endDate" id="modifyEndDate">
+							        </p>
+							        <div class="btnArea">
+							            <button type="button" id="btnDeleteEvent">삭제</button>
+							            <button type="button" id="modifyClose">취소</button>
+							            <input type="submit" value="수정완료">
+							        </div>
+							
+							    </form>
+							</div>
 		            	</div>
 		          	</article>
 		        </section>
