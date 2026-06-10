@@ -10,7 +10,7 @@ function checkUserid() {
     .then(resp => resp.text())
     .then(result => {
         const span = document.querySelector('.uidResult');
-        if(result == 'yes') {
+        if(result == '0') {
             span.style.color = 'green';
             span.innerText = '사용 가능한 아이디입니다.';
         } else {
@@ -38,19 +38,20 @@ function checkPass() {
         span.innerText = '비밀번호가 일치하지 않습니다.';
     }
 }
+
 function checkNick() {
     const value = document.querySelector('input[name="nick"]').value;
-    
+
     if(value == '') {
         alert('별명을 입력해주세요!');
         return;
     }
-    
+
     fetch('/farmstory/user/check.do?type=nick&value=' + value)
     .then(resp => resp.text())
     .then(result => {
         const span = document.querySelector('.nickResult');
-        if(result == 'yes') {
+        if(result == '0') {
             span.style.color = 'green';
             span.innerText = '사용 가능한 별명입니다.';
         } else {
@@ -60,8 +61,6 @@ function checkNick() {
     });
 }
 
-
-
 function sendEmail() {
     const email = document.querySelector('input[name="email"]').value;
     
@@ -70,16 +69,14 @@ function sendEmail() {
         return;
     }
     
-    // 이메일 중복확인 먼저!
     fetch('/farmstory/user/check.do?type=email&value=' + email)
     .then(resp => resp.text())
     .then(result => {
-        if(result == 'no') {
+        if(result == '1') {
             const span = document.querySelector('.emailResult');
             span.style.color = 'red';
             span.innerText = '이미 사용중인 이메일입니다.';
         } else {
-            // 중복 아니면 인증번호 발송
             fetch('/farmstory/user/email.do?email=' + email)
             .then(resp => resp.text())
             .then(result => {
@@ -116,7 +113,6 @@ function checkAuth() {
     });
 }
 
-
 function validateForm() {
     const userid = document.querySelector('input[name="uid"]').value;
     const pass1 = document.querySelector('input[name="pass1"]').value;
@@ -139,6 +135,7 @@ function validateForm() {
     
     return true;
 }
+
 function searchZip() {
     new daum.Postcode({
         oncomplete: function(data) {
@@ -150,38 +147,26 @@ function searchZip() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-
     const btnNick = document.getElementById('btnNickCheck');
-
     if (!btnNick) return;
-
     btnNick.addEventListener('click', function () {
-
         const nick = document.querySelector('input[name="nick"]').value.trim();
         const resultSpan = document.querySelector('.nickResult');
-
         if (!nick) {
             resultSpan.innerText = "닉네임을 입력하세요.";
             resultSpan.style.color = "red";
             return;
         }
-
-        fetch(`${path}/user/check.do?type=nick&value=` + encodeURIComponent(nick))
-            .then(resp => resp.text())
-            .then(data => {
-
-                if (data == 1) {
-                    resultSpan.innerText = "❌ 사용 불가능한 닉네임입니다.";
-                    resultSpan.style.color = "red";
-                } else {
-                    resultSpan.innerText = "✅ 사용 가능한 닉네임입니다.";
-                    resultSpan.style.color = "green";
-                }
-
-            });
-
+        fetch(`/farmstory/user/check.do?type=nick&value=` + encodeURIComponent(nick))
+        .then(resp => resp.text())
+        .then(data => {
+            if (data == '1') {
+                resultSpan.innerText = "❌ 사용 불가능한 닉네임입니다.";
+                resultSpan.style.color = "red";
+            } else {
+                resultSpan.innerText = "✅ 사용 가능한 닉네임입니다.";
+                resultSpan.style.color = "green";
+            }
+        });
     });
-
 });
-
-
