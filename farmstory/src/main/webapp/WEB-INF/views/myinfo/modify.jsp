@@ -7,6 +7,8 @@
         <meta charset="UTF-8" />
         <title>팜스토리::정보수정</title>
         <link rel="stylesheet" href="${path}/css/modify.css" />
+        <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        
     </head>
     <body>
         <div id="container">
@@ -51,7 +53,7 @@
                                         <td>비밀번호 확인</td>
                                         <td>
                                             <input type="password" name="pass2" placeholder="비밀번호 입력 확인" />
-                                            <button type="button" class="btnUpdatePass">비밀번호 수정</button>
+                                            <button type="button" class="btnUpdatePass" onclick="updatePass()">비밀번호 수정</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -85,7 +87,7 @@
                                         <td>
                                             <input type="email" name="email" value="${sessUser.email }" />
                                             <span class="emailResult"></span>
-                                            <button type="button" id="btnEmailAuth">
+                                            <button type="button" id="btnEmailAuth" onclick="sendEmail()">
                                                 <img src="${path}/images/myinfo/chk_auth.gif" alt="인증번호 받기" />
                                             </button>
                                             <div class="auth">
@@ -113,7 +115,7 @@
 												value="${sessUser.zip }"                                                
                                                 readonly="readonly"
                                             />
-                                            <button type="button">
+                                            <button type="button" onclick="searchZip()">
                                                 <img src="${path}/images/myinfo/chk_post.gif" alt="우편번호찾기" />
                                             </button>
                                             <input type="text" name="addr1" id="addr1" value="${sessUser.addr1 }"/>
@@ -129,7 +131,7 @@
                                 </table>
 
                                 <div>
-                                    <a href="/Jboard2/user/login.do" class="btn btnCancel">취소</a>
+                                    <a href="${path}/index.jsp" class="btn btnCancel">취소</a>
                                     <input type="submit" value="회원수정" class="btn btnRegister" />
                                 </div>
                             </form>
@@ -152,5 +154,6 @@
             </footer>
         </div>
         <script src="${path}/js/register.js"></script>
+        <script src="${path}/js/modify.js"></script>
     </body>
 </html>

@@ -41,4 +41,19 @@ public enum UserService {
 		return dao.selectAll();
 	}
 	
+	public int updatePass(String userid, String pass) {
+	    return dao.updatePass(userid, pass);
+	}
+	
+	public String selectUserIdByNameEmail(String name, String email) {
+		return dao.selectUserIdByNameEmail(name, email);
+	}
+
+	public String selectUserByNameEmail(String name, String email) {
+		return dao.selectUserByNameEmail(name, email);
+	}
+	
+	
+	
+	
 }

@@ -57,7 +57,7 @@
                     <h3>회원 로그인 안내</h3>
                     <p>아직 회원이 아니시면 회원으로 가입하세요.</p>
                     <div style="text-align: right;">
-                        <a href="${path}/user/userid.do">아이디 |</a>
+                        <a href="${path}/user/userid.do">아이디찾기 |</a>
                         <a href="${path}/user/password.do">비밀번호찾기 |</a>
                         <a href="${path}/user/terms.do">회원가입</a>
                     </div>
