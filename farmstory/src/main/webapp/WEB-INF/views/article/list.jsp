@@ -61,7 +61,16 @@
                                 <c:set var="num" value="${pageStartNum}" />
                                 <c:if test="${empty dtoList}">
 								    <tr>
-								        <td colspan="5">검색 결과가 없습니다.</td>
+								        <td colspan="5">
+								        	<c:choose>
+							                <c:when test="${not empty keyword}">
+							                    <p>검색결과가 없습니다.</p>
+							                </c:when>
+							                <c:otherwise>
+							                    <p>등록된 게시글이 없습니다.</p>
+							                </c:otherwise>
+							            </c:choose>
+								        </td>
 								    </tr>
 								</c:if>
                                 <c:forEach var="dto" items="${dtoList}">	
@@ -95,8 +104,8 @@
 							        <a href="${path}/article/list.do?groupName=${groupName}&cate=${cate}&page=${pageGroup.end + 1}&searchType=${searchType}&keyword=${keyword}" class="next">다음</a>
 							    </c:if>
                             </div>
-
-                            <c:if test="${not empty sessUser}">
+							<!-- 로그인 체크 및 공지사항 게시판 관리자 권한 체크 -->
+                            <c:if test="${not empty sessUser and (cate ne 'notice' or sessUser.role eq 'admin')}">
 							    <a href="${path}/article/write.do?groupName=${groupName}&cate=${cate}" class="btn btnWrite">글쓰기</a>
 							</c:if>
                         </section>

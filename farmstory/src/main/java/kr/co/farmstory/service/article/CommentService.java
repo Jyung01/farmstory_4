@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.co.farmstory.dao.article.CommentDAO;
 import kr.co.farmstory.dto.article.CommentDTO;
+import kr.co.farmstory.dto.user.UserDTO;
 
 public enum CommentService {
 	
@@ -33,6 +34,25 @@ public enum CommentService {
 	
 	public CommentDTO findById(int cno) {
 	    return dao.select(cno);
+	}
+	
+	public boolean isOwnerOrAdmin(int cno, UserDTO sessUser) {
+
+	    CommentDTO origin = dao.select(cno);
+
+	    if(origin == null) {
+	        return false;
+	    }
+
+	    if(sessUser.getUserid().equals(origin.getWriter())) {
+	        return true;
+	    }
+
+	    if("admin".equals(sessUser.getRole())) {
+	        return true;
+	    }
+
+	    return false;
 	}
 	
 }

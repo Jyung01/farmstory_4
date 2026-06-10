@@ -5,6 +5,7 @@ import java.util.List;
 import kr.co.farmstory.dao.article.ArticleDAO;
 import kr.co.farmstory.dto.article.ArticleDTO;
 import kr.co.farmstory.dto.page.PageGroupDTO;
+import kr.co.farmstory.dto.user.UserDTO;
 
 public enum ArticleService {
 	
@@ -20,6 +21,26 @@ public enum ArticleService {
 	
 	public List<ArticleDTO> findAll(String groupName, String cate, int start, String searchType, String keyword) {
 		return dao.selectAll(groupName, cate, start, searchType, keyword);
+	}
+	
+	public void updateHit(int ano) {
+	    dao.updateHit(ano);
+	}
+	
+	public ArticleDTO findById(int ano) {
+	    return dao.select(ano);
+	}
+	
+	public void modify(ArticleDTO dto) {
+	    dao.update(dto);
+	}
+	
+	public void updateFileCount(int ano, int fileCount) {
+	    dao.updateFileCount(ano, fileCount);
+	}
+	
+	public void remove(int ano) {
+	    dao.delete(ano);
 	}
 	
 	// 현재 페이지 번호 계산
@@ -73,11 +94,25 @@ public enum ArticleService {
 	    return (int)Math.ceil(total / 10.0);
 	}
 	
-	public void updateHit(int ano) {
-	    dao.updateHit(ano);
+	// 권한 체크
+	public boolean isOwnerOrAdmin(int ano, UserDTO sessUser) {
+
+	    ArticleDTO origin = dao.select(ano);
+
+	    if(origin == null) {
+	        return false;
+	    }
+
+	    if(sessUser.getUserid().equals(origin.getWriter())) {
+	        return true;
+	    }
+
+	    if("admin".equals(sessUser.getRole())) {
+	        return true;
+	    }
+
+	    return false;
 	}
 	
-	public ArticleDTO findById(int ano) {
-	    return dao.select(ano);
-	}
+	
 }

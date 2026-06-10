@@ -29,7 +29,7 @@
         <li><a href="${path}/introduction/hello.jsp">팜스토리소개</a></li>
         <li><a href="${path}/market/list.do"><img src="${path}/images/head_menu_badge.png" alt="30%" />장보기</a></li>
         <li><a href="${path}/article/list.do?groupName=crop&cate=story">농작물이야기</a></li>
-        <li><a href="${path}/event/event.jsp">이벤트</a></li>
+        <li><a href="${path}/event/view.do">이벤트</a></li>
         <li><a href="${path}/article/list.do?groupName=community&cate=notice">커뮤니티</a></li>
     </ul>
 </header>

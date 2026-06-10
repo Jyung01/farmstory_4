@@ -109,4 +109,46 @@ public class FileDAO extends DBHelper {
 	        e.printStackTrace();
 	    }
 	}
+	
+	public void delete(int fno) {
+
+	    try {
+	        conn = getConnection();
+
+	        psmt = conn.prepareStatement(ArticleSQL.DELETE_FILE);
+	        psmt.setInt(1, fno);
+
+	        psmt.executeUpdate();
+
+	        closeAll();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public int countFiles(int ano) {
+
+	    int count = 0;
+
+	    try {
+	        conn = getConnection();
+
+	        psmt = conn.prepareStatement(ArticleSQL.COUNT_FILES);
+	        psmt.setInt(1, ano);
+
+	        rs = psmt.executeQuery();
+
+	        if(rs.next()) {
+	            count = rs.getInt(1);
+	        }
+
+	        closeAll();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return count;
+	}
 }

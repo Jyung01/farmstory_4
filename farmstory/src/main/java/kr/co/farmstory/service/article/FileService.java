@@ -28,4 +28,12 @@ public enum FileService {
 	public void updateDownload(int fno) {
 	    dao.updateDownload(fno);
 	}
+	
+	public void remove(int fno) {
+	    dao.delete(fno);
+	}
+	
+	public int countFiles(int ano) {
+	    return dao.countFiles(ano);
+	}
 }

@@ -1,85 +1,70 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>팜스토리::이벤트</title>
-    <link rel="stylesheet" href="../css/crop.css" />
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var calendarEl = document.getElementById("fc-calendar");
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: "dayGridMonth",
-          initialDate: "2026-05-17", // 사진 속 2026년 5월 기준 설정
-          locale: "en", // 요일 표시 (Sun, Mon...)
-          height: 600, // 달력 전체 높이 지정
-
-          // 상단 헤더 배치 설정 (왼쪽: 년/월, 오른쪽: 오늘/이전/다음 버튼)
-          headerToolbar: {
-            left: "title",
-            right: "today prev,next",
-          },
-        });
-        calendar.render();
-      });
-    </script>
-  </head>
-  <body>
-    <div id="container">
-      <header>
-        <a href="../index.html" class="logo"><img src="../images/logo.png" alt="로고" /></a>
-        <p>
-          <a href="#">HOME |</a>
-          <a href="#">로그인 |</a>
-          <a href="#">회원가입 |</a>
-          <a href="#">나의정보 |</a>
-          <a href="#">로그아웃 |</a>
-          <a href="#">관리자 |</a>
-          <a href="#">고객센터</a>
-        </p>
-        <img src="../images/head_txt_img.png" alt="3만원 이상 무료배송" />
-
-        <ul class="gnb">
-          <li><a href="#">팜스토리소개</a></li>
-          <li>
-            <a href="#"><img src="../images/head_menu_badge.png" alt="30%" />장바구니</a>
-          </li>
-          <li><a href="../crop/grow.html">농작물이야기</a></li>
-          <li><a href="./event.html">이벤트</a></li>
-          <li><a href="../community/notice.html">커뮤니티</a></li>
-        </ul>
-      </header>
-      <div id="crop">
-        <div><img src="../images/sub_top_tit3.png" alt="CROP TALK" /></div>
-        <section class="event">
-          <aside>
-            <img src="../images/sub_aside_cate4_tit.png" alt="이벤트" />
-            <ul class="lnb">
-              <li class="on"><a href="#">이벤트</a></li>
-            </ul>
-          </aside>
-          <article id="board">
-            <nav>
-              <img src="../images/sub_nav_tit_cate4_tit1.png" alt="이벤트" />
-              <p>HOME > 이벤트 > <em>이벤트</em></p>
-            </nav>
-
-            <div id="fc-calendar" style="min-height: 500px; margin-top: 20px"></div>
-          </article>
-        </section>
-      </div>
-
-      <footer>
-        <img src="../images/footer_logo.png" alt="로고" />
-        <p>
-          (주)팜스토리 / 사업자등록번호 123-45-67890 / 통신판매업신고 제 2013-팜스토리구-123호 / 벤처기업확인
-          서울지방중소기업청 제 012345678-9-01234호<br />
-          등록번호 팜스토리01234 (2013.04.01) / 발행인 : 홍길동<br />
-          대표 : 홍길동 / 이메일 : email@mail.mail / 전화 : 01) 234-5678 / 경기도 성남시 잘한다구 신난다동 345<br />
-          <em>Copyright(C)홍길동 All rights reserved.</em>
-        </p>
-      </footer>
-    </div>
-  </body>
+  	<head>
+	    <meta charset="UTF-8" />
+	    <title>팜스토리::이벤트</title>
+	    <link rel="stylesheet" href="${path}/css/crop.css" />
+	    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+	    <script>
+	    const path = '${path}';
+	    const isAdmin = ${not empty sessUser and sessUser.role eq 'admin'};
+	
+	    const eventData = [
+	        <c:forEach var="event" items="${eventList}" varStatus="status">
+	        {
+	            id:'${event.eventNo}',
+	            title:'${event.title}',
+	            start:'${event.startDate}',
+	            end:'${event.endDate}'
+	        }${status.last ? '' : ','}
+	        </c:forEach>
+	    ];
+		</script>
+		
+		<script src="${path}/js/event.js"></script>
+  	</head>
+  	<body>
+	    <div id="container">
+	      	<!-- header import -->
+	      	<jsp:include page="/WEB-INF/views/inc/_header.jsp"></jsp:include>
+	      	<div id="crop">
+	        	<div><img src="${path}/images/sub_top_tit3.png" alt="CROP TALK" /></div>
+		        <section class="event">
+		          	<aside>
+			            <img src="${path}/images/sub_aside_cate4_tit.png" alt="이벤트" />
+			            <ul class="lnb">
+			              	<li class="on"><a href="#">이벤트</a></li>
+			            </ul>
+		          	</aside>
+		          	<article id="board">
+			            <nav>
+			              	<img src="${path}/images/sub_nav_tit_cate4_tit1.png" alt="이벤트" />
+			              	<p>HOME > 이벤트 > <em>이벤트</em></p>
+			            </nav>
+		            	<div id="fc-calendar" style="min-height: 500px; margin-top: 20px"></div>
+		            	<!-- 관리자가 누르면 보여줄 모달창 -->
+		            	<div id="modalBg">
+		            		<div id="eventModal" style="display:none;">
+							    <form action="${path}/event/write.do" method="post">
+							        <h3>이벤트 등록</h3>
+							        <p>제목<input type="text" name="title" id="eventTitle"></p>	
+							        <p>시작일<input type="date" name="startDate" id="startDate"></p>				
+							        <p>종료일<input type="date" name="endDate" id="endDate"></p>			
+							        <div class="btnArea">
+							            <input type="submit" value="등록">
+							            <button type="button" id="modalClose">취소</button>
+							        </div>
+							    </form>
+							</div>
+		            	</div>
+		          	</article>
+		        </section>
+	      </div>
+	      <!-- footer import -->
+	      <jsp:include page="/WEB-INF/views/inc/_footer.jsp"></jsp:include>
+	    </div>
+	  </body>
 </html>
