@@ -6,12 +6,14 @@ import kr.co.farmstory.dao.market.MarketDAO;
 import kr.co.farmstory.dto.cart.CartDTO;
 import kr.co.farmstory.dto.page.PageGroupDTO;
 import kr.co.farmstory.dto.product.ProductDTO;
+import kr.co.farmstory.dto.user.UserDTO;
 
 public enum MarketService {
 
 	INSTANCE;
 	
 	private MarketDAO dao = MarketDAO.getInstance();
+
 	
 	public int getCurrentPage(String page) {
 		int currentPage = 1;
@@ -100,6 +102,10 @@ public enum MarketService {
     
     public List<CartDTO> selectCartListByCartNo(String[] cartNoArr) {
     	return dao.selectCartListByCartNo(cartNoArr);
+    }
+    
+    public UserDTO selectOrderUser(String userid) {
+        return dao.selectOrderUser(userid);
     }
     
 }

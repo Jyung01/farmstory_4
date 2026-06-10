@@ -47,109 +47,116 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:if test="${empty orderList}">
-                                    <tr class="empty">
-                                        <td colspan="8" style="text-align: center; padding: 20px;">주문할 상품이 선택되지 않았습니다.</td>
-                                    </tr>
-                                </c:if>
-                                
-                                <c:if test="${not empty orderList}">
-                                    <c:forEach var="item" items="${orderList}">
-                                        <tr class="order-item-row" data-cartno="${item.cartNo}" data-prodno="${item.prodNo}">
-                                            <td>
-                                                <a href="${path}/market/view.do?prodNo=${item.prodNo}">
-                                                    <img src="${path}${item.thumb}" class="thumb" alt="${item.prodName}" />
-                                                </a>
-                                            </td>
-                                            <td>${item.cate}</td>
-                                            <td style="text-align: left; padding-left: 15px;">
-                                                <a href="${path}/market/view.do?prodNo=${item.prodNo}">${item.prodName}</a>
-                                            </td>
-                                            <td class="item-count" data-count="${item.count}">${item.count}</td>
-                                            <td class="item-discount" data-discount="${item.discount}">${item.discount}%</td>
-                                            <td class="item-point" data-point="${item.point * item.count}"><fmt:formatNumber value="${item.point * item.count}" type="number"/>P</td>
-                                            <td class="item-price" data-price="${item.price}"><fmt:formatNumber value="${item.price}" type="number"/>원</td>
-                                            <td class="item-subtotal">
-                                                <strong>
-                                                    <fmt:formatNumber value="${(item.price - (item.price * item.discount / 100)) * item.count}" type="number"/>
-                                                </strong>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </c:if>
-                            </tbody>
-                        </table>
-
-                        <div class="final">
-                            <table border="0">
-                                <caption>최종결제정보</caption>
-                                <tr>
-                                    <th>상품수</th>
-                                    <td><span id="totalCount">0</span></td>
-                                </tr>
-                                <tr>
-                                    <th>상품금액</th>
-                                    <td><span id="cartTotalPrice">0</span></td>
-                                </tr>
-                                <tr>
-                                    <th>할인금액</th>
-                                    <td><span id="totalDiscount">0</span></td>
-                                </tr>
-                                <tr>
-                                    <th>포인트사용</th>
-                                    <td><span id="displayedUsedPoint">0</span>P</td>
-                                </tr>
-                                <tr>
-                                    <th>배송비</th>
-                                    <td class="delivery"><span id="totalDelivery">0</span></td>
-                                </tr>
-                                <tr>
-                                    <th>포인트적립</th>
-                                    <td><span id="totalSavePoint">0</span>P</td>
-                                </tr>
-                                <tr>
-                                    <th>전체주문금액</th>
-                                    <td class="total"><span id="finalOrderPrice">0</span></td>
-                                </tr>
-                            </table>
-                            <input type="button" class="btnOrder" id="btnPaySubmit" value="결제하기" />
-                        </div>
+							    <c:if test="${empty orderList}">
+							        <tr class="empty">
+							            <td colspan="8" style="text-align: center; padding: 20px;">주문할 상품이 선택되지 않았습니다.</td>
+							        </tr>
+							    </c:if>
+							
+							    <c:if test="${not empty orderList}">
+							        <c:forEach var="item" items="${orderList}">
+							            <tr class="order-item-row" data-cartno="${item.cartNo}" data-prodno="${item.prodNo}">
+							                <td>
+							                    <a href="${path}/market/view.do?prodNo=${item.prodNo}">
+							                        <img src="${path}${item.thumb}" class="thumb" alt="${item.prodName}" />
+							                    </a>
+							                </td>
+							                <td>${item.cate}</td>
+							                <td style="text-align: left; padding-left: 15px;">
+							                    <a href="${path}/market/view.do?prodNo=${item.prodNo}">${item.prodName}</a>
+							                </td>
+							                <td class="item-count" data-count="${item.count}">${item.count}개</td>
+							                <td class="item-discount" data-discount="${item.discount}">${item.discount}%</td>
+							                <td class="item-point" data-point="${item.point * item.count}">
+							                    <span class="row-point"><fmt:formatNumber value="${item.point * item.count}" type="number"/></span>P
+							                </td>
+							                <td class="item-price" data-price="${item.price}">
+							                    <span class="row-price"><fmt:formatNumber value="${item.price}" type="number"/></span>원
+							                </td>
+							                <td class="item-subtotal">
+							                    <strong>
+							                        <span class="row-subtotal"><fmt:formatNumber value="${(item.price - (item.price * item.discount / 100)) * item.count}" type="number"/></span>
+							                    </strong>원
+							                </td>
+							            </tr>
+							        </c:forEach>
+							    </c:if>
+							</tbody>
+							</table>
+							
+							
+							<div class="final">
+							    <table border="0">
+							        <caption>최종결제정보</caption>
+							        <tr>
+							            <th>상품수</th>
+							            <td><span id="totalCount">0개</span></td>
+							        </tr>
+							        <tr>
+							            <th>상품금액</th>
+							            <td><span id="cartTotalPrice">0원</span></td>
+							        </tr>
+							        <tr>
+							            <th>할인금액</th>
+							            <td><span id="totalDiscount">0원</span></td>
+							        </tr>
+							        <tr>
+							            <th>포인트사용</th>
+							            <td><span id="displayedUsedPoint">0</span>P</td>
+							        </tr>
+							        <tr>
+							            <th>배송비</th>
+							            <td class="delivery"><span id="totalDelivery">0원</span></td>
+							        </tr>
+							        <tr>
+							            <th>포인트적립</th>
+							            <td><span id="totalSavePoint">0</span></td>
+							        </tr>
+							        <tr>
+							            <th>전체주문금액</th>
+							            <td class="total"><span id="finalOrderPrice">0원</span></td>
+							        </tr>
+							    </table>
+							    <input type="button" class="btnOrder" id="btnPaySubmit" value="결제하기" />
+							</div>
 
                         <h3>주문정보 입력</h3>
                         <div class="shipping">
                             <table>
                                 <tr>
                                     <td>주문자</td>
-                                    <td><input type="text" id="orderer" value="${sessUser.name}" readonly /></td>
+                                    <td><input type="text" id="orderer" value="${orderUser.name}" placeholder="주문자 이름" style="padding: 0 8px; height: 26px;" /></td>
                                 </tr>
                                 <tr>
                                     <td>휴대폰</td>
-                                    <td><input type="text" id="ordererHp" value="${sessUser.hp}" readonly /></td>
+                                    <td><input type="text" id="ordererHp" value="${orderUser.hp}" placeholder="010-0000-0000" style="padding: 0 8px; height: 26px;" /></td>
                                 </tr>
                                 <tr>
                                     <td>포인트사용</td>
                                     <td>
-                                        <input type="number" id="inputPoint" value="0" min="0" max="${sessUser.point}" style="text-align: right; width: 100px;" />
+                                        <input type="number" id="inputPoint" value="0" min="0" max="${orderUser.point}" style="text-align: right; width: 100px; padding-right: 5px; height: 26px;" />
                                         <button type="button" id="btnApplyPoint">사용하기</button>
-                                        <p class="point">사용가능 <span id="availablePoint"><fmt:formatNumber value="${sessUser.point}" type="number"/></span></p>
+                                        <p class="point">사용가능 <span id="availablePoint"><fmt:formatNumber value="${orderUser.point}" type="number"/></span>P</p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>받는분</td>
-                                    <td><input type="text" id="receiver" required /></td>
+                                    <td><input type="text" id="receiver" value="${orderUser.name}" placeholder="받는 사람 이름" required style="padding: 0 8px; height: 26px;" /></td>
                                 </tr>
                                 <tr>
                                     <td>연락처</td>
-                                    <td><input type="text" id="receiverHp" required /></td>
+                                    <td><input type="text" id="receiverHp" value="${orderUser.hp}" placeholder="010-0000-0000" required style="padding: 0 8px; height: 26px;" /></td>
                                 </tr>
                                 <tr>
-                                    <td>배송주소</td>
-                                    <td>
-                                        <input type="text" id="zip" readonly /><button type="button" id="btnZip">우편번호 검색</button>
-                                        <input type="text" id="addr1" placeholder="기본주소 검색" readonly />
-                                        <input type="text" id="addr2" placeholder="상세주소 입력" />
-                                    </td>
-                                </tr>
+								    <td>배송주소</td>
+								    <td>
+								        <input type="text" id="zip" value="${orderUser.zip}" placeholder="우편번호" style="margin-bottom: 4px" />
+								        <button type="button" id="btnZip">우편번호 검색</button>
+								        
+								        <input type="text" id="addr1" value="${orderUser.addr1}" placeholder="기본주소 검색" style="width: 80%; margin-bottom: 4px" /><br>
+								        <input type="text" id="addr2" value="${orderUser.addr2}" placeholder="상세주소 입력" style="width: 80%;" />
+								    </td>
+								</tr>
                                 <tr>
                                     <td>결제방법</td>
                                     <td>
@@ -172,10 +179,12 @@
                 </section>
             </div>
             
-            <form id="formOrderFinal" action="${path}/market/orderResult.do" method="POST" style="display:none;"></form>
-            
+            <form id="formOrderFinal" action="${path}/market/ordersResult.do" method="POST" style="display:none;"></form>
             <input type="hidden" class="contextPath" value="${path}"/>
-            <input type="hidden" id="hiddenUserid" value="${sessUser.userid}"/>
+            <input type="hidden" id="hiddenUserid" value="${orderUser.userid}"/>
+            
+            <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+            <script src="${path}/js/daumPostcode.js"></script>
             
             <script src="${path}/js/market.js"></script>
             <%@ include file="/WEB-INF/views/inc/_footer.jsp" %>

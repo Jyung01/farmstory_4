@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    // ========================================================
+    // [1] 상품 상세보기 페이지: 수량 변경 시 실시간 총 상품금액 계산
+    // ========================================================
     var countInput = document.getElementById('productCount');
     var detailTotalPriceEl = document.getElementById('totalPrice');
 
@@ -14,6 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // ========================================================
+    // [2] 상품 상세보기 페이지: 장바구니 담기 및 바로구매 예외 처리
+    // ========================================================
     var btnCart = document.getElementById('btnCart');
     var btnOrder = document.getElementById('btnOrder');
     
@@ -94,6 +100,9 @@ document.addEventListener('DOMContentLoaded', function() {
         btnOrder.addEventListener('click', checkStockAndCount);
     }
 	
+    // ========================================================
+    // [3] 장바구니 페이지: 전체 합계 정산 테이블 연산 기능 (공통 함수)
+    // ========================================================
     var cartCheckboxes = document.querySelectorAll('.cart-checkbox:not([disabled])');
     var totalCountEl = document.getElementById('totalCount');
     var cartTotalPriceEl = document.getElementById('cartTotalPrice'); 
@@ -153,6 +162,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // ========================================================
+    // [4] 장바구니 페이지: 전체 선택 체크박스 바인딩
+    // ========================================================
     var checkAll = document.getElementById('chkAll'); 
     if (checkAll) {
         checkAll.addEventListener('change', function() {
@@ -164,6 +176,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // ========================================================
+    // [5] 장바구니 페이지: 상품 수량 변경 및 DB 반영 (Ajax)
+    // ========================================================
     var btnUpdateQtys = document.querySelectorAll('.btnUpdateQty');
 
     if (btnUpdateQtys.length > 0) {
@@ -241,6 +256,211 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // ========================================================
+    // [6] 장바구니 페이지: 선택 상품 삭제 기능 (Ajax)
+    // ========================================================
+    var btnDeleteSelected = document.getElementById('btnDeleteSelected');
+    
+    if (btnDeleteSelected) {
+        btnDeleteSelected.addEventListener('click', function() {
+            var checkedBoxes = document.querySelectorAll('.cart-checkbox:checked:not([disabled])');
+            
+            if (checkedBoxes.length === 0) {
+                alert('삭제할 상품을 선택해주세요.');
+                return;
+            }
+            
+            if (!confirm('선택한 상품을 장바구니에서 삭제하시겠습니까?')) {
+                return;
+            }
+            
+            var pathElement = document.querySelector('.contextPath');
+            var contextPath = pathElement ? pathElement.value : '';
+            
+            var deleteCount = 0;
+            var totalToDelete = checkedBoxes.length;
+            
+            checkedBoxes.forEach(function(box) {
+                var cartNo = box.value;
+                
+                fetch(contextPath + '/market/cart.do', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'cartNo=' + cartNo
+                })
+                .then(function(res) {
+                    return res.text();
+                })
+                .then(function(data) {
+                    if (data.trim() === "1") {
+                        deleteCount++;
+                        if (deleteCount === totalToDelete) {
+                            alert('선택한 상품이 삭제되었습니다.');
+                            location.reload(); 
+                        }
+                    } else {
+                        alert('일부 상품 삭제에 실패했습니다.');
+                    }
+                })
+                .catch(function(err) {
+                    console.error('삭제 중 에러 발생:', err);
+                });
+            });
+        });
+    }
+
+    // ========================================================
+    // [7] 장바구니 페이지: 주문하기 전송 (가상 폼 동적 전송 구조)
+    // ========================================================
+    var btnOrderSubmit = document.getElementById('btnOrderSubmit');
+    
+    if (btnOrderSubmit) {
+        btnOrderSubmit.addEventListener('click', function() {
+            var checkedBoxes = document.querySelectorAll('.cart-checkbox:checked:not([disabled])');
+            
+            if (checkedBoxes.length === 0) {
+                alert('주문하실 상품을 선택해주세요.');
+                return;
+            }
+            
+            if (!confirm('선택한 상품을 주문하시겠습니까?')) {
+                return;
+            }
+            
+            var form = document.getElementById('formCartOrder');
+            if (form) {
+                form.innerHTML = ''; 
+                
+                checkedBoxes.forEach(function(box) {
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'cartNo';  
+                    input.value = box.value;
+                    form.appendChild(input);
+                });
+                
+                form.submit();
+            }
+        });
+    }
+
+    // ========================================================
+    // [8] 주문서 페이지(order.jsp): 금액 및 포인트 자동 연산기
+    // ========================================================
+	function calculateOrderTotal() {
+        var orderRows = document.querySelectorAll('.order-item-row');
+        if (orderRows.length === 0) return;
+
+        var totalCount = 0;       
+        var totalPrice = 0;       
+        var totalDiscount = 0;   
+        var totalSavePoint = 0;  
+
+        orderRows.forEach(function(row) {
+            var countEl = row.querySelector('.item-count');
+            var priceEl = row.querySelector('.item-price');
+            var discountEl = row.querySelector('.item-discount');
+            var pointEl = row.querySelector('.item-point');
+
+            var count = countEl ? (parseInt(countEl.getAttribute('data-count')) || 0) : 0;
+            var price = priceEl ? (parseInt(priceEl.getAttribute('data-price')) || 0) : 0;
+            var discountPercent = discountEl ? (parseInt(discountEl.getAttribute('data-discount')) || 0) : 0;
+            var point = pointEl ? (parseInt(pointEl.getAttribute('data-point')) || 0) : 0;
+
+            totalCount += 1;
+            totalPrice += (price * count);
+            totalDiscount += (price * (discountPercent / 100) * count);
+            totalSavePoint += point; 
+        });
+
+        var totalDelivery = (totalPrice - totalDiscount >= 30000 || totalCount === 0) ? 0 : 3000;
+        var finalOrderPrice = totalPrice - totalDiscount + totalDelivery;
+
+        var elTotalCount = document.getElementById('totalCount');
+        var elCartTotalPrice = document.getElementById('cartTotalPrice');
+        var elTotalDiscount = document.getElementById('totalDiscount');
+        var elTotalDelivery = document.getElementById('totalDelivery');
+        var elTotalSavePoint = document.getElementById('totalSavePoint');
+        var elFinalOrderPrice = document.getElementById('finalOrderPrice');
+
+        if (elTotalCount) elTotalCount.innerText = orderRows.length + "개";
+        if (elCartTotalPrice) elCartTotalPrice.innerText = totalPrice.toLocaleString() + "원";
+        if (elTotalDiscount) elTotalDiscount.innerText = totalDiscount.toLocaleString() + "원";
+        if (elTotalDelivery) elTotalDelivery.innerText = totalDelivery.toLocaleString() + "원";
+        if (elTotalSavePoint) elTotalSavePoint.innerText = totalSavePoint.toLocaleString() + "P"; 
+        if (elFinalOrderPrice) elFinalOrderPrice.innerText = finalOrderPrice.toLocaleString() + "원";
+    }
+
+    // ========================================================
+    // [9] 주문서 페이지(order.jsp): 다음 우편번호 API 호출 연동
+    // ========================================================
+    var btnZip = document.getElementById('btnZip');
+    if (btnZip) {
+        btnZip.addEventListener('click', function() {
+            if (typeof daumPostcode === 'function') {
+                daumPostcode(); 
+            } else {
+                alert('우편번호 서비스 로딩에 실패했습니다.');
+            }
+        });
+    }
+
+    // ========================================================
+    // [10] 주문서 페이지(order.jsp): 포인트 검증 및 전체 금액 연동 제어
+    // ========================================================
+    var btnApplyPoint = document.getElementById('btnApplyPoint');
+    if (btnApplyPoint) {
+        btnApplyPoint.addEventListener('click', function() {
+            var inputPointEl = document.getElementById('inputPoint');
+            var displayedUsedPointEl = document.getElementById('displayedUsedPoint');
+            var finalOrderPriceEl = document.getElementById('finalOrderPrice');
+            var cartTotalPriceEl = document.getElementById('cartTotalPrice');
+            var totalDiscountEl = document.getElementById('totalDiscount');
+            var totalDeliveryEl = document.getElementById('totalDelivery');
+
+            var maxPoint = parseInt(inputPointEl.getAttribute('max')) || 0;
+            var usePoint = parseInt(inputPointEl.value) || 0;
+
+            var price = parseInt(cartTotalPriceEl.innerText.replace(/[^0-9]/g, '')) || 0;
+            var discount = parseInt(totalDiscountEl.innerText.replace(/[^0-9]/g, '')) || 0;
+            var delivery = parseInt(totalDeliveryEl.innerText.replace(/[^0-9]/g, '')) || 0;
+            var netOrderPrice = price - discount + delivery; 
+
+            if (usePoint < 0) {
+                alert('0P 이상의 포인트만 입력 가능합니다.');
+                inputPointEl.value = 0;
+                return;
+            }
+
+            if (usePoint > maxPoint) {
+                alert('포인트가 부족합니다.');
+                if (maxPoint > netOrderPrice) {
+                    inputPointEl.value = netOrderPrice;
+                    usePoint = netOrderPrice;
+                } else {
+                    inputPointEl.value = maxPoint;
+                    usePoint = maxPoint;
+                }
+            }
+
+            if (usePoint > netOrderPrice) {
+                alert('주문금액보다 포인트가 더 많습니다.');
+                inputPointEl.value = netOrderPrice;
+                usePoint = netOrderPrice;
+            }
+
+            var finalPrice = netOrderPrice - usePoint;
+
+            if (displayedUsedPointEl) displayedUsedPointEl.innerText = usePoint.toLocaleString();
+            if (finalOrderPriceEl) finalOrderPriceEl.innerText = finalPrice.toLocaleString() + "원";
+        });
+    }
+
+    // ========================================================
+    // [11] 주문서 페이지(order.jsp): 결제하기 최종 데이터 입력 상태 유효성 체크 및 전송
+    // ========================================================
     var btnPaySubmit = document.getElementById('btnPaySubmit');
     
     if (btnPaySubmit) {
@@ -261,24 +481,45 @@ document.addEventListener('DOMContentLoaded', function() {
             var elAddr2 = document.getElementById('addr2');
             var elMemo = document.getElementById('memo');
             var elPayment = document.querySelector('input[name="payment_view"]:checked');
-            
+			var elTotalDelivery = document.getElementById('totalDelivery');  
+			var elTotalSavePoint = document.getElementById('totalSavePoint'); 
+			var elFinalOrderPrice = document.getElementById('finalOrderPrice');
+            var hpRegex = /^01[016789]-?\d{3,4}-?\d{4}$/;
+
             var fields = {
                 userid: elHiddenUserid ? elHiddenUserid.value : '',
-                orderer: elOrderer ? elOrderer.value : '',
-                ordererHp: elOrdererHp ? elOrdererHp.value : '',
+                orderer: elOrderer ? elOrderer.value.trim() : '',
+                ordererHp: elOrdererHp ? elOrdererHp.value.trim() : '',
                 usedPoint: elInputPoint ? elInputPoint.value : '0',
-                receiver: elReceiver ? elReceiver.value : '',
-                receiverHp: elReceiverHp ? elReceiverHp.value : '',
-                zip: elZip ? elZip.value : '',
-                addr1: elAddr1 ? elAddr1.value : '',
-                addr2: elAddr2 ? elAddr2.value : '',
-                memo: elMemo ? elMemo.value : '',
-                payment: elPayment ? elPayment.value : '계좌이체'
+                receiver: elReceiver ? elReceiver.value.trim() : '',
+                receiverHp: elReceiverHp ? elReceiverHp.value.trim() : '',
+                zip: elZip ? elZip.value.trim() : '',
+                addr1: elAddr1 ? elAddr1.value.trim() : '',
+                addr2: elAddr2 ? elAddr2.value.trim() : '',
+                memo: elMemo ? elMemo.value.trim() : '',
+                payment: elPayment ? elPayment.value : '계좌이체',
+				delivery: elTotalDelivery ? elTotalDelivery.innerText.replace(/[^0-9]/g, '') : '0',
+				savePoint: elTotalSavePoint ? elTotalSavePoint.innerText.replace(/[^0-9]/g, '') : '0',
+				totalPrice: elFinalOrderPrice ? elFinalOrderPrice.innerText.replace(/[^0-9]/g, '') : '0'
             };
             
-            if (!fields.receiver.trim()) { alert('받는 분 이름을 입력해주세요.'); if(elReceiver) elReceiver.focus(); return; }
-            if (!fields.receiverHp.trim()) { alert('연락처를 입력해주세요.'); if(elReceiverHp) elReceiverHp.focus(); return; }
-            if (!fields.zip.trim()) { alert('우편번호를 검색해주세요.'); return; }
+            if (!fields.orderer) { alert('주문자 이름을 입력해주세요.'); elOrderer.focus(); return; }
+            if (!fields.ordererHp) { alert('주문자 휴대폰 번호를 입력해주세요.'); elOrdererHp.focus(); return; }
+            if (!fields.receiver) { alert('받는 분 이름을 입력해주세요.'); elReceiver.focus(); return; }
+            if (!fields.receiverHp) { alert('받는 분 연락처를 입력해주세요.'); elReceiverHp.focus(); return; }
+            if (!fields.zip || !fields.addr1) { alert('배송주소 조회를 위해 우편번호 검색을 해주세요.'); return; }
+            if (!fields.addr2) { alert('상세주소를 입력해주세요.'); elAddr2.focus(); return; }
+            
+            if (!hpRegex.test(fields.ordererHp)) {
+                alert('주문자 휴대폰 번호를 다시 입력해 주세요.');
+                elOrdererHp.focus();
+                return;
+            }
+            if (!hpRegex.test(fields.receiverHp)) {
+                alert('받는 분 연락처(휴대폰 번호)를 다시 입력해 주세요.');
+                elReceiverHp.focus();
+                return;
+            }
             
             for (var key in fields) {
                 var input = document.createElement('input');
@@ -289,31 +530,63 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             var rows = document.querySelectorAll('.order-item-row');
-            rows.forEach(function(row) {
-                var cartNo = row.getAttribute('data-cartno');
-                var prodNo = row.getAttribute('data-prodno');
-                
-                if (cartNo) {
-                    var inputCart = document.createElement('input');
-                    inputCart.type = 'hidden';
-                    inputCart.name = 'cartNo';
-                    inputCart.value = cartNo;
-                    form.appendChild(inputCart);
-                }
-                if (prodNo) {
-                    var inputProd = document.createElement('input');
-                    inputProd.type = 'hidden';
-                    inputProd.name = 'prodNo';
-                    inputProd.value = prodNo;
-                    form.appendChild(inputProd);
-                }
-            });
+            if (rows.length === 0) {
+                alert('주문할 상품 정보가 존재하지 않습니다.');
+                return;
+            }
+
+			rows.forEach(function(row) {
+			    var cartNo = row.getAttribute('data-cartno');
+			    var prodNo = row.getAttribute('data-prodno');
+			    
+			    var countEl = row.querySelector('.item-count');
+			    var count = countEl ? (countEl.getAttribute('data-count') || '1') : '1';
+			    
+			    var subtotalEl = row.querySelector('.row-subtotal');
+			    var price = subtotalEl ? subtotalEl.innerText.replace(/[^0-9]/g, '') : '0';
+			    
+
+			    if (cartNo) {
+			        var inputCart = document.createElement('input');
+			        inputCart.type = 'hidden';
+			        inputCart.name = 'cartNo';
+			        inputCart.value = cartNo;
+			        form.appendChild(inputCart);
+			    }
+			    
+			    if (prodNo) {
+			        var inputProd = document.createElement('input');
+			        inputProd.type = 'hidden';
+			        inputProd.name = 'prodNo';
+			        inputProd.value = prodNo;
+			        form.appendChild(inputProd);
+			    }
+			    
+			    var inputCount = document.createElement('input');
+			    inputCount.type = 'hidden';
+			    inputCount.name = 'count';
+			    inputCount.value = count;
+			    form.appendChild(inputCount);
+			    
+			    var inputPrice = document.createElement('input');
+			    inputPrice.type = 'hidden';
+			    inputPrice.name = 'price';
+			    inputPrice.value = price;
+			    form.appendChild(inputPrice);
+			});
             
             form.submit();
         });
     }
 
-    if (cartTotalPriceEl) {
+    // ========================================================
+    // [12] ★ 핵심 초기화 통합 통제 엔진 구동부 분기
+    // ========================================================
+    if (document.querySelector('.order-item-row')) {
+        // A. 주문서 페이지일 경우: 주문 정산 연산 함수만 단독 실행
+        calculateOrderTotal();
+    } else if (cartTotalPriceEl) {
+        // B. 장바구니 페이지일 경우: 장바구니 실시간 체크박스 기반 연산 실행
         updateCartTotal();
     }
 });

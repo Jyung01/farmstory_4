@@ -5,8 +5,10 @@ import java.util.List;
 
 import kr.co.farmstory.dto.cart.CartDTO;
 import kr.co.farmstory.dto.product.ProductDTO;
+import kr.co.farmstory.dto.user.UserDTO;
 import kr.co.farmstory.util.DBHelper;
 import kr.co.farmstory.util.SQL.MarketSQL;
+import kr.co.farmstory.util.SQL.OrdersSQL;
 
 public class MarketDAO extends DBHelper {
 
@@ -317,7 +319,7 @@ public class MarketDAO extends DBHelper {
 
         try {
             conn = getConnection();
-            psmt = conn.prepareStatement(MarketSQL.SELECT_ORDER_PRODUCT);
+            psmt = conn.prepareStatement(OrdersSQL.SELECT_ORDER_PRODUCT);
             
             for (String cartNoStr : cartNoArr) {
                 psmt.setInt(1, Integer.parseInt(cartNoStr));
@@ -345,5 +347,31 @@ public class MarketDAO extends DBHelper {
             e.printStackTrace();
         }
         return cartList;
+    }
+    
+    public UserDTO selectOrderUser(String userid) {
+        UserDTO dto = null;
+        try {
+            conn = getConnection();
+            psmt = conn.prepareStatement(OrdersSQL.SELECT_ORDER_USER);
+            psmt.setString(1, userid);
+            
+            rs = psmt.executeQuery();
+            
+            if (rs.next()) {
+                dto = new UserDTO();
+                dto.setName(rs.getString("name"));
+                dto.setHp(rs.getString("hp"));
+                dto.setPoint(rs.getInt("point"));
+                dto.setZip(rs.getString("zip"));
+                dto.setAddr1(rs.getString("addr1"));
+                dto.setAddr2(rs.getString("addr2"));
+                dto.setUserid(userid); 
+            }
+            closeAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dto;
     }
 }
