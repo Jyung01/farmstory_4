@@ -3,6 +3,8 @@ package kr.co.farmstory.controller.user;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -29,7 +31,8 @@ public class UpdatePassController extends HttpServlet{
 		
 		// 3. 비밀번호 업데이트
 		UserService service = UserService.INSTANCE;
-		int result = service.updatePass(sessUser.getUserid(),pass);
+		String hashedPass = BCrypt.hashpw(pass, BCrypt.gensalt());
+		int result = service.updatePass(sessUser.getUserid(), hashedPass);
 		
 		// 4.결과 반환
 		resp.setContentType("text/html; charset=UTF-8");

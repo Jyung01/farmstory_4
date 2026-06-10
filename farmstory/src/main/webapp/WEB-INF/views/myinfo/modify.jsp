@@ -22,9 +22,9 @@
                     <aside>
                         <img src="${path}/images/myinfo/myinfo_menu_tit.png" alt="나의정보" />
                         <ul class="menu">
-                            <li><a href="cart.html">장바구니</a></li>
-                            <li><a href="ordered.html">주문내역</a></li>
-                            <li class="on"><a href="modify.html">정보수정</a></li>
+                            <li><a href="${path}/user/cart.do">장바구니</a></li>
+                            <li><a href="${path}/user/ordered.do">주문내역</a></li>
+                            <li class="on"><a href="${path}/user/myinfo.do">정보수정</a></li>
                         </ul>
                     </aside>
                     <article>

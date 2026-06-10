@@ -58,7 +58,7 @@ public class UserDAO extends DBHelper {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            try { closeAll(); } catch(Exception e) { e.printStackTrace(); }
+            try { closeAll(); } catch(Exception e) {}
         }
         return dto;
     }

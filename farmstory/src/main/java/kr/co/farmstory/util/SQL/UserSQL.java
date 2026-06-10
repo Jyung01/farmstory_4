@@ -8,7 +8,7 @@ public class UserSQL {
     
     // 로그인
     public static final String SELECT_USER_LOGIN =
-    "SELECT * FROM user WHERE userid = ? AND pass = ? AND leaveDate IS NULL";
+    		"SELECT * FROM user WHERE userid = ? AND leaveDate IS NULL";
     
     // 아이디 중복확인
     public static final String SELECT_USERID_CHECK = 

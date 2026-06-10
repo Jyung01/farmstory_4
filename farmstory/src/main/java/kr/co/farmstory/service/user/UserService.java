@@ -16,8 +16,8 @@ public enum UserService {
 	}
 	
 	
-	public UserDTO selectUser(String userid, String pass) {
-	    return dao.selectUser(userid, pass);
+	public UserDTO selectUser(String userid) {
+	    return dao.selectUser(userid);
 	}
 	
 	public int checkUser(String type, String value) {

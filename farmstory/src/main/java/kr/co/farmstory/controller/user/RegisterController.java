@@ -2,6 +2,8 @@ package kr.co.farmstory.controller.user;
 
 import java.io.IOException;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -42,7 +44,8 @@ public class RegisterController extends HttpServlet{
 		
 		UserDTO dto = new UserDTO();
 		dto.setUserid(userid);
-		dto.setPass(pass);
+		String hashedPass = BCrypt.hashpw(pass, BCrypt.gensalt());
+		dto.setPass(hashedPass);
 		dto.setName(name);
 		dto.setNick(nick);
 		dto.setEmail(email);
