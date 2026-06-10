@@ -8,13 +8,19 @@ import jakarta.servlet.http.HttpSession;
 import kr.co.farmstory.dto.user.UserDTO;
 
 import java.io.IOException;
-/* 나중에 테스트 하실때 주석 풀어서 테스트 해보시면 될거 같습니다
+
+
+// 마이페이지, 회원정보수정, 회원탈퇴 접근시 로그인 체크 
+
+
 @WebFilter({
-        "/myinfo/*",
-        "/cart/*",
-        "/order/*"
+    "/user/myinfo.do",
+    "/user/modify.do",
+    "/user/leave.do",
+    "/myinfo/*"
 })
-*/
+
+
 public class LoginCheckFilter implements Filter {
 
     @Override

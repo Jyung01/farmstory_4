@@ -3,6 +3,8 @@ package kr.co.farmstory.controller.user;
 import java.io.IOException;
 import java.util.UUID;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -44,7 +46,8 @@ public class PasswordController extends HttpServlet{
 	        String tempPass = UUID.randomUUID().toString().substring(0, 8);
 
 	        // 4. DB에 임시 비밀번호 저장
-	        service.updatePass(userid, tempPass);
+	        String hashedPass = BCrypt.hashpw(tempPass, BCrypt.gensalt());
+	        service.updatePass(userid, hashedPass);
 
 	        // 5. 이메일 발송
 	        MailHelper mailHelper = new MailHelper();
