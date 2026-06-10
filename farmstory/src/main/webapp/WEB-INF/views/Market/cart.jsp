@@ -134,6 +134,7 @@
 					    <input type="button" class="btnOrder" id="btnOrderSubmit" value="주문하기">
 					</div>
                 </article>
+                <form action="${path}/market/order.do" method="POST" id="formCartOrder" style="display:none;"></form>
             </section>
         </div>
         <script src="${path}/js/market.js"></script>
