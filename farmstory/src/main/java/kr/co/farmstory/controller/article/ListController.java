@@ -57,11 +57,7 @@ public class ListController extends HttpServlet {
 		req.setAttribute("groupTitle", ArticleSwitch.GROUP_TITLE.get(groupName));
 		req.setAttribute("cateTitle", ArticleSwitch.CATE_TITLE.get(cate));
 		req.setAttribute("navImage", ArticleSwitch.NAV_IMAGE.get(cate));
-		req.setAttribute("dtoList", dtoList);
-		
-		
-		
-		
+		req.setAttribute("dtoList", dtoList);	
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/article/list.jsp");
 		dispatcher.forward(req, resp);

@@ -45,8 +45,8 @@ public class WriteController extends HttpServlet {
 		req.setAttribute("cateTitle", ArticleSwitch.CATE_TITLE.get(cate));
 		req.setAttribute("navImage", ArticleSwitch.NAV_IMAGE.get(cate));
 		
-		// notice 게시판에서 관리자인지 확인
-		if("notice".equals(cate) && !"admin".equals(sessUser.getRole())) {
+		// notice 및 faq 게시판 관리자 권한 확인
+		if(("notice".equals(cate) || "faq".equals(cate)) && !"admin".equals(sessUser.getRole())) {
 		    resp.sendRedirect(req.getContextPath()
 		            + "/article/list.do?groupName=" + groupName
 		            + "&cate=" + cate);
@@ -96,8 +96,8 @@ public class WriteController extends HttpServlet {
 		String cate = req.getParameter("cate");
 		String regip = req.getRemoteAddr();
 		
-		// notice 게시판에서 관리자인지 확인
-		if("notice".equals(cate) && !"admin".equals(sessUser.getRole())) {
+		// notice 및 faq 게시판 관리자 권한 확인
+		if(("notice".equals(cate) || "faq".equals(cate)) && !"admin".equals(sessUser.getRole())) {
 		    resp.sendRedirect(req.getContextPath()
 		            + "/article/list.do?groupName=" + groupName
 		            + "&cate=" + cate);
