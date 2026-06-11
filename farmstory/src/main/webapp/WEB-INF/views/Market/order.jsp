@@ -72,7 +72,7 @@
 							            <tr class="order-item-row" data-cartno="${item.cartNo}" data-prodno="${item.prodNo}">
 							                <td>
 							                    <a href="${path}/market/view.do?prodNo=${item.prodNo}">
-							                        <img src="${path}${item.thumb}" class="thumb" alt="${item.prodName}" />
+							                        <img src="${path}/upload/${item.thumb}" class="thumb" alt="${item.prodName}" />
 							                    </a>
 							                </td>
 							                <td>${item.cate}</td>

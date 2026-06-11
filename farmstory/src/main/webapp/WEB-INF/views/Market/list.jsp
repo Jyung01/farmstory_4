@@ -54,7 +54,7 @@
                                             <tr>
                                                 <td>
                                                     <a href="${path}/market/view.do?prodNo=${product.prodNo}">
-                                                        <img src="${path}${product.thumb}" class="thumbnail" alt="${product.prodName}" />
+                                                        <img src="${path}/upload/${product.thumb}" class="thumbnail" alt="${product.prodName}" />
                                                     </a>
                                                 </td>
                                                 <td class="type">${product.cate}</td>

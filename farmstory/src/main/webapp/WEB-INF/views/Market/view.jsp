@@ -32,7 +32,7 @@
 
                         <h3>기본정보</h3>
                         <div class="basic">
-                            <img src="${path}${product.infoImg}" alt="${product.prodName}" class="thumbnail" />
+                            <img src="${path}/upload/${product.infoImg}" alt="${product.prodName}" class="thumbnail" />
 
                             <table border="0">
                                 <tr>
@@ -104,7 +104,7 @@
 
                         <h3>상품설명</h3>
                         <div class="detail">
-                            <img src="${path}${product.detailImg}" alt="상품 상세 설명" />
+                            <img src="${path}/upload/${product.detailImg}" alt="상품 상세 설명" />
                         </div>
 
                         <h3>배송정보</h3>
