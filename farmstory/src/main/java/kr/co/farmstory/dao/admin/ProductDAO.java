@@ -61,9 +61,9 @@ public class ProductDAO extends DBHelper {
 				dto.setStock(rs.getInt(8));
 				dto.setDiscript(rs.getString(9));
 				dto.setThumb(rs.getString(10));
-				dto.setRegDate(rs.getString(11));
-				dto.setInfo(rs.getString(12));
-				dto.setDetail(rs.getString(13));
+				dto.setInfo(rs.getString(11));
+				dto.setDetail(rs.getString(12));
+				dto.setRegDate(rs.getString(13));
 				dtoList.add(dto);
 			}
 			closeAll();

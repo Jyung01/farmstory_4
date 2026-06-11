@@ -61,6 +61,8 @@
                                 <select name="category">
                                     <option value="종류">종류</option>
                                     <option value="과일">과일</option>
+                                    <option value="야채">야채</option>
+                                    <option value="곡물">곡물</option>
                                 </select>
                             </div>
                             <div>
@@ -74,6 +76,7 @@
                             <div>
                                 <p>할인</p>
                                 <select name="discount">
+                                    <option value="0">-</option>
                                     <option value="5">5%</option>
                                     <option value="10">10%</option>
                                 </select>

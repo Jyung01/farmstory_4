@@ -12,8 +12,8 @@ public class ProductSQL {
 												+ "stock=?, "
 												+ "descript=?, "
 												+ "thumb=?, "
-												+ "info=?, "
-												+ "detail=?, "
+												+ "infoImg=?, "
+												+ "detailImg=?, "
 												+ "regDate=NOW()";
 	
 	// 관리자 상품 목록
