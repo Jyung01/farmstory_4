@@ -108,4 +108,23 @@ public enum MarketService {
         return dao.selectOrderUser(userid);
     }
     
+    public List<kr.co.farmstory.dto.cart.CartDTO> selectProductBuyNowOrder(String countStr, String prodNoStr) {
+        java.util.ArrayList<kr.co.farmstory.dto.cart.CartDTO> orderList = new java.util.ArrayList<>();
+        
+        try {
+            int count = (countStr != null) ? Integer.parseInt(countStr) : 1;
+            int prodNo = (prodNoStr != null) ? Integer.parseInt(prodNoStr) : 0;
+            
+            if (prodNo > 0) {
+                CartDTO dto = dao.selectProductBuyNowOrder(count, prodNo);
+                if (dto != null) {
+                    orderList.add(dto);
+                }
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return orderList;
+    }
+    
 }

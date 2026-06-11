@@ -374,4 +374,32 @@ public class MarketDAO extends DBHelper {
         }
         return dto;
     }
+    
+    public CartDTO selectProductBuyNowOrder(int count, int prodNo) {
+        CartDTO dto = null;
+        try {
+            conn = getConnection();
+            psmt = conn.prepareStatement(MarketSQL.SELECT_PRODUCT_FOR_BUY_NOW);
+            psmt.setInt(1, prodNo);
+            
+            rs = psmt.executeQuery();
+            
+            if (rs.next()) {
+                dto = new CartDTO();
+                dto.setProdNo(prodNo);
+                dto.setCount(count); 
+                dto.setProdName(rs.getString("prodName"));
+                dto.setPrice(rs.getInt("price"));
+                dto.setDiscount(rs.getInt("discount"));
+                dto.setPoint(rs.getInt("point"));
+                dto.setThumb(rs.getString("thumb"));
+                dto.setCate(rs.getString("cate"));
+                dto.setStock(rs.getInt("stock"));
+            }
+            closeAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dto;
+    }
 }

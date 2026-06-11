@@ -46,4 +46,6 @@ public class MarketSQL {
 	//장바구니 삭제
 	public static final String DELETE_CART = "DELETE FROM cart WHERE cartNo = ?";
 	
+	//바로구매
+	public static final String SELECT_PRODUCT_FOR_BUY_NOW = "SELECT * FROM product WHERE prodNo = ?";
 }

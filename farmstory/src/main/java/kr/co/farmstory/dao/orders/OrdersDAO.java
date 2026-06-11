@@ -1,6 +1,9 @@
 package kr.co.farmstory.dao.orders;
 
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import kr.co.farmstory.dto.orders.OrdersDTO;
 import kr.co.farmstory.dto.orderItem.OrderItemDTO;
 import kr.co.farmstory.util.DBHelper;
@@ -98,5 +101,98 @@ public class OrdersDAO extends DBHelper {
             e.printStackTrace();
         }
         return result;
+    }
+    
+    public List<OrdersDTO> selectOrdersList(String userid) {
+        List<OrdersDTO> ordersList = new ArrayList<>();
+        try {
+            conn = getConnection();
+            psmt = conn.prepareStatement(OrdersSQL.SELECT_ORDERS_LIST);
+            psmt.setString(1, userid);
+            
+            rs = psmt.executeQuery();
+            
+            while (rs.next()) {
+                OrdersDTO dto = new OrdersDTO();
+                dto.setOrderNo(rs.getInt("orderNo"));
+                
+                if(rs.getTimestamp("regDate") != null) {
+                    dto.setRegDate(rs.getTimestamp("regDate").toString().substring(0, 19));
+                }
+                
+                dto.setTotalPrice(rs.getInt("totalPrice"));
+                dto.setOrderer(rs.getString("orderer"));
+                dto.setDisplayProdName(rs.getString("displayProdName"));
+                dto.setDisplayThumb(rs.getString("displayThumb"));
+                dto.setTotalCount(rs.getInt("totalCount"));
+                
+                ordersList.add(dto);
+            }
+            closeAll();
+        } catch (Exception e) {
+            System.err.println("에러 발생");
+            e.printStackTrace();
+        }
+        return ordersList;
+    }
+    
+    public OrdersDTO selectOrder(int orderNo) {
+        OrdersDTO dto = null;
+        try {
+            conn = getConnection();
+            psmt = conn.prepareStatement(OrdersSQL.SELECT_ORDER);
+            psmt.setInt(1, orderNo);
+            rs = psmt.executeQuery();
+            if (rs.next()) {
+                dto = new OrdersDTO();
+                dto.setOrderNo(rs.getInt("orderNo"));
+                dto.setUserid(rs.getString("userid"));
+                dto.setOrderer(rs.getString("orderer"));
+                dto.setHp(rs.getString("hp"));
+                dto.setReceiver(rs.getString("receiver"));
+                dto.setReceiverHp(rs.getString("receiverHp"));
+                dto.setZip(rs.getString("zip"));
+                dto.setAddr1(rs.getString("addr1"));
+                dto.setAddr2(rs.getString("addr2"));
+                dto.setUsedPoint(rs.getInt("usedPoint"));
+                dto.setSavePoint(rs.getInt("savePoint"));
+                dto.setDelivery(rs.getInt("delivery"));
+                dto.setTotalPrice(rs.getInt("totalPrice"));
+                dto.setPayment(rs.getString("payment"));
+                dto.setMemo(rs.getString("memo"));
+                dto.setStatus(rs.getString("status"));
+                if(rs.getTimestamp("regDate") != null) {
+                    dto.setRegDate(rs.getTimestamp("regDate").toString().substring(0, 19));
+                }
+            }
+            closeAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dto;
+    }
+
+    public List<OrderItemDTO> selectOrderItems(int orderNo) {
+        List<OrderItemDTO> list = new ArrayList<>();
+        try {
+            conn = getConnection();
+            psmt = conn.prepareStatement(OrdersSQL.SELECT_ORDER_ITEMS);
+            psmt.setInt(1, orderNo);
+            rs = psmt.executeQuery();
+            while (rs.next()) {
+                OrderItemDTO dto = new OrderItemDTO();
+                dto.setItemNo(rs.getInt("itemNo"));
+                dto.setOrderNo(rs.getInt("orderNo"));
+                dto.setProdNo(rs.getInt("prodNo"));
+                dto.setCount(rs.getInt("count"));
+                dto.setPrice(rs.getInt("price"));
+                dto.setProdName(rs.getString("prodName"));
+                list.add(dto);
+            }
+            closeAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

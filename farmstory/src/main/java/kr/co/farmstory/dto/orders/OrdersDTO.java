@@ -18,12 +18,33 @@ public class OrdersDTO {
 	private String memo;
 	private String status;
 	private String regDate;
+	private String displayProdName; 
+	private String displayThumb; 
+	private int totalCount;
 	
 	public int getOrderNo() {
 		return orderNo;
 	}
 	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
+	}
+	public String getDisplayProdName() {
+		return displayProdName;
+	}
+	public void setDisplayProdName(String displayProdName) {
+		this.displayProdName = displayProdName;
+	}
+	public String getDisplayThumb() {
+		return displayThumb;
+	}
+	public void setDisplayThumb(String displayThumb) {
+		this.displayThumb = displayThumb;
+	}
+	public int getTotalCount() {
+		return totalCount;
+	}
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
 	}
 	public String getUserid() {
 		return userid;
@@ -128,6 +149,9 @@ public class OrdersDTO {
 				+ ", receiver=" + receiver + ", receiverHp=" + receiverHp + ", zip=" + zip + ", addr1=" + addr1
 				+ ", addr2=" + addr2 + ", usedPoint=" + usedPoint + ", savePoint=" + savePoint + ", delivery="
 				+ delivery + ", totalPrice=" + totalPrice + ", payment=" + payment + ", memo=" + memo + ", status="
-				+ status + ", regDate=" + regDate + "]";
+				+ status + ", regDate=" + regDate + ", displayProdName=" + displayProdName + ", displayThumb="
+				+ displayThumb + ", totalCount=" + totalCount + "]";
 	}
+	
+
 }

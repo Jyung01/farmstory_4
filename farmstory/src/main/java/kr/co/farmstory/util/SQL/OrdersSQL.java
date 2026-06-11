@@ -39,4 +39,36 @@ public class OrdersSQL {
 		
 		//주문상품삭제
 		public static final String DELETE_ORDERED_CART = "DELETE FROM cart WHERE cartNo = ?";
+		
+		//주문내역보기
+		public static final String SELECT_ORDERS_LIST = "SELECT "
+													    + "    o.orderNo, "
+													    + "    o.regDate, "
+													    + "    o.totalPrice, "
+													    + "    o.orderer, "
+													    + "    CASE "
+													    + "        WHEN COUNT(oi.itemNo) > 1 THEN CONCAT(MIN(p.prodName), ' 외 ', COUNT(oi.itemNo) - 1, '건') "
+													    + "        ELSE MIN(p.prodName) "
+													    + "    END AS displayProdName, "
+													    + "    MIN(p.thumb) AS displayThumb, "
+													    + "    SUM(oi.count) AS totalCount "
+													    + "FROM orders AS o "
+													    + "JOIN order_item AS oi ON o.orderNo = oi.orderNo "
+													    + "JOIN product AS p     ON oi.prodNo = p.prodNo "
+													    + "WHERE o.userid = ? "
+													    + "GROUP BY o.orderNo "
+													    + "ORDER BY o.orderNo DESC";
+		
+		// 상세확인
+		public static final String SELECT_ORDER = 
+		      "SELECT orderNo, userid, orderer, hp, receiver, receiverHp, zip, addr1, addr2, "
+		    + "       usedPoint, savePoint, delivery, totalPrice, payment, memo, status, regDate "
+		    + "FROM orders WHERE orderNo = ?";
+
+		public static final String SELECT_ORDER_ITEMS = 
+		      "SELECT oi.itemNo, oi.orderNo, oi.prodNo, oi.count, oi.price, p.prodName "
+		    + "FROM order_item AS oi "
+		    + "JOIN product AS p ON oi.prodNo = p.prodNo "
+		    + "WHERE oi.orderNo = ?";
+
 }
