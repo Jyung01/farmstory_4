@@ -137,7 +137,12 @@ Controller → Service → DAO → Database 구조로 요청을 처리하고 JSP
 
 ## ERD
 
+<details>
+<summary>📷 ERD</summary>
+
 ![ERD](./docs/erd.png)
+
+</details>
 
 ---
 

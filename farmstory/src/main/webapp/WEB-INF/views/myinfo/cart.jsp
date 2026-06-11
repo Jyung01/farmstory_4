@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +30,7 @@
                     </nav>
                     <section class="cart">
                         <p class="sort">
-                            <a href="#" class="on">장바구니 전체(10)</a>
+                            <a href="#" class="on">장바구니 전체(${cartList.size()})</a>
                         </p>
                         <table border="0">
                             <thead>
@@ -46,61 +47,92 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="empty">
-                                    <td colspan="9">장바구니에 상품이 없습니다.</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name=""></td>
-                                    <td><a href="#"><img src="${path}/images/market_item1.jpg" class="thumb" alt="사과 500g"></a></td>
-                                    <td>과일</td>
-                                    <td><a href="#">사과 500g</a></td>
-                                    <td>1</td>
-                                    <td>10%</td>
-                                    <td>40P</td>
-                                    <td>4,000</td>
-                                    <td><strong>3,600</strong>원</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name=""></td>
-                                    <td><a href="#"><img src="${path}/images/market_item1.jpg" class="thumb" alt="사과 500g"></a></td>
-                                    <td>과일</td>
-                                    <td><a href="#">사과 500g</a></td>
-                                    <td>1</td>
-                                    <td>10%</td>
-                                    <td>40P</td>
-                                    <td>4,000</td>
-                                    <td><strong>3,600</strong>원</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name=""></td>
-                                    <td><a href="#"><img src="${path}/images/market_item1.jpg" class="thumb" alt="사과 500g"></a></td>
-                                    <td>과일</td>
-                                    <td><a href="#">사과 500g</a></td>
-                                    <td>1</td>
-                                    <td>10%</td>
-                                    <td>40P</td>
-                                    <td>4,000</td>
-                                    <td><strong>3,600</strong>원</td>
-                                </tr>
+                                <c:if test="${empty cartList}">
+	                                <tr class="empty">
+	                                    <td colspan="9">장바구니에 상품이 없습니다.</td>
+	                                </tr>
+	                            </c:if>
+                                <c:if test="${not empty cartList}">
+                                <c:forEach var="cart" items="${cartList}">
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" name="cartNo" value="${cart.cartNo}" class="cart-checkbox" data-stock="${cart.stock}" />
+										</td>
+                                        <td>
+                                            <a href="${path}/market/view.do?prodNo=${cart.prodNo}">
+                                                <img src="${path}/upload/${cart.thumb}" class="thumb" alt="${cart.prodName}">
+                                            </a>
+                                        </td>
+                                        <td>${cart.cate}</td>
+                                        <td style="text-align: left; padding-left: 15px;">
+                                            <a href="${path}/market/view.do?prodNo=${cart.prodNo}">${cart.prodName}</a>
+                                            <c:if test="${cart.stock <= 0}">
+										        <span style="color: gray; font-weight: bold;">(품절)</span>
+										    </c:if>
+                                        </td>
+										<td>
+											 <div class="qty-wrap" style="display: flex; align-items: center; justify-content: center; gap: 3px;">
+											    <input type="number" name="count" value="${cart.count}" min="1" max="${cart.stock}" style="width: 40px; text-align: center; height: 18px;" class="cart-qty-input" ${cart.stock <= 0 ? 'disabled' : ''}/>
+											        
+											    <c:if test="${cart.stock > 0}">
+												    <button type="button" class="btnUpdateQty" data-prodno="${cart.prodNo}" 
+												           style="padding: 1px 3px; min-width: 35px; white-space: nowrap; border: 1px solid #bebebe; background: #f7f7f7; cursor: pointer; font-size: 10px; line-height: 12px; height: 18px; box-sizing: border-box;">
+												            변경
+												    </button>
+											    </c:if>
+											    <input type="hidden" class="contextPath" value="${path}"/>
+											 </div>
+										</td>
+                                        <td>${cart.discount}%</td>
+                                        <td><fmt:formatNumber value="${cart.point * cart.count}" type="number"/>P</td>
+                                        <td><fmt:formatNumber value="${cart.price}" type="number"/>원</td>
+                                        <td>
+                                            <strong>
+                                                <fmt:formatNumber value="${(cart.price - (cart.price * cart.discount / 100)) * cart.count}" type="number"/>
+                                            </strong>원
+                                        </td>    
+                                    </tr>
+                                </c:forEach>
+                            </c:if>
                             </tbody>
                         </table>
-                        <input type="button" name="del" value="선택삭제">
+                        <input type="button" id="btnDeleteSelected" value="선택삭제">
                         <div class="info">
                             <table border="0">
-                                <caption>전체합계</caption>
-                                <tr><th>상품수</th><td>1</td></tr>
-                                <tr><th>상품금액</th><td>27,000</td></tr>
-                                <tr><th>할인금액</th><td>5,0000원</td></tr>
-                                <tr><th>배송비</th><td class="delivery">5,0000원</td></tr>
-                                <tr><th>포인트</th><td>4,000원</td></tr>
-                                <tr><th>전체주문금액</th><td class="total">22,000</td></tr>
+                                <caption>전체합계</caption>                            
+						        <tr>
+						            <th>상품수</th>
+						            <td style="text-align: right; padding-right: 15px;"><span id="totalCount">0개</span></td>
+						        </tr>
+						        <tr>
+						            <th>상품금액</th>
+						            <td style="text-align: right; padding-right: 15px;"><span id="cartTotalPrice">0원</span></td> 
+						        </tr>
+						        <tr>
+						            <th>할인금액</th>
+						            <td style="text-align: right; padding-right: 15px;"><span id="totalDiscount">0원</span></td>
+						        </tr>
+						        <tr>
+						            <th>배송비</th>
+						            <td class="delivery" style="text-align: right; padding-right: 15px;"><span id="totalDelivery">0원</span></td>
+						        </tr>
+						        <tr>
+						            <th>포인트</th>
+						            <td style="text-align: right; padding-right: 15px;"><span id="totalPoint">0원</span></td>
+						        </tr>
+						        <tr>
+						            <th>전체주문금액</th>
+						            <td class="total" style="text-align: right; padding-right: 15px;"><span id="finalOrderPrice">0원</span></td>
+						        </tr>
                             </table>
-                            <input type="submit" class="btnOrder" value="주문하기">
+                            <input type="button" class="btnOrder" id="btnOrderSubmit" value="주문하기">
                         </div>
                     </section>
                 </article>
+                <form action="${path}/market/order.do" method="POST" id="formCartOrder" style="display:none;"></form>
             </section>
         </div>
+        <script src="${path}/js/market.js"></script>
         <%@ include file="/WEB-INF/views/inc/_footer.jsp" %>
     </div>
 </body>

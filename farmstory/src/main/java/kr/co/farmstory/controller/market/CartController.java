@@ -25,7 +25,7 @@ public class CartController extends HttpServlet {
         UserDTO user = (UserDTO) session.getAttribute("sessUser");
 
         if (user == null) {
-            resp.sendRedirect(req.getContextPath() + "/test/login.do"); 
+            resp.sendRedirect(req.getContextPath() + "/user/login.do"); 
             return;
         }
 

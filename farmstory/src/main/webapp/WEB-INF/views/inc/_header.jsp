@@ -13,13 +13,15 @@
                 ${sessUser.name}님 반갑습니다! |
                 <a href="${path}/user/myinfo.do">나의정보 |</a>
                 <a href="${path}/user/logout.do">로그아웃 |</a>
+                <c:if test="${sessUser.role eq 'admin'}">
+		            <a href="${path}/admin/main.do">관리자 |</a>
+		        </c:if>
             </c:when>
             <c:otherwise>
                 <a href="${path}/user/login.do">로그인 |</a>
                 <a href="${path}/user/terms.do">회원가입 |</a>
             </c:otherwise>
         </c:choose>
-        <a href="${path}/admin/">관리자 |</a>
         <a href="${path}/article/list.do?groupName=community&cate=qna">고객센터</a>
     </p>
 

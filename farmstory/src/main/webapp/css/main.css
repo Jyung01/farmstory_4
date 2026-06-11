@@ -608,6 +608,12 @@ main > .info > div > .notice a {
 #sub > .market > .view > .basic > img {
   float: left;
 }
+
+#sub > .market > .view .thumbnail {
+    width: 240px;
+    height: 240px;
+}
+
 #sub > .market > .view > .basic > table {
   float: right;
   width: 60%;

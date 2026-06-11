@@ -6,8 +6,8 @@
         <img src="${path}/images/admin/admin_logo.jpg" alt="로고" />
     </a>
     <ul>
-        <li><a href="#">HOME |</a></li>
-        <li><a href="#">로그아웃 |</a></li>
-        <li><a href="#">고객센터</a></li>
+        <li><a href="${path}/index.jsp">HOME |</a></li>
+        <li><a href="${path}/user/logout.do">로그아웃 |</a></li>
+        <li><a href="${path}/article/list.do?groupName=community&cate=qna">고객센터</a></li>
     </ul>
 </header>
