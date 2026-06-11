@@ -114,5 +114,10 @@ public enum ArticleService {
 	    return false;
 	}
 	
+	// 최신글 가져오기
+	public List<ArticleDTO> findLatest(String groupName, String cate) {
+	    return dao.selectLatest(groupName, cate);
+	}
+	
 	
 }

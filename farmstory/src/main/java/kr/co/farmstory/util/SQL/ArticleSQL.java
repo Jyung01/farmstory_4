@@ -49,6 +49,9 @@ public class ArticleSQL {
 	
 	public static final String DELETE_ARTICLE = "DELETE FROM article WHERE ano = ?";
 	
+	public static final String SELECT_LATEST = "SELECT ano, groupName, cate, title, wdate FROM article"
+												+ " WHERE groupName=? AND cate=? ORDER BY ano DESC LIMIT 5";
+	
 	// ------------------------------
 	// 파일
 	// ------------------------------
