@@ -8,6 +8,20 @@
         <meta charset="UTF-8" />
         <title>팜스토리::상품주문</title>
         <link rel="stylesheet" href="${path}/css/main.css" />
+        
+        <style>
+        /* 크롬, 사파리, 엣지용 */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* 파이어폭스용 */
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
     </head>
     <body>
         <div id="container">
@@ -135,7 +149,7 @@
                                     <td>포인트사용</td>
                                     <td>
                                         <input type="number" id="inputPoint" value="0" min="0" max="${orderUser.point}" style="text-align: right; width: 100px; padding-right: 5px; height: 26px;" />
-                                        <button type="button" id="btnApplyPoint">사용하기</button>
+                                        <button type="button" id="btnApplyPoint" style="display: inline-block; visibility: visible; opacity: 1; color: #fff; background-color: #333; padding: 4px 10px; font-size: 11px; height: 20px; line-height: 1; border: none; vertical-align: middle; cursor: pointer;" >사용하기</button>
                                         <p class="point">사용가능 <span id="availablePoint"><fmt:formatNumber value="${orderUser.point}" type="number"/></span>P</p>
                                     </td>
                                 </tr>
@@ -150,12 +164,14 @@
                                 <tr>
 								    <td>배송주소</td>
 								    <td>
-								        <input type="text" id="zip" value="${orderUser.zip}" placeholder="우편번호" style="margin-bottom: 4px" />
-								        <button type="button" id="btnZip">우편번호 검색</button>
-								        
-								        <input type="text" id="addr1" value="${orderUser.addr1}" placeholder="기본주소 검색" style="width: 80%; margin-bottom: 4px" /><br>
-								        <input type="text" id="addr2" value="${orderUser.addr2}" placeholder="상세주소 입력" style="width: 80%;" />
-								    </td>
+									    <input type="text" id="zip" value="${orderUser.zip}" placeholder="우편번호" style="margin-bottom: 4px;" />
+									    
+									    <button type="button" id="btnZip" style="display: inline-block; visibility: visible; opacity: 1; color: #fff; background-color: #333; padding: 4px 10px; font-size: 11px; height: 20px; line-height: 1; border: none; vertical-align: middle; cursor: pointer;">우편번호 검색</button>
+									    
+									    <br>
+									    <input type="text" id="addr1" value="${orderUser.addr1}" placeholder="기본주소 검색" style="width: 80%; margin-bottom: 4px;" /><br>
+									    <input type="text" id="addr2" value="${orderUser.addr2}" placeholder="상세주소 입력" style="width: 80%;" />
+									</td>
 								</tr>
                                 <tr>
                                     <td>결제방법</td>

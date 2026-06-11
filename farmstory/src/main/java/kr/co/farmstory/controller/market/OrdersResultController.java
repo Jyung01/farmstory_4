@@ -92,7 +92,7 @@ public class OrdersResultController extends HttpServlet {
         boolean isSuccess = OrdersService.INSTANCE.receiveAndProcessOrder(ordersDTO, itemDTOList, cartNoArr);
 
         if (isSuccess) {
-            resp.sendRedirect(req.getContextPath() + "/myinfo/ordered.do");
+            resp.sendRedirect(req.getContextPath() + "/user/ordered.do");
         } else {
             resp.sendRedirect(req.getContextPath() + "/market/cart.do?error=order_failed");
         }

@@ -43,10 +43,10 @@
                 <c:forEach var="item" items="${orderItemList}">
                     <tr>
                         <td class="left">${item.prodName}</td>
-                        <td><fmt:formatNumber value="${item.price}" type="number"/>원</td>
+                        <td><fmt:formatNumber value="${item.price/item.count}" type="number"/>원</td>
                         <td>${item.count}개</td>
                         <td class="bold">
-                            <fmt:formatNumber value="${item.price * item.count}" type="number"/>원
+                            <fmt:formatNumber value="${item.price}" type="number"/>원
                         </td>
                     </tr>
                 </c:forEach>
