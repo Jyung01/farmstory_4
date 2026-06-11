@@ -26,7 +26,7 @@ public class ProductSQL {
 	public static final String DELETE_PRODUCT = "DELETE FROM product WHERE prodNo=?";
 		
 	// 관리자 주문 목록
-	public static final String SELECT_PRODUCT_JOIN_ORDER = "SELECT i.itemNo, i.orderNo, p.prodName, i.price, i.count,  o.delivery, o.totalPrice, u.name , o.regDate "
+	public static final String SELECT_PRODUCT_JOIN_ORDER = "SELECT i.itemNo, i.orderNo, p.prodName, i.price, i.count,  o.delivery, o.totalPrice, u.name , o.regDate, i.prodNo "
 															+ "FROM order_item AS i "
 															+ "JOIN product AS p ON i.prodNo = p.prodNo "
 															+ "JOIN orders AS o ON i.orderNo = o.orderNo "
@@ -38,4 +38,10 @@ public class ProductSQL {
 	
 	// 관리자 주문 목록 삭제
 	public static final String DELETE_ORDER = "DELETE FROM order_item WHERE itemNo=?";
+
+	// 관리자 주문 상세 조회
+	public static final String SELECT_ORDER_FOR_DETAIL = "SELECT * FROM orders WHERE orderNo=?";
+
+	// 관리자 주문 상품 조회
+	public static final String SELECT_PRODUCT_FOR_DETAIL = "SELECT p.thumb, p.prodName, p.cate, i.count, i.price FROM order_item AS i JOIN product AS p ON i.prodNo = p.prodNo WHERE i.orderNo=?";
 }

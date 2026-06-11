@@ -14,6 +14,25 @@ public class OrderItemDTO {
 	private String name;
 	private String prodName;
 	
+	// 관리자 상세 주문목록을 위한 추가 필드
+	private String thumb;
+	private String cate;
+	
+	
+	public String getThumb() {
+		return thumb;
+	}
+	public void setThumb(String thumb) {
+		this.thumb = thumb;
+	}
+	public String getCate() {
+		return cate;
+	}
+	public void setCate(String cate) {
+		this.cate = cate;
+	}
+	
+	
 	public int getDelivery() {
 		return delivery;
 	}

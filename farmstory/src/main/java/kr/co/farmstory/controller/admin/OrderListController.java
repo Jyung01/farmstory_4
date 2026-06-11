@@ -40,7 +40,8 @@ public class OrderListController extends HttpServlet {
 		int start = service.getStart(currentPage);
 		
 		List<OrderItemDTO> dtoList = service.findAll(start, 10);
-		
+		System.out.println(dtoList);
+
 		req.setAttribute("dtoList", dtoList);
 		req.setAttribute("pageGroupDTO", pageGroupDTO);
 		req.setAttribute("currentPage", currentPage);
