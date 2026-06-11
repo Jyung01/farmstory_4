@@ -27,28 +27,22 @@ public enum OrdersService {
         return dao.deleteOrderedCart(cartNo);
     }
     
-    /**
-     * 컨트롤러(99번째 줄) 에러 해결을 위해 String[] cartNoArr를 파라미터에 명확히 추가했습니다.
-     */
+
     public boolean receiveAndProcessOrder(OrdersDTO ordersDTO, List<OrderItemDTO> itemDTOList, String[] cartNoArr) {
         
-        // 1. orders 테이블 삽입 후 주문번호 가져오기
         int orderNo = dao.insertOrder(ordersDTO);
         
         if (orderNo > 0) {
-            
-            // 2. order_item 테이블 상품 개수만큼 루프 돌며 삽입
+
             for (OrderItemDTO item : itemDTOList) {
                 item.setOrderNo(orderNo);
                 dao.insertOrderItem(item);
             }
             
-            // 3. 포인트 차감 처리
             if (ordersDTO.getUsedPoint() > 0) {
                 dao.updateUserUsePoint(ordersDTO.getUsedPoint(), ordersDTO.getUserid());
             }
-            
-            // 4. 주문 완료된 장바구니 품목들 비우기
+
             if (cartNoArr != null) {
                 for (String cartNoStr : cartNoArr) {
                     if (cartNoStr != null && !cartNoStr.trim().isEmpty()) {
@@ -61,5 +55,17 @@ public enum OrdersService {
             return true; 
         }
         return false; 
+    }
+    
+    public List<OrdersDTO> selectOrdersList(String userid) {
+        return dao.selectOrdersList(userid);
+    }
+    
+    public OrdersDTO selectOrder(int orderNo) {
+        return dao.selectOrder(orderNo);
+    }
+
+    public List<OrderItemDTO> selectOrderItems(int orderNo) {
+        return dao.selectOrderItems(orderNo);
     }
 }

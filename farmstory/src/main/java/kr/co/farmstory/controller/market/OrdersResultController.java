@@ -89,12 +89,10 @@ public class OrdersResultController extends HttpServlet {
             }
         }
 
-        // 3. 3개 파라미터 조합으로 비즈니스 로직 연동 실행 (99번째 줄 빨간줄 완벽 해결)
         boolean isSuccess = OrdersService.INSTANCE.receiveAndProcessOrder(ordersDTO, itemDTOList, cartNoArr);
 
         if (isSuccess) {
-            req.setAttribute("orderResult", ordersDTO);
-            req.getRequestDispatcher("/WEB-INF/views/myinfo/ordered.jsp").forward(req, resp);
+            resp.sendRedirect(req.getContextPath() + "/myinfo/ordered.do");
         } else {
             resp.sendRedirect(req.getContextPath() + "/market/cart.do?error=order_failed");
         }

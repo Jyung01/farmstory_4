@@ -19,7 +19,7 @@ public class OrdersController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/myinfo/ordered.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/Market/order.jsp").forward(req, resp);
     }
 
     @Override
@@ -32,14 +32,23 @@ public class OrdersController extends HttpServlet {
             return;
         }
         
-        String[] cartNoArr = req.getParameterValues("cartNo");
-        
         UserDTO orderUser = MarketService.INSTANCE.selectOrderUser(sessUser.getUserid());
         req.setAttribute("orderUser", orderUser);
 
-        List<CartDTO> orderList = MarketService.INSTANCE.selectCartListByCartNo(cartNoArr);
-        req.setAttribute("orderList", orderList);
+        String buyNow = req.getParameter("buyNow");
+        List<CartDTO> orderList = null;
 
+        if ("true".equals(buyNow)) {
+            String prodNoStr = req.getParameter("prodNo");
+            String countStr = req.getParameter("count");
+            
+            orderList = MarketService.INSTANCE.selectProductBuyNowOrder(countStr, prodNoStr);
+        } else {
+            String[] cartNoArr = req.getParameterValues("cartNo");
+            orderList = MarketService.INSTANCE.selectCartListByCartNo(cartNoArr);
+        }
+
+        req.setAttribute("orderList", orderList);
         req.getRequestDispatcher("/WEB-INF/views/Market/order.jsp").forward(req, resp);
     }
 }
