@@ -1,6 +1,5 @@
 package kr.co.farmstory.dao.user;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +40,7 @@ public class UserDAO extends DBHelper {
             psmt = conn.prepareStatement(UserSQL.SELECT_USER_LOGIN);
             psmt.setString(1, userid);
             rs = psmt.executeQuery();
+
             if(rs.next()) {
                 dto = new UserDTO();
                 dto.setUserid(rs.getString("userid"));
@@ -63,35 +63,11 @@ public class UserDAO extends DBHelper {
         return dto;
     }
 
-    public List<UserDTO> selectAll() {
-        List<UserDTO> dtoList = new ArrayList<>();
-        try {
-            conn = getConnection();
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(UserSQL.SELECT_USER_FOR_ADMIN);
-            while(rs.next()) {
-                UserDTO dto = new UserDTO();
-                dto.setUserid(rs.getString(1));
-                dto.setName(rs.getString(2));
-                dto.setNick(rs.getString(3));
-                dto.setEmail(rs.getString(4));
-                dto.setHp(rs.getString(5));
-                dto.setRole(rs.getString(6));
-                dto.setRegDate(rs.getString(7));
-                dtoList.add(dto);
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        } finally {
-            try { closeAll(); } catch(Exception e) { e.printStackTrace(); }
-        }
-        return dtoList;
-    }
-
     public int selectUserCheck(String type, String value) {
         int result = 0;
         try {
             conn = getConnection();
+
             if(type.equals("userid")) {
                 psmt = conn.prepareStatement(UserSQL.SELECT_USERID_CHECK);
             } else if(type.equals("nick")) {
@@ -101,8 +77,10 @@ public class UserDAO extends DBHelper {
             } else {
                 return 0;
             }
+
             psmt.setString(1, value);
             rs = psmt.executeQuery();
+
             if(rs.next()) {
                 result = 1;
             }
@@ -150,7 +128,7 @@ public class UserDAO extends DBHelper {
         }
         return result;
     }
-    
+
     public UserDTO selectUser(String userid, String pass) {
         UserDTO dto = null;
         try {
@@ -159,6 +137,7 @@ public class UserDAO extends DBHelper {
             psmt.setString(1, userid);
             psmt.setString(2, pass);
             rs = psmt.executeQuery();
+
             if(rs.next()) {
                 dto = new UserDTO();
                 dto.setUserid(rs.getString("userid"));
@@ -180,7 +159,7 @@ public class UserDAO extends DBHelper {
         }
         return dto;
     }
-    
+
     public int updatePass(String userid, String pass) {
         int result = 0;
         try {
@@ -196,7 +175,7 @@ public class UserDAO extends DBHelper {
         }
         return result;
     }
-    
+
     public String selectUserIdByNameEmail(String name, String email) {
         String userid = null;
         try {
@@ -205,6 +184,7 @@ public class UserDAO extends DBHelper {
             psmt.setString(1, name);
             psmt.setString(2, email);
             rs = psmt.executeQuery();
+
             if(rs.next()) {
                 userid = rs.getString("userid");
             }
@@ -215,27 +195,72 @@ public class UserDAO extends DBHelper {
         }
         return userid;
     }
-    
-    public String selectUserByNameEmail(String name, String email) {
-    	String userid = null;
-    	try {
-    		conn = getConnection();
-    		psmt = conn.prepareStatement(UserSQL.SELECT_USERID_BY_NAME_EMAIL);
-    		psmt.setString(1, name);
-    		psmt.setString(2, email);
-    		rs = psmt.executeQuery();
-    		if(rs.next()) {
-    			userid = rs.getString("userid");
-    		}
-    		
-    	}catch(Exception e) {
-    		e.printStackTrace();
-    	}finally {
-    		try { closeAll();} catch (Exception e) { e.printStackTrace();}
-			
-		}
-    	return userid;
-    }
-    
-}
 
+    public String selectUserByNameEmail(String name, String email) {
+        String userid = null;
+        try {
+            conn = getConnection();
+            psmt = conn.prepareStatement(UserSQL.SELECT_USERID_BY_NAME_EMAIL);
+            psmt.setString(1, name);
+            psmt.setString(2, email);
+            rs = psmt.executeQuery();
+
+            if(rs.next()) {
+                userid = rs.getString("userid");
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            try { closeAll(); } catch(Exception e) { e.printStackTrace(); }
+        }
+        return userid;
+    }
+
+    public int selectCount() {
+        int total = 0;
+        try {
+            conn = getConnection();
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(UserSQL.SELECT_COUNT_FOR_ADMIN);
+
+            if(rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            try { closeAll(); } catch(Exception e) { e.printStackTrace(); }
+        }
+        return total;
+    }
+
+    public List<UserDTO> selectAll(int start, int count) {
+        List<UserDTO> dtoList = new ArrayList<>();
+
+        try {
+            conn = getConnection();
+            psmt = conn.prepareStatement(UserSQL.SELECT_USER_FOR_ADMIN);
+            psmt.setInt(1, start);
+            psmt.setInt(2, count);
+            rs = psmt.executeQuery();
+
+            while(rs.next()) {
+                UserDTO dto = new UserDTO();
+                dto.setUserid(rs.getString(1));
+                dto.setName(rs.getString(2));
+                dto.setNick(rs.getString(3));
+                dto.setEmail(rs.getString(4));
+                dto.setHp(rs.getString(5));
+                dto.setRole(rs.getString(6));
+                dto.setRegDate(rs.getString(7));
+                dtoList.add(dto);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            try { closeAll(); } catch(Exception e) { e.printStackTrace(); }
+        }
+
+        return dtoList;
+    }
+}
