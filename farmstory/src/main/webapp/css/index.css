@@ -164,6 +164,12 @@ section.proList table tbody td {
     display: flex;
     justify-content: space-between;
 }
+
+.buttons input:not(.proAdd .buttons input) {
+	border: 0;
+	background-color: transparent;	
+}
+
 .buttons a {
     color: #111111;
 }

@@ -49,57 +49,63 @@
 
                 <section class="admin_main orderList">
                     <h2>주문목록</h2>
-
-                    <section>
-                        <table>
-                            <tr>
-                                <th><input type="checkbox" /></th>
-                                <th>주문번호</th>
-                                <th>상품명</th>
-                                <th>판매가격</th>
-                                <th>수량</th>
-                                <th>배송비</th>
-                                <th>합계</th>
-                                <th>주문자</th>
-                                <th>주문일</th>
-                                <th>확인</th>
-                            </tr>
-                            <c:forEach var="order" items="${dtoList}">
-                            	<tr>
-	                                <td><input type="checkbox" /></td>
-	                                <td>${order.orderNo}</td>
-	                                <td>${order.prodName}</td>
-	                                <td>${order.price}원</td>
-	                                <td>${order.count}</td>
-	                                <td>${order.delivery}원</td>
-	                                <td>${order.totalPrice}원</td>
-	                                <td>${order.name}</td>
-	                                <td>${order.regDate}</td>
-	                                <td><a href="#">[상세확인]</a></td>
-                            	</tr>
-                            </c:forEach>
-                           
-                        </table>
-                        
-                       	<c:if test="${empty dtoList}">
-						    <p style="text-align:center; padding:20px 0;">주문 목록이 없습니다.</p>
-						</c:if>
-                    </section>
-
-                    <div class="buttons">
-                        <a href="#">선택삭제</a>
-                    </div>
+                    
+					<form action="/farmstory/admin/orderDelete.do" method="post">
+	                    <section>
+	                        <table>
+	                            <tr>
+	                                <th><input type="checkbox" /></th>
+	                                <th>주문번호</th>
+	                                <th>상품명</th>
+	                                <th>판매가격</th>
+	                                <th>수량</th>
+	                                <th>배송비</th>
+	                                <th>합계</th>
+	                                <th>주문자</th>
+	                                <th>주문일</th>
+	                                <th>확인</th>
+	                            </tr>
+	                            <c:forEach var="order" items="${dtoList}">
+	                            	<tr>
+		                                <td><input type="checkbox" name="itemNo" value="${order.itemNo}" /></td>
+		                                <td>${order.orderNo}</td>
+		                                <td>${order.prodName}</td>
+		                                <td>${order.price}원</td>
+		                                <td>${order.count}</td>
+		                                <td>${order.delivery}원</td>
+		                                <td>${order.totalPrice}원</td>
+		                                <td>${order.name}</td>
+		                                <td>${order.regDate}</td>
+		                                <td><a href="#">[상세확인]</a></td>
+	                            	</tr>
+	                            </c:forEach>
+	                           
+	                        </table>
+	                        
+	                       	<c:if test="${empty dtoList}">
+							    <p style="text-align:center; padding:20px 0;">주문 목록이 없습니다.</p>
+							</c:if>
+	                    </section>
+	
+	                    <div class="buttons">
+	                        <input type="submit" value="선택삭제">
+	                    </div>
+                    </form>
 
                     <!-- 페이지네이션 -->
                     <div class="pagination_wrapper">
                         <ul class="pagination">
-                            <li><a href="#"><</a></li>
-                            <li><a href="#" class="page_active">[1]</a></li>
-                            <li><a href="#">[2]</a></li>
-                            <li><a href="#">[3]</a></li>
-                            <li><a href="#">[4]</a></li>
-                            <li><a href="#">[5]</a></li>
-                            <li><a href="#">></a></li>
+                        	<c:if test="${pageGroupDTO.start > 1}">
+		                    	<a href="/farmstory/admin/orderList.do?page=${pageGroupDTO.start - 1}"><</a>
+		                    </c:if>
+		                    
+                        	<c:forEach var="i" begin="${pageGroupDTO.start}" end="${pageGroupDTO.end}">
+                        		<li><a href="/farmstory/admin/orderList.do?page=${i}" class="${currentPage == i ? 'page_active' : ''}">[${i}]</a></li>
+                        	</c:forEach>
+                        
+                        	<c:if test="${pageGroupDTO.end < lastPage}">
+		                    	<a href="/farmstory/admin/orderList.do?page=${pageGroupDTO.end + 1}">></a>
+		                    </c:if>
                         </ul>
                     </div>
                 </section>

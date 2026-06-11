@@ -75,6 +75,7 @@
                                 <p>할인</p>
                                 <select name="discount">
                                     <option value="5">5%</option>
+                                    <option value="10">10%</option>
                                 </select>
                             </div>
                             <div class="delivery">

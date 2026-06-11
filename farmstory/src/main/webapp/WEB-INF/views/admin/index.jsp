@@ -52,7 +52,7 @@
                     <section>
                         <div>
                             <p>상품현황</p>
-                            <a href="#">+ 더보기</a>
+                            <a href="/farmstory/admin/prodList.do">+ 더보기</a>
                         </div>
                         <table>
                             <tr>
@@ -86,7 +86,7 @@
                     <section>
                         <div>
                             <p>주문현황</p>
-                            <a href="#">+ 더보기</a>
+                            <a href="/farmstory/admin/orderList.do">+ 더보기</a>
                         </div>
                         <table>
                             <tr>
@@ -123,7 +123,7 @@
                     <section>
                         <div>
                             <p>회원현황</p>
-                            <a href="#">+ 더보기</a>
+                            <a href="/farmstory/admin/userList.do">+ 더보기</a>
                         </div>
                         <table>
                             <tr>

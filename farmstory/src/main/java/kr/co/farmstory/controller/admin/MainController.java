@@ -26,9 +26,9 @@ public class MainController extends HttpServlet  {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<ProductDTO> prodList = prodService.findAll();
-		List<OrderItemDTO> orderList = orderService.findAll();
-		List<UserDTO> userList = userService.selectAll();
+		List<ProductDTO> prodList = prodService.findAll(0,3);
+		List<OrderItemDTO> orderList = orderService.findAll(0,3);
+		List<UserDTO> userList = userService.selectAll(0,3);
 		
 		req.setAttribute("prodList", prodList);
 		req.setAttribute("orderList", orderList);
