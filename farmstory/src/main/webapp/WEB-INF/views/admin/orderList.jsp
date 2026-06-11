@@ -76,7 +76,7 @@
 		                                <td>${order.totalPrice}원</td>
 		                                <td>${order.name}</td>
 		                                <td>${order.regDate}</td>
-		                                <td><a href="#">[상세확인]</a></td>
+		                                <td><a href="/farmstory/admin/orderDetail.do?orderNo=${order.orderNo}&prodNo=${order.prodNo}">[상세확인]</a></td>
 	                            	</tr>
 	                            </c:forEach>
 	                           

@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.co.farmstory.dao.admin.OrderListDAO;
 import kr.co.farmstory.dto.orderItem.OrderItemDTO;
+import kr.co.farmstory.dto.orders.OrdersDTO;
 import kr.co.farmstory.dto.page.PageGroupDTO;
 
 public enum OrderListService {
@@ -65,4 +66,14 @@ public enum OrderListService {
 	public int getStart(int currentPage) {
 		return (currentPage - 1) * 10;
 	}
+	
+	// 주문 상세 조회
+	public OrdersDTO findByOrderNo(String orderNo) {
+		return dao.select(orderNo);
+	}
+	public List<OrderItemDTO> findByProdNo(String orderNo) {
+		return dao.selectProd(orderNo);
+	}
+	
+	
 }

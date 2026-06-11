@@ -42,7 +42,6 @@ public class UserListController extends HttpServlet {
 		
 		
 		List<UserDTO> dtoList = service.selectAll(start, 10);
-		System.out.println(dtoList);
 		
 		req.setAttribute("dtoList", dtoList);
 		req.setAttribute("pageGroupDTO", pageGroupDTO);
