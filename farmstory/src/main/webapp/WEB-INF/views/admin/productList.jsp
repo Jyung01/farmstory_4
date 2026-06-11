@@ -50,53 +50,59 @@
                 <section class="admin_main proList">
                     <h2>상품목록</h2>
 
-                    <section>
-                        <table>
-                            <tr>
-                                <th><input type="checkbox" /></th>
-                                <th>사진</th>
-                                <th>상품번호</th>
-                                <th>상품명</th>
-                                <th>구분</th>
-                                <th>가격</th>
-                                <th>재고</th>
-                                <th>등록일</th>
-                            </tr>
-                            
-                            <c:forEach var="product" items="${dtoList}">
+					<form action="/farmstory/admin/prodDelete.do" method="post">
+	                    <section>
+	                        <table>
 	                            <tr>
-	                                <td><input type="checkbox" /></td>
-	                                <td><img src="${path}/upload/${product.thumb}" alt="item1" /></td>
-	                                <td>${product.prodNo}</td>
-	                                <td>${product.prodName}</td>
-	                                <td>${product.cate}</td>
-	                                <td>${product.price}원</td>
-	                                <td>${product.stock}</td>
-	                                <td>${product.regDate}</td>
+	                                <th><input type="checkbox" /></th>
+	                                <th>사진</th>
+	                                <th>상품번호</th>
+	                                <th>상품명</th>
+	                                <th>구분</th>
+	                                <th>가격</th>
+	                                <th>재고</th>
+	                                <th>등록일</th>
 	                            </tr>
-                            </c:forEach>
-                        </table>
-                        
-                        <c:if test="${empty dtoList}">
-						    <p style="text-align:center; padding:20px 0;">상품 목록이 없습니다.</p>
-						</c:if>
-                    </section>
-
-                    <div class="buttons">
-                        <a href="#">선택삭제</a>
-                        <a href="/farmstory/admin/register.do" class="add_product"><p>상품등록</p></a>
-                    </div>
+	                            
+	                            <c:forEach var="product" items="${dtoList}">
+		                            <tr>
+		                                <td><input type="checkbox" name="prodNo" value="${product.prodNo}" /></td>
+		                                <td><img src="${path}/upload/${product.thumb}" alt="item1" /></td>
+		                                <td>${product.prodNo}</td>
+		                                <td>${product.prodName}</td>
+		                                <td>${product.cate}</td>
+		                                <td>${product.price}원</td>
+		                                <td>${product.stock}</td>
+		                                <td>${product.regDate}</td>
+		                            </tr>
+	                            </c:forEach>
+	                        </table>
+	                        
+	                        <c:if test="${empty dtoList}">
+							    <p style="text-align:center; padding:20px 0;">상품 목록이 없습니다.</p>
+							</c:if>
+	                    </section>
+	
+	                    <div class="buttons">
+	                    	<input type="submit" value="선택삭제">
+	                        <a href="/farmstory/admin/register.do" class="add_product"><p>상품등록</p></a>
+	                    </div>
+                    </form>
 
                     <!-- 페이지네이션 -->
                     <div class="pagination_wrapper">
                         <ul class="pagination">
-                            <li><a href="#"><</a></li>
-                            <li><a href="#" class="page_active">[1]</a></li>
-                            <li><a href="#">[2]</a></li>
-                            <li><a href="#">[3]</a></li>
-                            <li><a href="#">[4]</a></li>
-                            <li><a href="#">[5]</a></li>
-                            <li><a href="#">></a></li>
+                        	<c:if test="${pageGroupDTO.start > 1}">
+		                    	<a href="/farmstory/admin/prodList.do?page=${pageGroupDTO.start - 1}"><</a>
+		                    </c:if>
+		                    
+                        	<c:forEach var="i" begin="${pageGroupDTO.start}" end="${pageGroupDTO.end}">
+                        		<li><a href="/farmstory/admin/prodList.do?page=${i}" class="${currentPage == i ? 'page_active' : ''}">[${i}]</a></li>
+                        	</c:forEach>
+                        
+                        	<c:if test="${pageGroupDTO.end < lastPage}">
+		                    	<a href="/farmstory/admin/prodList.do?page=${pageGroupDTO.end + 1}">></a>
+		                    </c:if>
                         </ul>
                     </div>
                 </section>

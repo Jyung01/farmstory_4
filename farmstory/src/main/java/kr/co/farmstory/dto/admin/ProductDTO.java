@@ -75,7 +75,7 @@ public class ProductDTO {
 	}
 	public void setPoint(String point) {
 		if(point != null) {
-			this.price = Integer.parseInt(point);
+			this.point = Integer.parseInt(point);
 		}
 	}
 	

@@ -1,6 +1,5 @@
 package kr.co.farmstory.dao.admin;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +15,7 @@ public class ProductDAO extends DBHelper {
 	}
 	private ProductDAO() {};
 	
+	// 상품 등록
 	public void insert(ProductDTO dto) {
 		try {
 			conn = getConnection();
@@ -38,12 +38,17 @@ public class ProductDAO extends DBHelper {
 		}
 	}
 	
-	public List<ProductDTO> selectAll() {
+	// 상품 전체 조회
+	public List<ProductDTO> selectAll(int start, int count) {
 		List<ProductDTO> dtoList = new ArrayList<>();
 		try {
 			conn = getConnection();
-			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(ProductSQL.SELECT_ALL_PRODUCT);
+			psmt = conn.prepareStatement(ProductSQL.SELECT_ALL_PRODUCT);
+			psmt.setInt(1, start);
+			psmt.setInt(2, count);
+			
+			rs = psmt.executeQuery();
+			
 			while(rs.next()) {
 				ProductDTO dto = new ProductDTO();
 				dto.setProdNo(rs.getInt(1));
@@ -66,5 +71,35 @@ public class ProductDAO extends DBHelper {
 			e.printStackTrace();
 		}
 		return dtoList;
+	}
+	
+	// 상품 갯수 조회
+	public int selectCount() {
+		int total = 0;
+		try {
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(ProductSQL.SELECT_COUNT_PRODUCT);
+			if(rs.next()) {
+				total = rs.getInt(1);
+			}
+			closeAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+	
+	// 상품 삭제
+	public void delete(String prodNo) {
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(ProductSQL.DELETE_PRODUCT);
+			psmt.setString(1, prodNo);
+			psmt.executeUpdate();
+			closeAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

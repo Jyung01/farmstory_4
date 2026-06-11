@@ -50,72 +50,70 @@
                 <section class="admin_main userList">
                     <h2>회원목록</h2>
 
-                    <section>
-                        <table>
-                            <tr>
-                                <th><input type="checkbox" /></th>
-                                <th>아이디</th>
-                                <th>이름</th>
-                                <th>별명</th>
-                                <th>이메일</th>
-                                <th>휴대폰</th>
-                                <th>등급</th>
-                                <th>가입일</th>
-                                <th>확인</th>
-                            </tr>
-                            
-                            <c:forEach var="user" items="${dtoList}">
-                            	<tr>
-	                                <td><input type="checkbox" /></td>
-	                                <td>${user.userid}</td>
-	                                <td>${user.name}</td>
-	                                <td>${user.nick}</td>
-	                                <td>${user.email}</td>
-	                                <td>${user.hp}</td>
-	                                <c:choose>
-									    <c:when test="${user.role eq 'admin'}">
-									        <td>1</td>
-									    </c:when>
-									    <c:when test="${user.role eq 'member'}">
-									        <td>2</td>
-									    </c:when>
-									    <c:otherwise>
-									        <td>3</td>
-									    </c:otherwise>
-									</c:choose>
-									
-									<!-- 
-		                                <td>
-		                                    <select name="grade">
-		                                        <option value="1" ${user.role eq 'admin' ? 'selected' : ''}>1</option>
-		                                        <option value="2" ${user.role eq 'member' ? 'selected' : ''}>2</option>
-		                                        <option value="3" ${user.role eq 'guest' ? 'selected' : ''}>3</option>
-		                                    </select>
-		                                </td>
-	                                 -->
-	                                <td>${user.regDate}</td>
-	                                <td><a href="#">[상세확인]</a></td>
+					<form action="/farmstory/admin/userDelete.do" method="post">
+	                    <section>
+	                        <table>
+	                            <tr>
+	                                <th><input type="checkbox" /></th>
+	                                <th>아이디</th>
+	                                <th>이름</th>
+	                                <th>별명</th>
+	                                <th>이메일</th>
+	                                <th>휴대폰</th>
+	                                <th>등급</th>
+	                                <th>가입일</th>
+	                                <th>확인</th>
 	                            </tr>
-                            
-                            </c:forEach>
-                        </table>
-                        
-                        <c:if test="${empty dtoList}">
-						    <p style="text-align:center; padding:20px 0;">회원 목록이 없습니다.</p>
-						</c:if>
-						
-                    </section>
+	                            
+	                            <c:forEach var="user" items="${dtoList}">
+	                            	<tr>
+		                                <td><input type="checkbox" name="userid" value="${user.userid}"/></td>
+		                                <td>${user.userid}</td>
+		                                <td>${user.name}</td>
+		                                <td>${user.nick}</td>
+		                                <td>${user.email}</td>
+		                                <td>${user.hp}</td>
+		                                <c:choose>
+										    <c:when test="${user.role eq 'admin'}">
+										        <td>1</td>
+										    </c:when>
+										    <c:when test="${user.role eq 'member'}">
+										        <td>2</td>
+										    </c:when>
+										    <c:otherwise>
+										        <td>3</td>
+										    </c:otherwise>
+										</c:choose>
+										
+		                                <td>${user.regDate}</td>
+		                                <td><a href="#">[상세확인]</a></td>
+		                            </tr>
+	                            
+	                            </c:forEach>
+	                        </table>
+	                        
+	                        <c:if test="${empty dtoList}">
+							    <p style="text-align:center; padding:20px 0;">회원 목록이 없습니다.</p>
+							</c:if>
+							
+	                    </section>
+                    	
+                    </form>
 
                     <!-- 페이지네이션 -->
                     <div class="pagination_wrapper">
                         <ul class="pagination">
-                            <li><a href="#"><</a></li>
-                            <li><a href="#" class="page_active">[1]</a></li>
-                            <li><a href="#">[2]</a></li>
-                            <li><a href="#">[3]</a></li>
-                            <li><a href="#">[4]</a></li>
-                            <li><a href="#">[5]</a></li>
-                            <li><a href="#">></a></li>
+                        	<c:if test="${pageGroupDTO.start > 1}">
+		                    	<a href="/farmstory/admin/userList.do?page=${pageGroupDTO.start - 1}"><</a>
+		                    </c:if>
+		                    
+                        	<c:forEach var="i" begin="${pageGroupDTO.start}" end="${pageGroupDTO.end}">
+                        		<li><a href="/farmstory/admin/userList.do?page=${i}" class="${currentPage == i ? 'page_active' : ''}">[${i}]</a></li>
+                        	</c:forEach>
+                        
+                        	<c:if test="${pageGroupDTO.end < lastPage}">
+		                    	<a href="/farmstory/admin/userList.do?page=${pageGroupDTO.end + 1}">></a>
+		                    </c:if>
                         </ul>
                     </div>
                 </section>
