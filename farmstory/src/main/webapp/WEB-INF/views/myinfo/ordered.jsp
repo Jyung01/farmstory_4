@@ -52,7 +52,7 @@
 							                <tr>
 							                    <td>${order.orderNo}</td>
 							                    <td>
-							                        <img src="${path}${order.displayThumb}" class="thumb" alt="${order.displayProdName}" />
+							                        <img src="${path}/upload/${order.displayThumb}" class="thumb" alt="${order.displayProdName}" />
 							                    </td>
 							                    <td>${order.displayProdName}</td>
 							                    <td>${order.totalCount}개</td>
@@ -70,13 +70,23 @@
 							    </c:choose>
 							</table>
                             
-                            <div class="page">
-                                <a href="#" class="prev">이전</a>
-                                <a href="#" class="num current">1</a>
-                                <a href="#" class="num">2</a>
-                                <a href="#" class="num">3</a>
-                                <a href="#" class="next">다음</a>
-                            </div>
+                            <p class="paging" style="text-align: center; margin-top: 20px;">
+							    <c:if test="${not empty pageGroup}">
+							    
+							        <c:if test="${pageGroup.start > 1}">
+							            <a href="${path}/user/ordered.do?page=${pageGroup.start - 1}">&lt;</a>
+							        </c:if>
+							    
+							        <c:forEach var="i" begin="${pageGroup.start}" end="${pageGroup.end}">
+							            <a href="${path}/user/ordered.do?page=${i}" class="${currentPage == i ? 'on' : ''}">[${i}]</a>
+							        </c:forEach>
+							    
+							        <c:if test="${pageGroup.end < lastPageNum}">
+							            <a href="${path}/user/ordered.do?page=${pageGroup.end + 1}">&gt;</a>
+							        </c:if>
+							        
+							    </c:if>
+							</p>
                         </section>
                     </article>
                 </section>

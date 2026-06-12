@@ -195,4 +195,56 @@ public class OrdersDAO extends DBHelper {
         }
         return list;
     }
+    
+    public List<OrdersDTO> selectOrdersList(String userid, int start) {
+        List<OrdersDTO> ordersList = new ArrayList<>();
+        try {
+            conn = getConnection();
+            psmt = conn.prepareStatement(OrdersSQL.SELECT_ORDERS_LIST);
+            psmt.setString(1, userid);
+            psmt.setInt(2, start); // 매개변수로 받은 start를 SQL의 LIMIT 첫 번째 자리에 바인딩
+            
+            rs = psmt.executeQuery();
+            
+            while (rs.next()) {
+                OrdersDTO dto = new OrdersDTO();
+                dto.setOrderNo(rs.getInt("orderNo"));
+                
+                if(rs.getTimestamp("regDate") != null) {
+                    dto.setRegDate(rs.getTimestamp("regDate").toString().substring(0, 19));
+                }
+                
+                dto.setTotalPrice(rs.getInt("totalPrice"));
+                dto.setOrderer(rs.getString("orderer"));
+                dto.setDisplayProdName(rs.getString("displayProdName"));
+                dto.setDisplayThumb(rs.getString("displayThumb"));
+                dto.setTotalCount(rs.getInt("totalCount"));
+                
+                ordersList.add(dto);
+            }
+            closeAll();
+        } catch (Exception e) {
+            System.err.println("주문 목록 페이징 조회 중 에러 발생");
+            e.printStackTrace();
+        }
+        return ordersList;
+    }
+
+    public int selectCountOrders(String userid) {
+        int total = 0;
+        try {
+            conn = getConnection();
+            psmt = conn.prepareStatement(OrdersSQL.SELECT_COUNT_ORDERS);
+            psmt.setString(1, userid);
+            
+            rs = psmt.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+            closeAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
 }
