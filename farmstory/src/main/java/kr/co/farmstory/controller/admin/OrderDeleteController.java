@@ -19,7 +19,6 @@ public class OrderDeleteController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String[] itemNos = req.getParameterValues("itemNo");
-		System.out.println(Arrays.toString(itemNos));
 		
 		if(itemNos != null) {
 			for (String itemNo : itemNos) {
