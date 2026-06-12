@@ -61,7 +61,7 @@
                                 <c:forEach var="cart" items="${cartList}">
                                     <tr>
                                         <td>
-                                            <input type="checkbox" name="cartNo" value="${cart.cartNo}" class="cart-checkbox" data-stock="${cart.stock}" />
+                                            <input type="checkbox" name="cartNo" value="${cart.cartNo}" class="cart-checkbox" data-stock="${cart.stock}" ${cart.stock <= 0 ? 'disabled' : ''} />
 										</td>
                                         <td>
                                             <a href="${path}/market/view.do?prodNo=${cart.prodNo}">
