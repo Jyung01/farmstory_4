@@ -14,7 +14,14 @@ public class ProductDTO {
 	private String infoImg;
 	private String detailImg;
 	private String regDate;
+	private int salePrice; //할인가
 	
+	public int getSalePrice() {
+		return this.price - (this.price * this.discount / 100);
+	}
+	public void setSalePrice(int salePrice) {
+		this.salePrice = salePrice;
+	}
 	public int getProdNo() {
 		return prodNo;
 	}
@@ -99,8 +106,9 @@ public class ProductDTO {
 		return "ProductDTO [prodNo=" + prodNo + ", cate=" + cate + ", prodName=" + prodName + ", price=" + price
 				+ ", discount=" + discount + ", point=" + point + ", delivery=" + delivery + ", stock=" + stock
 				+ ", descript=" + descript + ", thumb=" + thumb + ", infoImg=" + infoImg + ", detailImg=" + detailImg
-				+ ", regDate=" + regDate + "]";
+				+ ", regDate=" + regDate + ", salePrice=" + salePrice + "]";
 	}
+	
 	
 	
 	

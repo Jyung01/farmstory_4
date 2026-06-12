@@ -202,7 +202,7 @@
             <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
             <script src="${path}/js/daumPostcode.js"></script>
             
-            <script src="${path}/js/market.js"></script>
+            <script src="${path}/js/order.js"></script>
             <%@ include file="/WEB-INF/views/inc/_footer.jsp" %>
         </div>
     </body>

@@ -2,11 +2,11 @@ package kr.co.farmstory.util.SQL;
 
 public class MarketSQL {
 	//전체 조회
-	public static final String SELECT_MARKET_PRODUCT = "SELECT prodNo, cate, prodName, price, discount, point, thumb FROM `product` LIMIT ?, 5";
+	public static final String SELECT_MARKET_PRODUCT = "SELECT prodNo, cate, prodName, price, discount, point, thumb FROM `product` ORDER BY `regDate` DESC LIMIT ?, 5";
 	public static final String SELECT_MARKET_PRODUCT_COUNT = "SELECT COUNT(*) FROM `product`";
 	
 	//카테고리별 조회
-	public static final String SELECT_MARKET_CATE = "SELECT prodNo, cate, prodName, price, discount, point, thumb FROM `product` WHERE `cate` = ? LIMIT ?, 5";
+	public static final String SELECT_MARKET_CATE = "SELECT prodNo, cate, prodName, price, discount, point, thumb FROM `product` WHERE `cate` = ? ORDER BY `regDate` DESC LIMIT ?, 5";
 	public static final String SELECT_MARKET_CATE_COUNT = "SELECT COUNT(*) FROM `product` WHERE `cate` = ?";
 	
 	//상세조회
@@ -48,4 +48,7 @@ public class MarketSQL {
 	
 	//바로구매
 	public static final String SELECT_PRODUCT_FOR_BUY_NOW = "SELECT * FROM product WHERE prodNo = ?";
+	
+	//메인페이지 상품 노출
+	public static final String SELECT_BEST_PRODUCT = "SELECT prodNo, thumb, cate, prodName, price, discount, (price - (price * discount / 100)) AS sale_price FROM `product` ORDER BY regDate DESC LIMIT 0, 6";
 }

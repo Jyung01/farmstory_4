@@ -3,6 +3,7 @@ package kr.co.farmstory.service.orders;
 import java.util.List;
 import kr.co.farmstory.dao.orders.OrdersDAO;
 import kr.co.farmstory.dto.orders.OrdersDTO;
+import kr.co.farmstory.dto.page.PageGroupDTO;
 import kr.co.farmstory.dto.orderItem.OrderItemDTO;
 
 public enum OrdersService {
@@ -68,4 +69,45 @@ public enum OrdersService {
     public List<OrderItemDTO> selectOrderItems(int orderNo) {
         return dao.selectOrderItems(orderNo);
     }
+    
+    public int selectCountOrders(String userid) {
+        return dao.selectCountOrders(userid);
+    }
+
+    public List<OrdersDTO> selectOrdersList(String userid, int start) {
+        return dao.selectOrdersList(userid, start);
+    }
+    
+    public int getCurrentPage(String page) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = Integer.parseInt(page);	
+		}
+		return currentPage;
+	}
+	
+	public int getLastPageNum(int total) {
+		int lastPageNum = (int) Math.ceil(total / 10.0);
+		return lastPageNum;	
+	}
+	
+	public int getStart(int currentPage) {
+		return (currentPage - 1) * 10;
+	}
+	
+	public int getCurrentStartNum(int total, int currentPage) {
+		int start = (currentPage - 1) * 10;
+		return total - start;
+	}
+	
+	public PageGroupDTO getCurrentPageGroup(int currentPage, int lastPageNum) {
+		int currentPageGroup = (int) Math.ceil(currentPage / 10.0);
+		int pageGroupStart = (currentPageGroup - 1) * 10 + 1;
+		int pageGroupEnd = currentPageGroup * 10;
+		
+		if(pageGroupEnd > lastPageNum) {
+			pageGroupEnd = lastPageNum;			
+		}
+		return new PageGroupDTO(pageGroupStart, pageGroupEnd);	
+	}
 }

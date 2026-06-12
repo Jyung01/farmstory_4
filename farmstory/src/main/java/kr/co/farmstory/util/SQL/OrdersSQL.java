@@ -57,7 +57,9 @@ public class OrdersSQL {
 													    + "JOIN product AS p     ON oi.prodNo = p.prodNo "
 													    + "WHERE o.userid = ? "
 													    + "GROUP BY o.orderNo "
-													    + "ORDER BY o.orderNo DESC";
+													    + "ORDER BY o.orderNo DESC LIMIT ?, 10";
+		
+		public static final String SELECT_COUNT_ORDERS = "SELECT COUNT(*) FROM `orders` WHERE `userid` = ?";
 		
 		// 상세확인
 		public static final String SELECT_ORDER = 
@@ -70,5 +72,5 @@ public class OrdersSQL {
 		    + "FROM order_item AS oi "
 		    + "JOIN product AS p ON oi.prodNo = p.prodNo "
 		    + "WHERE oi.orderNo = ?";
-
+		
 }
