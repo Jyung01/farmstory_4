@@ -91,7 +91,7 @@
                     </article>
                 </section>
             </div>
-            <script src="${path}/js/market.js"></script>
+            <script src="${path}/js/order.js"></script>
             <%@ include file="/WEB-INF/views/inc/_footer.jsp" %>
         </div>
     </body>
