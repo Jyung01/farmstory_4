@@ -74,7 +74,7 @@
                                     <tr>
                                         <td>별명</td>
                                         <td>
-                                            <p class="nickInfo">공백없는 한글, 영문, 숫자 입력</p>
+                                            <p class="nickInfo">한글, 영문, 숫자 입력</p>
                                             <input type="text" name="nick" value="${sessUser.nick }"/>
                                             <button type="button" id="btnNickCheck">
                                                 <img src="${path}/images/myinfo/chk_id.gif" alt="중복확인" />
@@ -132,7 +132,7 @@
 
                                 <div>
                                     <a href="${path}/index.jsp" class="btn btnCancel">취소</a>
-                                    <input type="submit" value="회원수정" class="btn btnRegister" />
+                                    <input type="submit" value="회원수정" class="btn btnRegister"/>
                                 </div>
                             </form>
                         </section>
