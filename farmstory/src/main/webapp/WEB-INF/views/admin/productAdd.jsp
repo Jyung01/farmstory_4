@@ -61,8 +61,9 @@
                                 <select name="category">
                                     <option value="종류">종류</option>
                                     <option value="과일">과일</option>
-                                    <option value="야채">야채</option>
+                                    <option value="채소">채소</option>
                                     <option value="곡물">곡물</option>
+                                    <option value="견과">견과</option>
                                 </select>
                             </div>
                             <div>

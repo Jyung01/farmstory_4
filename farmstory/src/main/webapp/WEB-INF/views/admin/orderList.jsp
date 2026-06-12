@@ -8,7 +8,44 @@
         <meta charset="UTF-8" />
         <title>관리자_주문목록</title>
         <link rel="stylesheet" href="../css/index.css" />
+        
+        <script>
+	        document.addEventListener('DOMContentLoaded', function() {
+	            // 1. 전체 선택/해제 기능 구현
+	            const thCheckbox = document.querySelector('table tr th input[type="checkbox"]');
+	            const tdCheckboxes = document.querySelectorAll('table tr td input[name="itemNo"]');
+	            
+	            if (thCheckbox) {
+	                thCheckbox.addEventListener('change', function() {
+	                    tdCheckboxes.forEach(cb => {
+	                        cb.checked = thCheckbox.checked;
+	                    });
+	                });
+	            }
+	
+	            // 2. 폼 전송(제출) 시 유효성 검사 및 확인창 띄우기
+	            const deleteForm = document.querySelector('form[action="/farmstory/admin/orderDelete.do"]');
+	            if (deleteForm) {
+	                deleteForm.addEventListener('submit', function(e) {
+	                    // 체크된 항목 개수 확인
+	                    const checkedCount = document.querySelectorAll('input[name="itemNo"]:checked').length;
+	                    
+	                    if (checkedCount === 0) {
+	                        alert('삭제할 주문 항목을 하나 이상 선택해 주세요.');
+	                        e.preventDefault(); // 서버 전송(Submit)을 강제로 중단
+	                        return false;
+	                    }
+	                    
+	                    if (!confirm('선택한 ' + checkedCount + '개의 주문 항목을 삭제하시겠습니까?')) {
+	                        e.preventDefault(); // 취소 누르면 전송 중단
+	                        return false;
+	                    }
+	                });
+	            }
+	        });
+        </script>
     </head>
+    
     <body>
         <div id="container">
             <%@ include file="/WEB-INF/views/inc/_admin_header.jsp" %>
@@ -54,7 +91,7 @@
 	                    <section>
 	                        <table>
 	                            <tr>
-	                                <th><input type="checkbox" /></th>
+	                                <th><input type="checkbox" id="checkAll" /></th>
 	                                <th>주문번호</th>
 	                                <th>상품명</th>
 	                                <th>판매가격</th>
