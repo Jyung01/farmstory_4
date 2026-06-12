@@ -21,4 +21,13 @@ function updatePass() {
             alert('비밀번호 수정에 실패했습니다.');
         }
     });
+	
+}
+
+if (window.location.pathname.includes('myinfo.do') && window.location.search.includes('success')) {
+    alert('회원정보가 수정되었습니다.');
+
+    window.history.replaceState({}, document.title, window.location.pathname);
+} else if (window.location.pathname.includes('myinfo.do') && window.location.search.includes('fail')) {
+	alert('회원정보 수정에 실패했습니다.');
 }
