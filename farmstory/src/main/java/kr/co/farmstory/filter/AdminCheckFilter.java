@@ -8,9 +8,13 @@ import jakarta.servlet.http.HttpSession;
 import kr.co.farmstory.dto.user.UserDTO;
 
 import java.io.IOException;
-/* 나중에 테스트 하실때 주석 풀어서 테스트 해보시면 될거 같습니다
-@WebFilter("/admin/*")
-*/
+
+@WebFilter({
+    "/admin/*",
+    "/event/write.do",
+    "/event/modify.do",
+    "/event/delete.do"
+})
 public class AdminCheckFilter implements Filter {
 
     @Override

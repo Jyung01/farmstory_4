@@ -9,17 +9,22 @@ import kr.co.farmstory.dto.user.UserDTO;
 
 import java.io.IOException;
 
-
-// 마이페이지, 회원정보수정, 회원탈퇴 접근시 로그인 체크 
-
-
 @WebFilter({
-    "/user/myinfo.do",
+    "/article/write.do",
+    "/article/modify.do",
+    "/article/delete.do",
+    "/comment/write.do",
+    "/comment/modify.do",
+    "/comment/delete.do",
+    "/market/cart.do",
+    "/order/*",
+    "/user/logout.do",
     "/user/modify.do",
-    "/user/leave.do",
-    "/myinfo/*"
+    "/user/myinfo.do",
+    "/user/ordered.do",
+    "/user/cart.do",
+    "/user/delete.do"
 })
-
 
 public class LoginCheckFilter implements Filter {
 

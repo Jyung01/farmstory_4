@@ -52,7 +52,7 @@
 							                <tr>
 							                    <td>${order.orderNo}</td>
 							                    <td>
-							                        <img src="${path}${order.displayThumb}" class="thumb" alt="${order.displayProdName}" />
+							                        <img src="${path}/upload/${order.displayThumb}" class="thumb" alt="${order.displayProdName}" />
 							                    </td>
 							                    <td>${order.displayProdName}</td>
 							                    <td>${order.totalCount}개</td>
